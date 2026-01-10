@@ -1,0 +1,34 @@
+[
+    {
+        "recource_name": "Kubernetes Control Plane Group",
+        "desc": "Группы управления кластером"
+    },
+    {
+        "recource_name": "cpu_cores",
+        "desc": "CPU"
+    },
+    {
+        "recource_name": "ram",
+        "desc": "RAM"
+    },
+    {
+        "recource_name": "ssd_size",
+        "desc": "Быстрый диск"
+    },
+    {
+        "recource_name": "public_ip",
+        "desc": "Публичный IP"
+    },
+    {
+        "recource_name": "backup",
+        "desc": "Бэкапы"
+    },
+    {
+        "recource_name": "hdd_size",
+        "desc": "Стандартный диск"
+    },
+    {
+        "recource_name": "Load Balancers",
+        "desc": "Балансировщик нагрузки"
+    }
+]

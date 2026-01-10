@@ -1,0 +1,49 @@
+   PAGE                                   Autotests Exist?                       Test Case Level to add
+
+
+
+1) Login Page -> Forgot Password          No                                     -> smoke test cases (all)
+                                                                                 -> positive test cases (all)
+                                                                                 -> negative test cases (all)
+
+
+2) Virtual Servers (Create a VM)          Yes                                    -> positive test cases (only missing i.e X icons, Cancel Button)
+
+   VM Details                             Yes                                    -> positive test cases (only missing i.e X icons, Cancel Button)
+   VM Details -> Backup Schedule          Yes                                    -> positive test cases (i.e Calendar next and previous buttons)
+
+
+3) Load Balancer                          Yes                                    -> negative test cases (all)
+                                                                                 -> positive test cases (only missing i.e links, Cancel Button, other cases)
+
+
+4) Network -> Local Networks              Yes                                    -> positive test cases (only missing i.e X icons, Cancel Button)
+             
+           -> Public IPs                  Yes                                    -> positive test cases (only missing i.e X icons, Cancel Button)
+
+           -> DNS server addresses        No                                     -> smoke test cases (all)
+                                                                                 -> positive test cases (all)
+                                                                                 -> negative test cases (all)
+
+5) Security Groups                        No                                     -> smoke test cases (all)
+                                                                                 -> positive test cases (all)
+                                                                                 -> negative test cases (all) 
+
+
+6) Disks                                  Yes                                    -> positive test cases (only missing i.e X icons, Cancel Button)
+
+
+
+7) Backups                                Yes                                    -> positive test cases (only missing i.e server link, Cancel Button)
+
+
+8) Custom Templates                       Yes                                    -> positive test cases (only missing ones i.e X icons, Cancel Button)
+         
+
+9) Object Storage                         No                                     -> smoke test cases (all)
+                                                                                 -> positive test cases (all)
+                                                                                 -> negative test cases (all)
+
+10) Managed Kubernetes                    Yes                                    -> positive test cases (only missing ones i.e X icons, Cancel Button, links)
+  
+

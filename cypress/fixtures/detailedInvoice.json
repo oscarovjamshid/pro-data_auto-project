@@ -1,0 +1,30 @@
+[
+    {
+        "service_name": "LOAD_BALANCER",
+        "detailed_name": "Балансировщик нагрузки"
+    },
+    {
+        "service_name": "KUBERNETES",
+        "detailed_name": "Kubernetes кластер"
+    },
+    {
+        "service_name": "GLOBAL_DISK",
+        "detailed_name": "Глобальный диск"
+    },
+    {
+        "service_name": "VM",
+        "detailed_name": "Виртуальный сервер"
+    },
+    {
+        "service_name": "PUBLIC_IP",
+        "detailed_name": "Публичный IP"
+    },
+    {
+        "service_name": "OBJECT_STORAGE",
+        "detailed_name": "Объектное хранилище"
+    },
+    {
+        "service_name": "CUSTOM_IMAGE",
+        "detailed_name": "Пользовательский образ"
+    }
+]

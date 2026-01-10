@@ -1,0 +1,19 @@
+{
+    "base_url": "https://kz-1.pro-data.tech/",
+    "login": "qatesterprod@yopmail.com",
+    "password": "123.Qa.321",
+    "user_ip": "94.158.54.224",
+    "blocked_login": "qablockeduser@mailinator.com",
+    "blocked_login_psw": "123.Qa.321",
+    "expired_login": "expireduser@mailinator.com",
+    "test_server_name": "Test-Server",
+    "test_server_id": "QI1763637462",
+    "test_local_ip": "Test_Local_Ip (192.168.1.0/24)",
+    "test_disk": "Test-Disk",
+    "test_disk_id": 511,
+    "test_disk2": "Test-Disk2",
+    "test_server_with_backup": "TS-With-Backup",
+    "test_server_without_backup": "TS-Without-Backup2",
+    "test_server_with_customOS": "TS-With-Custom-OS",
+    "password1": "qaTester@2000!"
+}
