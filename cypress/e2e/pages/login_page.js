@@ -3,8 +3,8 @@ class Login {
         loginTxt: () => cy.get('[qa-element="auth-email"]'),
         passwordTxt: () => cy.get('[qa-element="auth-password"]'),
         loginBtn: () => cy.get('[qa-element="login"]'),
-        languageBtn: () => cy.get('[qa-element="language-selector-open"]'),
-        russianTxt: () => cy.get('[qa-element="language-selector-0"]'),
+        languageBtn: () => cy.get('[qa-element="language-selector"]'),
+        russianTxt: () => cy.get('#root > main > aside:first-child > div:first-child > div:first-child > ul > li:first-child'), //later change this to qa-element tag
         passwordErrorLbl: () => cy.get('[qa-element="password-error"]'), 
     }
     actions = {
