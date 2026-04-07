@@ -6,7 +6,7 @@ class ServerList {
         server_searchLbl: (text) => cy.contains(text),
         server_searchLblInp: () => cy.contains("Test-Server"),
         server_searchIpLbl: () => cy.get('.selectable > :nth-child(7)').contains("td", "100.100.100.164"),
-        server_detailLbl: (text) => cy.get('.font-button-l').contains("h3", text),
+        server_detailLbl: (text) => cy.get('.font-lg-semibold').contains(text),
         server_disabledLbl: () => cy.get('.disabledSelect').first(),
         server_NotVisible: () => cy.get('.tooltip-inner'),
         server_backNavigateBtn: () => cy.get('[qa-element="to-back"]'),

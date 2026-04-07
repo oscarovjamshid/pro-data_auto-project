@@ -1,6 +1,6 @@
 class SideBar {
     elements = {
-        servers_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-servers"]'), //sidemenu-nav-services-sublink-services-servers
+        servers_icon: () => cy.get('[qa-element="nav_link_servers"]'), 
         networks_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-networks"]'), //sidemenu-nav-services-sublink-services-networks
         load_balance_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-loadbalancers"]'), //sidemenu-nav-services-sublink-services-loadbalancers
         disks_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-disks"]'), //sidemenu-nav-services-sublink-services-disks 

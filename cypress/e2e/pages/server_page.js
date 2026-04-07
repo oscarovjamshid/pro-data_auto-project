@@ -3,55 +3,70 @@
 class Server {
 
     elements = {
-        serversPageLbl: () => cy.get('[qa-element="vm-table"]'),
+        serversPageLbl: () => cy.get('#root > div > header > nav > h1'),
         createServerPageLbl: () => cy.get('[qa-element="vm-create"]'),
         createServerBtn: () => cy.get('[qa-element="to-create-vm"]'),
-        serverOsTxt: () => cy.get('[qa-element="select-os-source"]'),
         modalWindow: () => cy.get('.modal-body'),
         modalDialog: () => cy.get('div[role="dialog"][aria-modal="true"].modal'),
-        customOsTabBtn: () => cy.get('[qa-element="tab-1"]'),
-        serverOsOption: (id) => cy.get(`[qa-element="filtered-os-template-${id - 1}"]`), //filtered-os-template-0
-        customOsOption: (id) => cy.get(`[qa-element="custom-template-${id - 1}"]`), //custom-template-0
-        confirmOsBtn: () => cy.get('[qa-element="template-selector-submit"]'), //template-selector-submit
-        serverTitleTxt: () => cy.get('[qa-element="vm-create-name"]'), //vm-create-name
+        serverOsBtn: () => cy.get('[qa-element="templete-type-0"]'),
+        customOsBtn: () => cy.get('[qa-element="templete-type-1"]'),
+        serverOsOption: (index) => cy.get(`[qa-element="filtered-os-type-${index}"]`),
+        customOsOption: (index) => cy.get(`[qa-element="custom-template-${index}"]`),
+        serverOsOptionByName: (name) => cy.get('div[role="dialog"][aria-modal="true"]').contains('div', name),
+        versionDropdownLabel: () => cy.get('[qa-element="filtered-os-template-toggle"]'), // version of OS list
+        confirmOsBtn: () => cy.get('[qa-element="template-selector-submit"]'),
+        serverTitleTxt: () => cy.get('[qa-element="vm-create-name"]'),
         serverDescTxt: () => cy.get('[qa-element="vm-create-desc"]'),
-        cpuTxt: () => cy.get('[qa-element="create-vm-cpu-range-input"]'), //create-vm-cpu-range-input
-        ramTxt: () => cy.get('[qa-element="create-vm-ram-range-input"]'), //create-vm-ram-range-input
-        backupBtn: () => cy.get('[qa-element="add-backup-schedule"]'), //add-backup-schedule
-        backupTitleTxt: () => cy.get('[qa-element="backup-schedule-name"]'), //backup-schedule-name
-        backupCopiesBtn: () => cy.get('[qa-element="backup-limit-edit"]'), //backup-limit-edit
-        backupCopiesTxt: () => cy.get('[qa-element="add-backup-schedule-limit"]'), //add-backup-schedule-limit
-        confirmBackupCopiesBtn: () => cy.get('[qa-element="backup-schedule-save"]'), //backup-schedule-save
-        periodSelector: () => cy.get('[qa-element="cron-period-open"]'), //cron-period
-        periodOption: (id) => cy.get(`[qa-element="cron-period-${id - 1}"]`), //cron-period-0
-        backupTimeSelector: () => cy.get('[qa-element="time-selector"]'), //time-selector
-        confirmBackupBtn: () => cy.get('[qa-element="backup-schedule-create"]'), //backup-schedule-create
-        publicIpBtn: () => cy.get('[qa-element="public-ip"]'), //public-ip
-        localIpBtn: () => cy.get('[qa-element="local-ip"]'), //local-ip
-        localIpNameTxt: () => cy.get('[qa-element="network-create-name"]'), //network-create-name    
-        localIpAddressTxt: () => cy.get('[qa-element="address-mask"]'), //address-mask
-        localIpGatewayTxt: () => cy.get('[qa-element="gateway-mask"]').last(), //gateway-mask
+        
+        // new selectors for cpu and ram, disk by buttons instead of typing fields
+        cpuDecreaseBtn: () => cy.get('[qa-element="create-vm-cpu-range-decrease"]'),
+        cpuIncreaseBtn: () => cy.get('[qa-element="create-vm-cpu-range-increase"]'),
+        ramDecreaseBtn: () => cy.get('[qa-element="create-vm-ram-range-decrease"]'),
+        ramIncreaseBtn: () => cy.get('[qa-element="create-vm-ram-range-increase"]'),
+        diskDecreaseBtn: () => cy.get('[qa-element="local-disk-size-range-decrease"]'),
+        diskIncreaseBtn: () => cy.get('[qa-element="local-disk-size-range-increase"]'),
+        cpuValue: () => cy.get('[qa-element="create-vm-cpu-range"]'),
+        ramValue: () => cy.get('[qa-element="create-vm-ram-range"]'),
+        diskValue: () => cy.get('[qa-element="local-disk-size-range"]'),
+
+        cpuTxt: () => cy.get('[qa-element="create-vm-cpu-range-input"]'),
+        ramTxt: () => cy.get('[qa-element="create-vm-ram-range-input"]'),
+        backupBtn: () => cy.get('[qa-element="add-backup-schedule"]'),
+        backupTitleTxt: () => cy.get('[qa-element="backup-schedule-name"]'),
+        backupCopiesBtn: () => cy.get('[qa-element="backup-limit-edit"]'),
+        backupCopiesTxt: () => cy.get('[qa-element="add-backup-schedule-limit"]'),
+        confirmBackupCopiesBtn: () => cy.get('[qa-element="backup-schedule-save"]').last(),
+        periodSelector: () => cy.get('[qa-element="cron-period-toggle"]'),
+        periodOption: (id) => cy.get(`[qa-element="cron-period-${id - 1}"]`),
+        backupTimeSelector: () => cy.get('[qa-element="undefined-toggle"]'),
+        backupTimeOption: (id) => cy.get(`[qa-element="undefined-${id}"]`),
+        confirmBackupBtn: () => cy.get('[qa-element="backup-schedule-create"]'),
+        publicIpBtn: () => cy.get('[qa-element="public-ip"]'),
+        localIpBtn: () => cy.get('[qa-element="local-ip"]'),
+        localIpNameTxt: () => cy.get('[qa-element="network-create-name"]'),
+        localIpAddressTxt: () => cy.get('[qa-element="address-mask"]'),
+        localIpGatewayTxt: () => cy.get('[qa-element="gateway-mask"]').last(),
         localIpTxt: () => cy.get('[name="localIp"]'),
-        confirmCreateServerBtn: () => cy.get('[qa-element="vm-craete-submit"]').last(), //vm-craete-submit
-        closeModalBtn: () => cy.get('[qa-element="create-success-close"]'), //create-success-close
-        createdServerTitleLbl: (text) => cy.get('.react-table').contains('div', text),
-        serverStatusLbl: () => cy.get('.vm-status-badge').find('span'),
-        diskTypeSSDBtn: () => cy.get('[qa-element="hdd-ssd-1"]'), //hdd-ssd-1
-        diskTxt: () => cy.get('[qa-element="local-disk-size-range-input"]'), //local-disk-size-range-input
-        loginTypeSSHBtn: () => cy.get('[qa-element="authorize-ssh-0"]'), //authorize-ssh-0
-        osErrorLbl: () => cy.get('[qa-element="os-template-select-error"]'), //os-template-select-error
-        titleErrorLbl: () => cy.get('[qa-element="create-vm-name-error"]'), //create-vm-name-error
-        publicIpLbl: () => cy.get('[qa-element="public-ip-label"]'), //public-ip-label
-        localIpLbl: () => cy.get('[qa-element="user-local-ip-label"]'), //user-local-ip-label
-        cpuErrorLbl: () => cy.get('[qa-element="create-vm-cpu-range-error"]'), //create-vm-cpu-range-error
-        ramErrorLbl: () => cy.get('[qa-element="create-vm-ram-range-error"]'), //create-vm-ram-range-error
-        localIpErrorLbl: () => cy.get('[qa-element="create-network-mask-error"]'), //create-network-mask-error
-        localIpTitleErrorLbl: () => cy.get('[qa-element="create-network-name-error"]'), //create-network-name-error
-        localIpSelectTabBtn: () => cy.get('[qa-element="local-nets-open"]'), //local-nets-open
-        localIpSelector: () => cy.get('[qa-element="local-nets-open"]'), //local-nets-open
-        localIpOption: (localIpName) => cy.get('[qa-element="local-nets"]').contains(localIpName).first(), //local-nets
-        localIpAddNewBtn: () => cy.get('[qa-element="network-create-show"]'), //network-create-show
-        localIpAddConfBtn: () => cy.get('[qa-element="network-create-submit"]'), //network-create-submit
+        confirmCreateServerBtn: () => cy.get('[qa-element="vm-craete-submit"]').last(),
+        closeModalBtn: () => cy.get('[qa-element="create-success-close"]'),
+        createdServerTitleLbl: (text) => cy.get('.vm-table').contains('div', text),
+        serverStatusLbl: () => cy.get('[qa-element="vm-status"]'),
+        diskTypeSSDBtn: () => cy.get('[qa-element="disk-type-1"]'),
+        diskTxt: () => cy.get('[qa-element="local-disk-size-range-input"]'),
+        loginTypeSSHBtn: () => cy.get('[qa-element="authorize-ssh"]'),
+        osErrorLbl: () => cy.get('[qa-element="version-error"]'),
+        titleErrorLbl: () => cy.get('[qa-element="create-vm-name-error"]'), 
+        publicIpLbl: () => cy.get('[qa-element="public-ip-label"]'), 
+        localIpLbl: () => cy.get('[qa-element="user-local-ip-label"]'), 
+        cpuErrorLbl: () => cy.get('[qa-element="create-vm-cpu-range-error"]'),
+        ramErrorLbl: () => cy.get('[qa-element="create-vm-ram-range-error"]'), 
+        localIpErrorLbl: () => cy.get('[qa-element="create-network-mask-error"]'), 
+        localIpTitleErrorLbl: () => cy.get('[qa-element="create-network-name-error"]'), 
+        localIpSelectTabBtn: () => cy.get('[qa-element="local-nets-open"]'), 
+        localIpSelector: () => cy.get('[qa-element="local-nets"]'), 
+        localIpOption: (localIpName) => cy.get('[qa-element="local-nets"]').contains(localIpName).first(),
+        localIpAddNewBtn: () => cy.get('[qa-element="network-create-show"]'), 
+        localIpAddConfBtn: () => cy.get('[qa-element="network-create-submit"]'), 
         fadeModal: () => cy.get('div[role="dialog"][aria-modal="true"]')
     }
     actions = {
@@ -64,24 +79,26 @@ class Server {
         checkCreateServerPageLbl: () => {
             this.elements.createServerPageLbl().should('have.text', "Новый сервер")
         },
-        clickOsTxt: () => {
-            this.elements.serverOsTxt().click({force: true});
-        },
         isOpenedModal: () => {
             this.elements.modalWindow().should('be.visible');
         },
         selectServerOs: (id) => {
-            this.elements.serverOsOption(id).click()
+            const index = id > 0 ? id - 1 : 0;
+            this.elements.serverOsOption(index).click()
+        },
+        selectServerOsByName: (name) => {
+            this.elements.serverOsOptionByName(name).click()
         },
         selectCustomOs: (id) => {
-            this.elements.customOsOption(id).click()
+            const index = id > 0 ? id - 1 : 0;
+            this.elements.customOsOption(index).click()
         },
-        clickConfirmOsBtn: () => { 
+        clickConfirmOsBtn: () => {
             this.elements.confirmOsBtn().click();
             cy.wait(5000)
         },
         clickCustomOsTabBtn: () => {
-            this.elements.customOsTabBtn().click()
+            this.elements.customOsBtn().click()
         },
         clickServerTitleField: () => {
             this.elements.serverTitleTxt().should('be.visible').click();
@@ -92,13 +109,75 @@ class Server {
         writeDesc: (text) => {
             this.elements.serverDescTxt().type(text)
         },
+
+        // new methods for cpu and ram inserting by buttons instead of typing
+        setCpu: (target) => {
+            this.elements.cpuValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 13
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.cpuIncreaseBtn() : this.elements.cpuDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+        setRam: (target) => {
+            this.elements.ramValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 4
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.ramIncreaseBtn() : this.elements.ramDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+        setDisk: (target) => {
+            this.elements.diskValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 300
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.diskIncreaseBtn() : this.elements.diskDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+
         writeCpuTxt: (text) => {
-            this.elements.cpuTxt().clear()
-            this.elements.cpuTxt().type(text)
+            const target = Number(text)
+            if (Number.isFinite(target)) {
+                this.actions.setCpu(target)
+            } else {
+                this.elements.cpuTxt().invoke('val', text).trigger('input').trigger('change')
+            }
         },
         writeRamTxt: (text) => {
-            this.elements.ramTxt().clear()
-            this.elements.ramTxt().type(text)
+            const target = Number(text)
+            if (Number.isFinite(target)) {
+                this.actions.setRam(target)
+            } else {
+                this.elements.ramTxt().invoke('val', text).trigger('input').trigger('change')
+            }
+        },
+        isCpuIncreaseBtnDisabled: () => {
+            this.elements.cpuIncreaseBtn().should('be.disabled')
+        },
+        isRamIncreaseBtnDisabled: () => {
+            this.elements.ramIncreaseBtn().should('be.disabled')
+        },
+        isDiskIncreaseBtnDisabled: () => {
+            this.elements.diskIncreaseBtn().should('be.disabled')
+        },
+        isCpuDescreaseBtnDisabled: () => {
+            this.elements.cpuDecreaseBtn().should('be.disabled')
+        },
+        isRamDescreaseBtnDisabled: () => {
+            this.elements.ramDecreaseBtn().should('be.disabled')
+        },
+        isDiskDescreaseBtnDisabled: () => {
+            this.elements.diskDecreaseBtn().should('be.disabled')
         },
         toggleBackupBtn: () => {
             this.elements.backupBtn().click()
@@ -123,9 +202,9 @@ class Server {
             this.elements.periodSelector().click()
             this.elements.periodOption(id).click()
         },
-        writeTimeSelector: (text) => {
-            this.elements.backupTimeSelector().clear()
-            this.elements.backupTimeSelector().type(text)
+        writeTimeSelector: (id) => {
+            this.elements.backupTimeSelector().click()
+            this.elements.backupTimeOption(id).click()
         },
         clickConfirmBackupBtn: () => {
             this.elements.confirmBackupBtn().click()
@@ -195,9 +274,9 @@ class Server {
         clickLoginTypeSSHBtn: () => {
             this.elements.loginTypeSSHBtn().click()
         },
-        isVisibleOsRequiredLbl: () => {
+        isVisibleOsRequiredLbl: () => { // os version label
             this.elements.osErrorLbl().should('be.visible')
-        },
+        }, 
         isVisibleTitleRequiredLbl: () => {
             this.elements.titleErrorLbl().should('be.visible')
         },
@@ -212,12 +291,12 @@ class Server {
             this.elements.titleErrorLbl().should('have.text', text)
         },
         checkCpuErrorLbl: (text) => {
-           // this.elements.cpuErrorLbl().should('be.visible')
-           // this.elements.cpuErrorLbl().should('have.text', text)
+            // this.elements.cpuErrorLbl().should('be.visible')
+            // this.elements.cpuErrorLbl().should('have.text', text)
         },
         checkRamErrorLbl: (text) => {
-           // this.elements.ramErrorLbl().should('be.visible')
-           // this.elements.ramErrorLbl().should('have.text', text)
+            // this.elements.ramErrorLbl().should('be.visible')
+            // this.elements.ramErrorLbl().should('have.text', text)
         },
         isRedDiskTxt1: () => {
             this.elements.diskTxt().should('have.css', 'border-color', 'rgb(232, 95, 92)');
@@ -262,7 +341,7 @@ class Server {
                 expect(true, 'Превышено максимальное количество итераций').to.equal(false);
                 return;
             }
-        
+
             this.elements.serverStatusLbl().invoke('text').then((text1) => {
                 if (text1.includes('В работе')) {
                     cy.log('success');
@@ -272,7 +351,7 @@ class Server {
                 }
             });
         },
-        
+
         clickLocalIpSelector: () => {
             this.elements.localIpSelector().click()
         },
