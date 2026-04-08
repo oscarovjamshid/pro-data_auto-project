@@ -1,13 +1,14 @@
 class ConfigurationList {
     elements = {
         server_searchTxt: () => cy.get('[qa-element="search-input"]'),
-        click_serverDetailLbl: () => cy.get('.selectable > :nth-child(1)'),
+        click_serverDetailLbl: () => cy.get('.vm-table tbody tr:nth-child(1)'),
         server_dangerBtn: () => cy.get('[qa-element="vm-delete-show"]'),
         server_enterVnNameTxt: () => cy.get('[qa-element="vm-edit-name"]'),
         server_deleteVmNameTxt: () => cy.get('[qa-element="vm-delete-name"]'),
         server_verifiedDeleteBtn: () => cy.get('[qa-element="vm-delete-submit"]'),
         server_configuration: () => cy.get('[qa-element="tab-0"]'),
-        server_backupSchedule: () => cy.get('[qa-element="tab-5"]'),
+        server_backupsTab: () => cy.get('[qa-element="tab-3"]'),
+        server_backupScheduleTab: () => cy.get('[qa-element="backup-type-1"]'),
         server_scheduleDeleteBtn: () => cy.get('[qa-element="delete-schedule-submit"]'),
         server_backupPageBtn: () => cy.get('[data-active="true"]'),
         server_scheduleDeleteAllBtn: () => cy.get('[qa-element="delete-schedule-show"]').first(),
@@ -18,13 +19,21 @@ class ConfigurationList {
         server_editServerBtn: () => cy.get('[qa-element="server-reboot-show"]').first(),
         server_inValidMessageTxt: () => cy.get('[qa-element="edit-vm-name-error"]'),
         server_inValidDeleteMessageTxt: () => cy.get(':nth-child(1) > .invalid-feedback'),
-        server_visibleCpuLbl: () => cy.get('[qa-element="edit-vm-cpu-range-input"]'),
-        server_visibleRamLbl: () => cy.get('[qa-element="edit-vm-ram-range-input"]'),
+        server_visibleCpuLbl: () => cy.get('[qa-element="edit-vm-cpu-range"]'),
+        server_visibleRamLbl: () => cy.get('[qa-element="edit-vm-ram-range"]'),
         configuration_PrimaryBtn: () => cy.get('[qa-element="server-reboot-submit"]'),
         configuration_messageVisibleInValid: () => cy.get('[qa-element="edit-vm-name-error"]'),
         configuration_messageVisibleInValidCpu: () => cy.get('[qa-element="range-input-error"]'),
         configuration_messageInValidTxtVisible: () => cy.get('[qa-element="edit-vm-ram-range-error"]'),
-        server_editServerBtn2: () => cy.get('[qa-element="change-config"]')
+        server_editServerBtn2: () => cy.get('[qa-element="vm-edit-submit-show"]'),
+        vmdeletedText: (text) => cy.get('.Toast_toastContainer__zym8f').contains(text),
+        confirmEditBtn: () => cy.get('[qa-element="vm-edit-submit-submit"]'),
+        editCpuDecreaseBtn: () => cy.get('[qa-element="edit-vm-cpu-range-decrease"]'),
+        editCpuIncreaseBtn: () => cy.get('[qa-element="edit-vm-cpu-range-increase"]'),
+        editRamDecreaseBtn: () => cy.get('[qa-element="edit-vm-ram-range-decrease"]'),
+        editRamIncreaseBtn: () => cy.get('[qa-element="edit-vm-ram-range-increase"]'),
+        editCpuValue: () => cy.get('[qa-element="edit-vm-cpu-range"]'),
+        editRamValue: () => cy.get('[qa-element="edit-vm-ram-range"]'),
 
     }
     actions = {
@@ -47,7 +56,8 @@ class ConfigurationList {
             });
         },
         deleteScheduledBackups: () => {
-            this.elements.server_backupSchedule().click()
+            this.elements.server_backupsTab().click()
+            this.elements.server_backupScheduleTab().click()
             this.elements.server_scheduleDeleteAllBtn().click()
             this.elements.server_scheduleDeleteBtn().should("be.visible")
             this.elements.server_scheduleDeleteBtn().click()
@@ -121,7 +131,7 @@ class ConfigurationList {
         clickEditServerNameBtn: () => {
             this.elements.server_editServerBtn().click({ force: true });
         },
-        clickEditServerNameBtnDisable: () => {
+        clickEditServerNameBtnDisabled: () => {
             this.elements.server_editServerBtn2().should('be.disabled')
         },
         clickEditServerNameBtn2: () => {
@@ -136,12 +146,41 @@ class ConfigurationList {
         isVisibleDeleteInValidMessage: () => {
             this.elements.server_inValidDeleteMessageTxt()
         },
+        isVisibleDeletedVMMessage: (text) => {
+            this.elements.vmdeletedText(text).should('be.visible')
+        },
         isVisibleCpuInp: () => {
             this.elements.server_visibleCpuLbl().should('be.visible')
         },
         enterNegativeNumberCpu: (text) => {
             this.elements.server_visibleCpuLbl().clear().type(text)
         },
+
+        // new methods for cpu and ram inserting by buttons instead of typing
+        setCpu: (target) => {
+            this.elements.editCpuValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 13
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.editCpuIncreaseBtn() : this.elements.editCpuDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+        setRam: (target) => {
+            this.elements.editRamValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 4
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.editRamIncreaseBtn() : this.elements.editRamDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+
+
         isNotChangedCpu: () => {
             cy.wait('@serverEditNegativeCpu', { timeout: 10000 }).then((interception) => {
                 expect(interception.response.statusCode).to.eq(500);
@@ -159,12 +198,18 @@ class ConfigurationList {
         isVisibleConfigurationInValidMessage: () => {
             this.elements.configuration_messageVisibleInValid().should('be.visible')
         },
-         isVisibleConfigurationInValidMessageCpu: () => {
+        isVisibleConfigurationInValidMessageCpu: () => {
             this.elements.configuration_messageVisibleInValidCpu().should('be.visible')
         },
         isVisibleShowInValidMessageCpu: () => {
             this.elements.configuration_messageInValidTxtVisible().should('be.visible')
-        }
+        },
+        clickSubmitEditBtn: () => {
+            this.elements.confirmEditBtn().click({ force: true })
+        },
+        isEditCPUIncreaseBtnDisabled: () => {
+            this.elements.editCpuIncreaseBtn().should('be.disabled')
+        },
     }
 }
 

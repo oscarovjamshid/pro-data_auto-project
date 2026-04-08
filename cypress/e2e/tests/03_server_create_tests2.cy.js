@@ -207,7 +207,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.clickLocalIpAddNewBtn()
         server_page.actions.isLocalIpAddConfBtnDisabled()
     })
-    it.only('[PD-106] Создать новый сервер, с локальным IP, выбрав уже имеющуюся локальную сеть из списка', () => {
+    it('[PD-106] Создать новый сервер, с локальным IP, выбрав уже имеющуюся локальную сеть из списка', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
