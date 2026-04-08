@@ -43,7 +43,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.selectBackupPeriod(2)
         server_page.actions.writeTimeSelector(0)
         server_page.actions.clickConfirmBackupBtn()
-        server_page.actions.enableLocalIp(),
+        server_page.actions.enableLocalIp()
         server_page.actions.clickLocalIpAddNewBtn()
         server_page.actions.writeLocalIpNameTxt(`Test_IP_${localIpName}`)
         server_page.actions.writeLocalIpAddressTxt("192.168.100.0")

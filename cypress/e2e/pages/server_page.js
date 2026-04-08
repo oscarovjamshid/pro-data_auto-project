@@ -44,9 +44,9 @@ class Server {
         publicIpBtn: () => cy.get('[qa-element="public-ip"]'),
         localIpBtn: () => cy.get('[qa-element="local-ip"]'),
         localIpNameTxt: () => cy.get('[qa-element="network-create-name"]'),
-        localIpAddressTxt: () => cy.get('[qa-element="address-mask"]'),
+        localIpAddressTxt: () => cy.get('[qa-element="local-nets-toggle"]'),
         localIpGatewayTxt: () => cy.get('[qa-element="gateway-mask"]').last(),
-        localIpTxt: () => cy.get('[name="localIp"]'),
+        localIpTxt: () => cy.get('[qa-element="free-ip-address-toggle"]'),
         confirmCreateServerBtn: () => cy.get('[qa-element="vm-craete-submit"]').last(),
         closeModalBtn: () => cy.get('[qa-element="create-success-close"]'),
         createdServerTitleLbl: (text) => cy.get('.vm-table').contains('div', text),
@@ -209,6 +209,9 @@ class Server {
         clickConfirmBackupBtn: () => {
             this.elements.confirmBackupBtn().click()
         },
+        isBackupCopyBtnDisabled: () => {
+            this.elements.confirmBackupBtn().should('be.disabled')
+        },
         enablePublicIp: () => {
             this.elements.publicIpBtn().click()
         },
@@ -328,13 +331,13 @@ class Server {
             this.elements.localIpSelectTabBtn().click()
         },
         checkLocalIpAddressTxtNotEmpty: () => {
-            this.elements.localIpAddressTxt().invoke('val').should('not.be.empty');
+            this.elements.localIpAddressTxt().invoke('text').should('not.be.empty');
         },
         checkLocalIpGatewayTxtNotEmpty: () => {
-            this.elements.localIpGatewayTxt().invoke('val').should('not.be.empty');
+            this.elements.localIpGatewayTxt().invoke('text').should('not.be.empty');
         },
         checkLocalIpTxtNotEmpty: () => {
-            this.elements.localIpTxt().invoke('val').should('not.be.empty');
+            this.elements.localIpTxt().invoke('text').should('not.be.empty');
         },
         checkElementTextPeriodically: (maxIterations = 25) => {
             if (maxIterations <= 0) {
@@ -363,6 +366,9 @@ class Server {
         },
         clickLocalIpAddConfBtn: () => {
             this.elements.localIpAddConfBtn().click()
+        },
+        isLocalIpAddConfBtnDisabled: () => {
+            this.elements.localIpAddConfBtn().should('be.disabled')
         }
     }
 }
