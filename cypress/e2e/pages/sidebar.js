@@ -3,7 +3,7 @@ class SideBar {
         servers_icon: () => cy.get('[qa-element="nav_link_servers"]'), 
         networks_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-networks"]'), //sidemenu-nav-services-sublink-services-networks
         load_balance_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-loadbalancers"]'), //sidemenu-nav-services-sublink-services-loadbalancers
-        disks_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-disks"]'), //sidemenu-nav-services-sublink-services-disks 
+        disks_icon: () => cy.get('[qa-element="nav_link_disks"]'), //sidemenu-nav-services-sublink-services-disks 
         securityGroups_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-security-groups"]'),
         customOS_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-templates"]'), //sidemenu-nav-services-sublink-services-templates
         object_storage_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-storage"]'), //sidemenu-nav-services-sublink-services-templates

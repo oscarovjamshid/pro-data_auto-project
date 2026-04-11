@@ -77,8 +77,7 @@ describe('5.Servers - Actions', () => {
         serverAction_page.actions.clickServerActionsBtn()
         serverAction_page.actions.clickServerHibernationBtn()
         serverAction_page.actions.checkStatus(25, 'В гибернации')
-        //* Test ends here, bellow code is for return server to running status
-        serverAction_page.actions.clickServerActionsBtn()
+        //* Test ends here, below code is to return server to running status
         serverAction_page.actions.clickServerResumeBtn()
         serverAction_page.actions.checkStatus(8, 'В работе')
     })
@@ -112,3 +111,6 @@ describe('5.Servers - Actions', () => {
         serverAction_page.actions.checkStatus(25, 'Остановлен')
     })
 })
+
+
+// Test-Server remains Stopped after above tests

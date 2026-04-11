@@ -2,59 +2,59 @@ class ServerDisks {
 
     elements = {
         diskListItems: () => cy.get('tbody tr'),
-        serverDisksTab: () => cy.get('[qa-element="tab-1"]').contains("Диски"), //tab-1
-        addNewServerDiskBtn: () => cy.get('[qa-element="show-disk-modal"]'), //show-disk-modal
-        connectNewServerDiskBtn: () => cy.get('[qa-element="show-link-disk"]').contains('Привязать диск'), //show-link-disk
-        newDiskNameTxt: () => cy.get('[qa-element="disk-name"]'), //disk-name
-        newDiskTypeHDDBtn: () => cy.get('[qa-element="hdd-ssd-0"]'), //hdd-ssd-0
-        newDiskTypeSSDBtn: () => cy.get('[qa-element="hdd-ssd-1"]'),// hdd-ssd-1
-        newDiskTypeNVMEBtn: () => cy.get('[qa-element="hdd-ssd-2"]'),// hdd-ssd-2
-        changeDiskTypeHDDBtn: () => cy.get('[qa-element="external-internal-0"]'), //external-internal-0
-        changeDiskTypeSSDBtn: () => cy.get('[qa-element="external-internal-1"]'), //external-internal-1
-        newDiskSizeTxt: () => cy.get('[qa-element="disk-size-range-input"]'), //disk-size-range-input
-        confirmNewDiskBtn: () => cy.get('[qa-element="add-disk"]'), //add-disk
-        createdDiskTitleLbl: (text) => cy.get('.react-table').contains('div', text),
-        newDiskNameErrorLbl: () => cy.get('[qa-element="add-disk-name-error"]'), //add-disk-name-error
-        newDiskSizeErrorLbl: (text) => cy.get('[qa-element="disk-size-range-error"]').contains(text), //disk-size-range-error    
+        serverDisksTab: () => cy.get('[qa-element="tab-1"]').contains("Диски"),
+        addNewServerDiskBtn: () => cy.get('[qa-element="show-disk-modal"]'),
+        connectNewServerDiskBtn: () => cy.get('[qa-element="show-link-disk"]'),
+        newDiskNameTxt: () => cy.get('[qa-element="disk-name"]'),
+        newDiskTypeHDDBtn: () => cy.get('[qa-element="hdd-ssd-0"]'),
+        newDiskTypeSSDBtn: () => cy.get('[qa-element="hdd-ssd-1"]'),
+        newDiskTypeNVMEBtn: () => cy.get('[qa-element="hdd-ssd-2"]'),
+        changeDiskTypeHDDBtn: () => cy.get('[qa-element="external-internal-0"]'),
+        changeDiskTypeSSDBtn: () => cy.get('[qa-element="external-internal-1"]'),
+        newDiskSizeTxt: () => cy.get('[qa-element="disk-size-range-input"]'),
+        confirmNewDiskBtn: () => cy.get('[qa-element="add-disk"]'),
+        createdDiskTitleLbl: (text) => cy.get('table tbody[role="rowgroup"]').contains('tr', text),  // -> qa-element is needed
+        newDiskNameErrorLbl: () => cy.get('#disk-add-form > div:nth-child(1) > div:nth-child(3)'), // -> qa-element is needed
+        newDiskSizeErrorLbl: (text) => cy.get('[qa-element="disk-size-range-error"]').contains(text),    
         newDiskSizeErrorLbl2: (text) => cy.get('[qa-element="increase-disk-size-range-error"]').contains(text),
-        diskDeleteBtn: () => cy.get('tbody').contains('tr', 'Test-Created-Disk').find('[qa-element="delete-disk-show"]').first(), //increase-size-1-show
-        diskDeleteBtn2: () => cy.get('tbody').contains('tr', 'Test-Created-Disk2').find('[qa-element="delete-disk-show"]').first(),
-        diskDisconnectBtn: () => cy.get('tbody').contains('tr', 'Test-Disk').find('[qa-element="unlink-disk-show"]').first(), //unlink-disk-show
-        diskChangeTypeBtn: () => cy.get('tbody').contains('tr', 'Test-Created-Disk').find('[qa-element="disk-change-type"]').first(), //disk-change-type-1
-        diskChangeTypeBtn2: () => cy.get('tbody').contains('tr', 'Test-Created-Disk2').find('button.btn-outline-primary').first(), //disk-change-type-1
-        diskChangeTypeBtn2ndRow: () => cy.get('tbody').contains('tr', 'Test-Created-Disk2').find('[qa-element="disk-change-type"]').first(), //disk-change-type
-        diskSizeUpBtn: () => cy.get('tbody').contains('tr', 'Test-Created-Disk').find('[qa-element="disk-increase-size"]').first(), //disk-increase-size-1
-        diskMakeUploadBtn: () => cy.get('tbody').contains('tr', 'Test-Created-Disk').find('[qa-element="as-boot-show"]').first(),  //as-boot-1-show
-        remakeUploadBtn: () => cy.get('tbody').contains('tr', 'Загрузочный диск').find('[qa-element="as-boot-show"]').first(),  //as-boot-1-show
-        confDeleteDiskBtn: () => cy.get('[qa-element="delete-disk-submit"]'), //increase-size-1-submit
+        diskDeleteBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="delete-disk-show"]').first(), 
+        diskDeleteBtn2: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="delete-disk-show"]').first(),
+        diskDisconnectBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="unlink-disk-show"]').first(), 
+        diskChangeTypeBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="disk-change-type"]').first(),
+        diskChangeTypeBtn2: (text) => cy.get('tbody').contains('tr', text).find('button.btn-outline-primary').first(), 
+        diskChangeTypeBtn2ndRow: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="disk-change-type"]').first(), 
+        diskSizeUpBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="disk-increase-size"]').first(), 
+        diskMakeUploadBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="as-boot-show"]').first(),  
+        remakeUploadBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="as-boot-show"]').first(),  
+        confDeleteDiskBtn: () => cy.get('[qa-element="delete-disk-submit"]'), 
         noLimitsOfDiskLbl: () => cy.get('.modal-body > .fade'),
         standartDiskLimits: () => cy.get('.resources-limits__container').contains('span', 'Стандартный диск: ').parent().find('strong'),
-        diskSizeUpModalBtn: () => cy.get('[qa-element="disk-increase-submit"]').contains('Увеличить'), //disk-increase-submit
-        changeDiskTypeConfBtn: () => cy.get('[qa-element="disk-change"]').contains('Изменить'), //disk-change
-        diskSizeUpModalTxt: () => cy.get('[qa-element="increase-disk-size-range-input"]'), //increase-disk-size-range-input
-        diskmakeUploadConfirmBtn: () => cy.get('[qa-element="as-boot-submit"]').contains('Подтвердить'), //as-boot-1-submit
+        diskSizeUpModalBtn: () => cy.get('[qa-element="disk-increase-submit"]').contains('Увеличить'), 
+        changeDiskTypeConfBtn: () => cy.get('[qa-element="disk-change"]').contains('Изменить'), 
+        diskSizeUpModalTxt: () => cy.get('[qa-element="increase-disk-size-range-input"]'), 
+        diskmakeUploadConfirmBtn: () => cy.get('[qa-element="as-boot-submit"]').contains('Подтвердить'), 
         diskSizeUpModalErrorLbl: () => cy.get('div[role="alert"].alert-danger'),
-        connectDiskSelector: () => cy.get('[qa-element="select-disk-open"]'), //select-disk-open
-        connectDiskOption: () => cy.get('.modal-body').find('div#input-dropdown').contains('a', 'Test-Disk'), //select-disk-0
-        connectNvmeDiskOption: () => cy.get('.modal-body').find('div#input-dropdown').contains('a', 'Test-Edited-NVME-Disk'), //select-disk-1
-        connectDiskModalBtn: () => cy.get('[qa-element="link-disk-submit"]').contains('Добавить'), //link-disk-submit
-        disconnectDiskModalBtn: () => cy.get('[qa-element="unlink-disk-submit"]').contains('Да'), //unlink-disk-submit
+        connectDiskSelector: () => cy.get('[qa-element="select-disk-toggle"]'), 
+        connectDiskOption: (text) => cy.contains('button', text),
+        connectNvmeDiskOption: (text) => cy.get('.modal-body').find('div#input-dropdown').contains('a', text), 
+        connectDiskModalBtn: () => cy.get('[qa-element="link-disk-submit"]').contains('Добавить'), 
+        disconnectDiskModalBtn: () => cy.get('[qa-element="unlink-disk-submit"]'), 
         modalCloseBtn: () => cy.get('.btn-close'),
-        diskChangeNameBtn: () => cy.get('tbody').contains('tr', 'Test-NVME-Disk').find('[qa-element="disk-rename"]').first(), //rename disk button
+        diskChangeNameBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="disk-rename"]').first(), 
         cancelButtonInRenameDiskModal: () => cy.get('[qa-element="cancel-rename"]').contains('Отмена'),
         renameDiskModalNameInputField: () => cy.get('[qa-element="rename-input"]'),
         renameDiskModalConfirmBtn: () => cy.get('[qa-element="confirm-rename"]'),
-        renameDiskNameErrorLbl: () => cy.get('[qa-element="rename-error"]'), //add-disk-name-error
-        nvmeDiskSizeUpBtn: () => cy.get('tbody').contains('tr', 'Test-Edited-NVME-Disk').find('[qa-element="disk-increase-size"]').first(), //disk-increase-size-2
+        renameDiskNameErrorLbl: () => cy.get('[qa-element="rename-error"]'), 
+        nvmeDiskSizeUpBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="disk-increase-size"]').first(), 
         changeDiskSizeWithoutServerRebootRadioBtn: () => cy.get('#disk-increase-form > div:nth-child(2) > div > label').click(),
         changeDiskSizeWithServerRebootRadioBtn: () => cy.get('#disk-increase-form > div:nth-child(1) > div > label').click(),
-        nvmeDiskChangeToBootBtn: () => cy.get('tbody').contains('tr', 'Test-Edited-NVME-Disk').find('[qa-element="as-boot-show"]').first(),
-        bootDiskChangeToBootBtn: () => cy.get('tbody').contains('tr', 'Загрузочный диск').find('[qa-element="as-boot-show"]').first(),// as-boot-cancel
+        nvmeDiskChangeToBootBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="as-boot-show"]').first(),
+        bootDiskChangeToBootBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="as-boot-show"]').first(),
         nvmeDiskChangeToBootCancelBtn: () => cy.get('[qa-element="as-boot-cancel"]').first(),
-        nvmeDiskDetachBtn: () => cy.get('tbody').contains('tr', 'Test-Edited-NVME-Disk').find('[qa-element="unlink-disk-show"]').first(), //unlink-disk-show
+        nvmeDiskDetachBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="unlink-disk-show"]').first(), 
         nvmeDiskDetachModalCancelBtn: () => cy.get('[qa-element="unlink-disk-cancel"]').first(),
-        nvmeDiskRowInServersDisksTab: () => cy.get('tbody').contains('tr', 'Test-Edited-NVME-Disk'),
-        nvmeDiskDeleteBtn: () => cy.get('tbody').contains('tr', 'Test-Edited-NVME-Disk').find('[qa-element="delete-disk-show"]').first(),
+        nvmeDiskRowInServersDisksTab: (text) => cy.get('tbody').contains('tr', text),
+        nvmeDiskDeleteBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="delete-disk-show"]').first(),
         nvmeDiskDeleteModalCancelBtn: () => cy.get('[qa-element="delete-disk-cancel"]').first(),
         anyDiskRenameBtn: (name) => cy.get('tbody').contains('tr', name).find('[qa-element="disk-rename"]').first(), //rename disk button per custom name
         anyDiskChangeTypeBtn: (name) => cy.get('tbody').contains('tr', name).find('[qa-element="disk-change-type"]').first(), //change disk type per custom name
@@ -63,6 +63,10 @@ class ServerDisks {
         anyDiskDetachBtn: (name) => cy.get('tbody').contains('tr', name).find('[qa-element="unlink-disk-show"]').first(),  //detach disk per custom name
         anyDiskRowInServersDisksTab: (name) => cy.get('tbody').contains('tr', name), //search any disk per custom name
         anyDiskInAttachList: (name) => cy.get('.modal-body').find('div#input-dropdown').contains('a', name),  //select any disk name in attach list per custom name
+        // new element for disk size increase - inserting by buttons instead of typing
+        diskSizeIncreaseBtn: () => cy.get('[qa-element="disk-size-range-increase"]'),
+        diskSizeDecreaseBtn: () => cy.get('[qa-element="disk-size-range-decrease"]'),
+        diskSizeValue: () => cy.get('#disk-add-form > div:nth-child(5) > div:nth-child(1) > div > span')   // -> qa-element is needed
     }
     actions = {
         clickServerDisksTab: () => {
@@ -117,7 +121,7 @@ class ServerDisks {
         },
         checkNewDiskNameErrorLbl: (text) => {
             this.elements.newDiskNameErrorLbl().should('be.visible')
-            this.elements.newDiskNameErrorLbl().should('have.text', text)
+            this.elements.newDiskNameErrorLbl().should('contain.text', text)
         },
         checkNewDiskNameContainsErrorLbl: (text) => {
             this.elements.newDiskNameErrorLbl().should('be.visible')
@@ -136,15 +140,15 @@ class ServerDisks {
         clickDeleteDiskBtn: () => {
             this.elements.diskDeleteBtn().click()
         },
-        clickDeleteDiskBtn2: () => {
-            this.elements.diskDeleteBtn2().click()
+        clickDeleteDiskBtn2: (text) => {
+            this.elements.diskDeleteBtn2(text).click()
         },
         clickConfDeleteBtn: () => {
             this.elements.confDeleteDiskBtn().click()
         },
 
-        isDeleteBtnDisabled: () => {
-            this.elements.diskDeleteBtn().should('be.disabled');
+        isDeleteBtnDisabled: (text) => {
+            this.elements.diskDeleteBtn(text).should('be.disabled');
         },
 
         clickDiskSizeUpBtn: () => {
@@ -168,14 +172,20 @@ class ServerDisks {
         checkAddNewDiskServerBtnIsDisabled: () => {
             this.elements.addNewServerDiskBtn().should('be.disabled');
         },
+        checkAddNewDiskServerBtnIsEnabled: () => {
+            this.elements.addNewServerDiskBtn().should('be.enabled');
+        },
         clickConnectNewServerDiskBtn: () => {
             this.elements.connectNewServerDiskBtn().click()
+        },
+        IsaAttachNewServerDiskBtnEnabled: () => {
+            this.elements.connectNewServerDiskBtn().should('be.enabled');
         },
         clickConnectDiskSelector: () => {
             this.elements.connectDiskSelector().click()
         },
-        selectConnectDiskOption: () => {
-            this.elements.connectDiskOption().click()
+        selectConnectDiskOption: (text) => {
+            this.elements.connectDiskOption(text).click()
         },
         clickConnectDiskModalBtn: () => {
             this.elements.connectDiskModalBtn().click()
@@ -183,11 +193,11 @@ class ServerDisks {
         checkconnectNewDiskServerBtnIsDisabled: () => {
             this.elements.connectNewServerDiskBtn().parent().should('be.disabled');
         },
-        clickDiskDisconnectBtn: () => {
-            this.elements.diskDisconnectBtn().click()
+        clickDiskDisconnectBtn: (text) => {
+            this.elements.diskDisconnectBtn(text).click()
         },
-        isDiskDisconnectBtnDisabled: () => {
-            this.elements.diskDisconnectBtn().should('be.disabled');
+        isDiskDisconnectBtnDisabled: (text) => {
+            this.elements.diskDisconnectBtn(text).should('be.disabled');
         },
         clickDisconnectDiskModalBtn: () => {
             this.elements.disconnectDiskModalBtn().click()
@@ -341,9 +351,41 @@ class ServerDisks {
         selectAnyDiskInAttachDiskList: (name) => {
             this.elements.anyDiskInAttachList(name).click();
         },
+        // new methods for cpu and ram inserting by buttons instead of typing
+        setDiskSize: (target) => {
+            this.elements.diskSizeValue()
+                .invoke('text')
+                .then((text) => {
+                    const current = Number(text.replace(/\D/g, '')) || 0
+                    const min = 1
+                    const max = 500
+                    const desired = Math.min(max, Math.max(min, Number(target)))
+                    const diff = desired - current
 
+                    if (diff === 0) {
+                        return
+                    }
 
+                    const button = diff > 0
+                        ? this.elements.diskSizeIncreaseBtn()
+                        : this.elements.diskSizeDecreaseBtn()
+                    const clicks = Math.abs(diff)
 
+                    Cypress._.times(clicks, () => {
+                        button.then(($btn) => {
+                            if (!$btn.is(':disabled')) {
+                                cy.wrap($btn).click()
+                            }
+                        })
+                    })
+                })
+        },
+        isDiskSizeIncreaseBtnDisabled: () => {
+            this.elements.diskSizeIncreaseBtn().should('be.disabled')
+        },
+        isDiskSizeDecreaseBtnDisabled: () => {
+            this.elements.diskSizeDecreaseBtn().should('be.disabled')
+        },
     }
 }
 

@@ -175,3 +175,5 @@ describe('4.Servers - Configuration tab', () => {
     //     configuration_page.actions.clickEditServerNameBtnDisabled()
     // })
 })
+
+// Test-Server remains Stopped after above tests
