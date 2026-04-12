@@ -1,9 +1,7 @@
-
-
 class Server {
 
     elements = {
-        serversPageLbl: () => cy.get('#root > div > header > nav > h1'),
+        serversPageLbl: () => cy.get('[qa-element="vm-table"]'),
         createServerPageLbl: () => cy.get('[qa-element="vm-create"]'),
         createServerBtn: () => cy.get('[qa-element="to-create-vm"]'),
         modalWindow: () => cy.get('.modal-body'),

@@ -1,32 +1,36 @@
+const { fr } = require("@faker-js/faker");
+
 class LocalNetworks {
     elements = {
-        click_serverDetailLbl: () => cy.get('.selectable > :nth-child(1)'),
+        click_serverDetailLbl: () => cy.get('[qa-element="vm-table"]'),
         server_searchTxt: () => cy.get('[qa-element="search-input"]'),
-        server_localNetworkTxt: () => cy.get('.navbar-custom__nav > :nth-child(3)'),
+        server_localNetworkTxt: () => cy.get('[qa-element="tab-2"]'),
         networks_addNetworkBtn: () => cy.get('[qa-element="show-link-modal"]'),
-        network_selectList: () => cy.get('[qa-element="local-network-id-open"]'),
-        network_selectIpTxt: (name) => cy.contains(name),
+        network_selectList: () => cy.get('[qa-element="local-network-id-toggle"]'),
+        server_ipList: () => cy.get('[qa-element="free-ip-address-toggle"]'),
+        server_ipListSearchField: () => cy.get('[qa-element="dropdown-search"]'),
+        server_ipNothingFoundText: (text) => cy.contains(text),  // qa-element is needed here
+        network_selectIpTxt: (text) => cy.get('button[qa-element^="local-network-id-"]').filter(':visible').contains(text),
         network_selectInValidIpTxt: () => cy.contains('Test_IP'),
         network_addNetworkSuccess: () => cy.get('[qa-element="network-link-submit"]'),
-        network_deleteBtn: () => cy.get('[qa-element="network-unlink"]'),
+        network_detachBtn: () => cy.get('[qa-element="network-unlink"]'),
         network_confirmCheckbox: () => cy.get('[qa-element="vm-confirm-reboot"]'),
         network_deleteConfirmNetworks: () => cy.get('[qa-element="network-unlink-submit"]'),
         network_editBtn: () => cy.get('[qa-element="network-edit"]'),
-        network_withoutRebootLbl: () => cy.get('#reboot'),
+        network_withoutRebootLbl: () => cy.get('[qa-element="reboot"]'),
         network_closedModalBtn: () => cy.get('.btn-close'),
         network_serverIpInp: () => cy.get('[qa-element="free-ip-address"]'),
         network_serverIpInvalidMessage: () => cy.get('[qa-element="local-network-id-error"]'),
-        network_editServerIpInp: () => cy.get('[qa-element="free-ip-address"]'),
-        network_verifiedSuccessCheckbox: () => cy.get('#confirm-reboot'),
+        network_editServerIpInp: () => cy.get('[qa-element="free-ip-address-toggle"]'),
+        network_verifiedSuccessCheckbox: () => cy.get('[qa-element="network-edit-reboot"]'),
         network_saveEditIpBtn: () => cy.get('[qa-element="network-edit-submit"]'),
         network_IpInValidMessageTxt: () => cy.get('[qa-element="free-ip-address-error"]'),
         network_actionsSelectBtn: () => cy.get('[qa-element="vm-action"]'),
         network_actionsServerIpTxt: () => cy.get('[qa-element="free-ip-address-7"]'),
         network_clickModalTxt1: () => cy.get('.modal-title'),
-        network_lblSelect: () => cy.get('qa-element="free-ip-address-0"')
-// qa-element="free-ip-address"
-// qa-element="free-ip-address-0"
+        network_lblSelect: () => cy.get('[qa-element="free-ip-address-0"]')
     }
+
     actions = {
         checkServerStatusStopped3: () => {
             cy.wait('@serverStatusStopped3', { timeout: 10000 }).then((interception) => {
@@ -73,6 +77,9 @@ class LocalNetworks {
         clickSelectListNetwork: () => {
             this.elements.network_selectList().click()
         },
+        clickSelectServerIpAddress: () => {
+            this.elements.server_ipList().click()
+        },
         isVisibleNetworkIp: (name) => {
             this.elements.network_selectIpTxt(name).should("be.visible")
         },
@@ -87,12 +94,15 @@ class LocalNetworks {
         },
         clickAddNetworkSuccessBtn: () => {
             this.elements.network_addNetworkSuccess().click();
+        }, 
+        IsAddNetworkSuccessBtn: () => {
+            this.elements.network_addNetworkSuccess().should('be.disabled');
         },        
-        isVisibleNetworkDeleteBtn: () => {
-            this.elements.network_deleteBtn().should("be.visible")
+        isVisibleNetworkDetachBtn: () => {
+            this.elements.network_detachBtn().should("be.visible")
         },
-        clickDeleteNetworkBtn: () => {
-            this.elements.network_deleteBtn().click()
+        clickDetachNetworkBtn: () => {
+            this.elements.network_detachBtn().click()
         },
         clickConfirmCheckbox: () => {
             this.elements.network_confirmCheckbox().click()
@@ -103,11 +113,11 @@ class LocalNetworks {
         isNotVisibleNetworkEditeBtn: () => {
             this.elements.network_editBtn().should("not.exist");
         },
-        clickNetworkWithoutRebootBtn: () => {
+        clickNetworkWithRebootBtn: () => {
             this.elements.network_withoutRebootLbl().click()
         },
-        isNotVisibleNetworkIpTxt: () => {
-            this.elements.network_selectIpTxt().should("not.be.visible");
+        isNotVisibleNetworkIpTxt: (text) => {
+            this.elements.network_selectIpTxt(text).should("not.be.visible");
         },
         clickClosedModalBtn1: () => {
             this.elements.network_closedModalBtn({ multiple: true }).last().click({ force: true });
@@ -125,7 +135,7 @@ class LocalNetworks {
             this.elements.network_editServerIpInp().should("be.visible")
         },
         enterEditIpServerNetworkTxt: (text) => {
-            this.elements.network_editServerIpInp().clear({ force: true }).type(text)
+            this.elements.network_editServerIpInp().clear().type(text)
         },
         enterEditIpServerNetworkTxt2: () => {
             this.elements.network_lblSelect().click()
@@ -159,8 +169,14 @@ class LocalNetworks {
         },
         clickModalCloseTxtBtn: () => {
             this.elements.network_clickModalTxt1().click()
-        }
-        
+        },
+        typeToSearchIpAddressField: (text) => {
+            this.elements.server_ipListSearchField().click()
+            this.elements.server_ipListSearchField().clear().type(text)
+        },
+        isVisibleServerIpNotFoundText: (text) => {
+            this.elements.server_ipNothingFoundText(text).should("be.visible")
+        },
     }
 }
 
