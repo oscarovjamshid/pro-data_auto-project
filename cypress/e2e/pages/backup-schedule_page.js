@@ -1,9 +1,10 @@
 class BackupSchedule {
     elements = {
-        backupSchedule_navigatePageTxt: () => cy.get('[qa-element="tab-5"]'),
+        backupsTab: () => cy.get('[qa-element="tab-3"]'),
+        backupScheduleTab: () => cy.get('[qa-element="backup-type-1"]'),
         backupSchedule_AddScheduleBtn: () => cy.get('[qa-element="add-schedule"]'),
-        backupSchedule_dataLbl: () => cy.get('[qa-element="cron-period-open"]'),
-        backupSchedule_timeLbl: () => cy.get('[qa-element="cron-period-0"]'),
+        backupSchedule_dataLbl: () => cy.get('[qa-element="cron-period-toggle"]'),
+        backupSchedule_hourlyLbl: () => cy.get('[qa-element="cron-period-0"]'),
         backupSchedule_verificationBtn: () => cy.get('[qa-element="backup-create"]'),
         backupSchedule_deleteBtn: () => cy.get('[qa-element="delete-schedule-show"]').first(),
         backupSchedule_deleteVerificationBtn: () => cy.get('[qa-element="delete-schedule-submit"]'),
@@ -18,12 +19,14 @@ class BackupSchedule {
         backupSchedule_lastSelectMonthLbl: () => cy.get('[qa-element="day-of-month-option-0"]'),
         backupSchedule_clickYearDataLbl: () => cy.get('[qa-element="month-option-open"]'),
         backupSchedule_SelectMonthDataLbl: () => cy.get('[qa-element="month-option-4"]'),
-        scheduleErrorTxt: () => cy.get('[qa-element="schedule-name-error"]'),
+        scheduleErrorTxt: () => cy.get('[qa-element="schedule-name-error"]'), // in panel, currently there is no qa-element, we need to add
+        lastMonthArrowBtnInCalendar: () => cy.get('[qa-element="previous-month"]'),
 
     }
     actions = {
-        clickBackupScheduleTxt: () => {
-            this.elements.backupSchedule_navigatePageTxt().click()
+        clickBackupScheduleTab: () => {
+            this.elements.backupsTab().click()
+            this.elements.backupScheduleTab().click()
         },
         isVisibleAddScheduleBtn: () => {
             this.elements.backupSchedule_AddScheduleBtn().should("be.visible")
@@ -34,8 +37,8 @@ class BackupSchedule {
         clickBackupScheduleDataInp: () => {
             this.elements.backupSchedule_dataLbl().click()
         },
-        clickBackupScheduleTime: () => {
-            this.elements.backupSchedule_timeLbl().click()
+        clickBackupHourlyScheduleTime: () => {
+            this.elements.backupSchedule_hourlyLbl().click()
         },
         clickBackupscheduleVerificationBtn: () => {
             this.elements.backupSchedule_verificationBtn().click()
@@ -54,16 +57,16 @@ class BackupSchedule {
         isNotVisibleBackupScheduleDeleteBtn: () => {
             this.elements.backupSchedule_verificationBtn().should("not.exist")
         },
-        clickBackupScheduleDay: () => {
+        clickBackupScheduleDaily: () => {
             this.elements.backupSchedule_dayLbl().click()
         },
-        clickBackupScheduleWeek: () => {
+        clickBackupScheduleWeekly: () => {
             this.elements.backupSchedule_weekLbl().click()
         },
-        clickBackupScheduleMonth: () => {
+        clickBackupScheduleMonthly: () => {
             this.elements.backupSchedule_monthLbl().click()
         },
-        clickBackupScheduleYear: () => {
+        clickBackupScheduleYearly: () => {
             this.elements.backupSchedule_yearLbl().click()
         },
         IsNotClickDisabledBtn: () => {
@@ -92,7 +95,10 @@ class BackupSchedule {
         },
         isVisibleScheduleErrorText: () => {
             this.elements.scheduleErrorTxt().should('be.visible')
-        }
+        },
+        clickLastMonthCalendarArrowBtn: () => {
+            this.elements.lastMonthArrowBtnInCalendar().click()
+        },
     }
 }
 module.exports = new BackupSchedule()
