@@ -3,13 +3,13 @@ class ServerActions {
         serverActionsBtn: () => cy.get('[qa-element="vm-action"]'), //vm-action
         serverStatusLbl: () => cy.get('[qa-element="vm-status"]'), //vm-status-badge
 
-        serverStartBtn: () => cy.get('[qa-element="vm-action-0"]').contains('Запуск'), //vm-action-0
-        serverTurnOffBtn: () => cy.get('[qa-element="vm-action-5"]').contains('Выключить'), //vm-action-5
-        serverStopBtn: () => cy.get('[qa-element="vm-action-6"]').contains('Остановить'), //vm-action-6
-        serverRestartBtn: () => cy.get('[qa-element="vm-action-1"]').contains('Перезагрузить'),//vm-action-1
-        serverPauseBtn: () => cy.get('[qa-element="vm-action-2"]').contains('Пауза'), //vm-action-2
-        serverResumeBtn: () => cy.get('[qa-element="vm-action-4"]').contains('Возобновить'), //vm-action-4
-        serverHibernationBtn: () => cy.get('[qa-element="vm-action-3"]').contains('Гибернация'), //vm-action-3
+        serverStartBtn: () => cy.get('[qa-element="vm-action-0"]:visible').contains('Запуск'), //vm-action-0
+        serverTurnOffBtn: () => cy.get('[qa-element="vm-action-5"]:visible').contains('Выключить'), //vm-action-5
+        serverStopBtn: () => cy.get('[qa-element="vm-action-6"]:visible').contains('Остановить'), //vm-action-6
+        serverRestartBtn: () => cy.get('[qa-element="vm-action-1"]:visible').contains('Перезагрузить'),//vm-action-1
+        serverPauseBtn: () => cy.get('[qa-element="vm-action-2"]:visible').contains('Пауза'), //vm-action-2
+        serverResumeBtn: () => cy.get('[qa-element="vm-action-4"]:visible').contains('Возобновить'), //vm-action-4
+        serverHibernationBtn: () => cy.get('[qa-element="vm-action-3"]:visible').contains('Гибернация'), //vm-action-3
 
         serverRunningStatus: () => cy.get('[qa-element="vm-status"]').contains('В работе'),
         serverRestartingStatus: () => cy.get('[qa-element="vm-status"]').contains('Перезагружается'),
@@ -20,29 +20,29 @@ class ServerActions {
     }
     actions = {
         clickServerActionsBtn: () => {
-            this.elements.serverActionsBtn().click()
+            this.elements.serverActionsBtn().should('be.visible').click()
         },
 
         clickStartServerBtn: () => {
-            this.elements.serverStartBtn().click()
+            this.elements.serverStartBtn().should('be.visible').click()
         },
         clickStopServerBtn: () => {
-            this.elements.serverStopBtn().click()
+            this.elements.serverStopBtn().should('be.visible').click()
         },
         clickServerTurnOffBtn: () => {
-            this.elements.serverTurnOffBtn().click()
+            this.elements.serverTurnOffBtn().should('be.visible').click()
         },
         clickServerRestartBtn: () => {
-            this.elements.serverRestartBtn().click()
+            this.elements.serverRestartBtn().should('be.visible').click()
         },
         clickServerPauseBtn: () => {
-            this.elements.serverPauseBtn().click()
+            this.elements.serverPauseBtn().should('be.visible').click()
         },
         clickServerResumeBtn: () => {
-            this.elements.serverResumeBtn().click()
+            this.elements.serverResumeBtn().should('be.visible').click()
         },
         clickServerHibernationBtn: () => {
-            this.elements.serverHibernationBtn().click()
+            this.elements.serverHibernationBtn().should('be.visible').click()
         },
 
         isRunningServer: () => {

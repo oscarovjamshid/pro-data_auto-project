@@ -17,7 +17,7 @@ describe('5.Servers - Actions', () => {
         cy.viewport(1280, 720)
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
     })
-    it('[PD-96] Запуск', () => {
+    it('[PD-96] Start', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -29,7 +29,7 @@ describe('5.Servers - Actions', () => {
         serverAction_page.actions.clickStartServerBtn()
         serverAction_page.actions.checkStatus(25, 'В работе')
     })
-    it('[PD-97] Перезагрузить', () => {
+    it('[PD-97] Reboot', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -42,7 +42,7 @@ describe('5.Servers - Actions', () => {
         serverAction_page.actions.isRestartingServer()
         serverAction_page.actions.checkStatus(25, 'В работе')
     })
-    it('[PD-98] Пауза', () => {
+    it('[PD-98] Pause', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -54,7 +54,7 @@ describe('5.Servers - Actions', () => {
         serverAction_page.actions.clickServerPauseBtn()
         serverAction_page.actions.checkStatus(25, 'На паузе')
     })
-    it('[PD-100] Возобновить', () => {
+    it('[PD-100] Resume', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -66,7 +66,7 @@ describe('5.Servers - Actions', () => {
         serverAction_page.actions.clickServerResumeBtn()
         serverAction_page.actions.checkStatus(25, 'В работе')
     })
-    it('[PD-99] Гибернация', () => {
+    it('[PD-99] Hibernate', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -81,7 +81,7 @@ describe('5.Servers - Actions', () => {
         serverAction_page.actions.clickServerResumeBtn()
         serverAction_page.actions.checkStatus(8, 'В работе')
     })
-    it('[PD-101] Выключить', () => {
+    it('[PD-101] Shutdown', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -95,7 +95,7 @@ describe('5.Servers - Actions', () => {
 
         serverAction_page.actions.checkStatus(40, 'Остановлен')
     })
-    it('[PD-102] Остановить', () => {
+    it('[PD-102] Stop', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -111,6 +111,4 @@ describe('5.Servers - Actions', () => {
         serverAction_page.actions.checkStatus(25, 'Остановлен')
     })
 })
-
-
 // Test-Server remains Stopped after above tests

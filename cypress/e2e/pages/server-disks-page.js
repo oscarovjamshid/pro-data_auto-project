@@ -13,7 +13,7 @@ class ServerDisks {
         changeDiskTypeSSDBtn: () => cy.get('[qa-element="external-internal-1"]'),
         newDiskSizeTxt: () => cy.get('[qa-element="disk-size-range-input"]'),
         confirmNewDiskBtn: () => cy.get('[qa-element="add-disk"]'),
-        createdDiskTitleLbl: (text) => cy.get('table tbody[role="rowgroup"]').contains('tr', text),  // -> qa-element is needed
+        createdDiskTitleLbl: (text) => cy.get('table tbody[role="rowgroup"]').contains(text),  // -> qa-element is needed
         newDiskNameErrorLbl: () => cy.get('#disk-add-form > div:nth-child(1) > div:nth-child(3)'), // -> qa-element is needed
         newDiskSizeErrorLbl: (text) => cy.get('[qa-element="disk-size-range-error"]').contains(text),    
         newDiskSizeErrorLbl2: (text) => cy.get('[qa-element="increase-disk-size-range-error"]').contains(text),
@@ -29,7 +29,7 @@ class ServerDisks {
         confDeleteDiskBtn: () => cy.get('[qa-element="delete-disk-submit"]'), 
         noLimitsOfDiskLbl: () => cy.get('.modal-body > .fade'),
         standartDiskLimits: () => cy.get('.resources-limits__container').contains('span', 'Стандартный диск: ').parent().find('strong'),
-        diskSizeUpModalBtn: () => cy.get('[qa-element="disk-increase-submit"]').contains('Увеличить'), 
+        diskSizeUpModalBtn: () => cy.get('[qa-element="disk-increase-submit"]'), 
         changeDiskTypeConfBtn: () => cy.get('[qa-element="disk-change"]').contains('Изменить'), 
         diskSizeUpModalTxt: () => cy.get('[qa-element="increase-disk-size-range-input"]'), 
         diskmakeUploadConfirmBtn: () => cy.get('[qa-element="as-boot-submit"]').contains('Подтвердить'), 
@@ -39,15 +39,15 @@ class ServerDisks {
         connectNvmeDiskOption: (text) => cy.get('.modal-body').find('div#input-dropdown').contains('a', text), 
         connectDiskModalBtn: () => cy.get('[qa-element="link-disk-submit"]').contains('Добавить'), 
         disconnectDiskModalBtn: () => cy.get('[qa-element="unlink-disk-submit"]'), 
-        modalCloseBtn: () => cy.get('.btn-close'),
+        modalCloseBtn: () => cy.get('button[type="button"][class*="CloseButton"]').first(),
         diskChangeNameBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="disk-rename"]').first(), 
-        cancelButtonInRenameDiskModal: () => cy.get('[qa-element="cancel-rename"]').contains('Отмена'),
+        cancelButtonInRenameDiskModal: () => cy.get('button').contains('Отмена'),
         renameDiskModalNameInputField: () => cy.get('[qa-element="rename-input"]'),
         renameDiskModalConfirmBtn: () => cy.get('[qa-element="confirm-rename"]'),
         renameDiskNameErrorLbl: () => cy.get('[qa-element="rename-error"]'), 
         nvmeDiskSizeUpBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="disk-increase-size"]').first(), 
-        changeDiskSizeWithoutServerRebootRadioBtn: () => cy.get('#disk-increase-form > div:nth-child(2) > div > label').click(),
-        changeDiskSizeWithServerRebootRadioBtn: () => cy.get('#disk-increase-form > div:nth-child(1) > div > label').click(),
+        changeDiskSizeWithoutServerRebootRadioBtn: () => cy.get('[qa-element="manual-increase"]'),
+        changeDiskSizeWithServerRebootRadioBtn: () => cy.get('qa-element="auto-increase"]'),
         nvmeDiskChangeToBootBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="as-boot-show"]').first(),
         bootDiskChangeToBootBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="as-boot-show"]').first(),
         nvmeDiskChangeToBootCancelBtn: () => cy.get('[qa-element="as-boot-cancel"]').first(),
@@ -62,9 +62,10 @@ class ServerDisks {
         anyDiskMarkAsBootBtn: (name) => cy.get('tbody').contains('tr', name).find('[qa-element="as-boot-show"]').first(),  //mark disk as boot per custom name
         anyDiskDetachBtn: (name) => cy.get('tbody').contains('tr', name).find('[qa-element="unlink-disk-show"]').first(),  //detach disk per custom name
         anyDiskRowInServersDisksTab: (name) => cy.get('tbody').contains('tr', name), //search any disk per custom name
-        anyDiskInAttachList: (name) => cy.get('.modal-body').find('div#input-dropdown').contains('a', name),  //select any disk name in attach list per custom name
+        anyDiskInAttachList: (name) => cy.contains('button', name),  //select any disk name in attach list per custom name
         // new element for disk size increase - inserting by buttons instead of typing
         diskSizeIncreaseBtn: () => cy.get('[qa-element="disk-size-range-increase"]'),
+        nvmeDiskSizeIncreaseBtn: () => cy.get('[qa-element="increase-disk-size-range-increase"]'),
         diskSizeDecreaseBtn: () => cy.get('[qa-element="disk-size-range-decrease"]'),
         diskSizeValue: () => cy.get('#disk-add-form > div:nth-child(5) > div:nth-child(1) > div > span')   // -> qa-element is needed
     }
@@ -154,8 +155,11 @@ class ServerDisks {
         clickDiskSizeUpBtn: () => {
             this.elements.diskSizeUpBtn().click()
         },
-        clickDiskSizeUpModalBtn: () => {
+        clickDiskSaveBtnInChangesModal: () => {
             this.elements.diskSizeUpModalBtn().click()
+        },
+        IsDiskSubmitChangesBtnIsDisabled: () => {
+            this.elements.diskSizeUpModalBtn().should('be.disabled');
         },
         writeDiskSizeUpModalTxt: (size) => {
             this.elements.diskSizeUpModalTxt().clear()
@@ -238,8 +242,8 @@ class ServerDisks {
         clickDiskSizeUpModalBtn: () => {
             this.elements.diskSizeUpModalBtn().click();
         },
-        clickRenameDiskBtn: () => {
-            this.elements.diskChangeNameBtn().click();
+        clickRenameDiskBtn: (text) => {
+            this.elements.diskChangeNameBtn(text).click();
         },
         checkAddDiskBtnExists: () => {
             this.elements.addNewServerDiskBtn().should('be.visible')
@@ -268,8 +272,8 @@ class ServerDisks {
             this.elements.renameDiskNameErrorLbl().should('be.visible')
             this.elements.renameDiskNameErrorLbl().should('contain.text', text)
         },
-        clickNvmeIncreaseDiskSizeBtn: () => {
-            this.elements.nvmeDiskSizeUpBtn().click()
+        clickNvmeIncreaseDiskSizeBtn: (text) => {
+            this.elements.nvmeDiskSizeUpBtn().click(text)
         },
         clickWithServerRebootIncreaseDiskSizeBtn: () => {
             this.elements.changeDiskSizeWithServerRebootRadioBtn().click()
@@ -386,6 +390,9 @@ class ServerDisks {
         isDiskSizeDecreaseBtnDisabled: () => {
             this.elements.diskSizeDecreaseBtn().should('be.disabled')
         },
+        clickNvmeDiskSizeIncreaseBtn: () => {
+            this.elements.nvmeDiskSizeIncreaseBtn().click()
+        }
     }
 }
 

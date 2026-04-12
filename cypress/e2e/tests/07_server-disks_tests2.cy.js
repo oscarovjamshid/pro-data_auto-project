@@ -24,7 +24,7 @@ describe('7.Servers - Disks tab Part2', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/resourceMetaData`).as('resourcePrices');
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/disk/${configData.test_server_id}/linkDisk/${configData.test_disk_id}`).as('linkDisk');
     })
-    it("[PD-665] Создать NVME диск", () => { // Test Cases 665-700
+    it("[PD-665] Add NVME disk", () => { // Test Cases 665-700
         const diskName = "Test-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -38,10 +38,9 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.writeNewDiskNameTxt(diskName)
         serverDisksPage.actions.clickDiskTypeNVMEBtn()
         serverDisksPage.actions.clickConfirmNewDiskBtn()
-        //serverDisksPage.actions.checkCreateDiskAPI(diskName)
         serverDisksPage.actions.isVisibleCreatedDisk(diskName)
     })
-    it("[PD-689] Создать NVME диск (пустое называние)", () => {
+    it("[PD-689] Add NVME disk (empty name)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -55,22 +54,22 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickConfirmNewDiskBtn()
         serverDisksPage.actions.checkNewDiskNameErrorLbl("Обязательное поле")
     })
-    it("[PD-690] Создать NVME диск (математические символы)", () => {
-        cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickServersIcon()
-        server_page.actions.checkServerPageLbl()
-        serverlist_page.actions.searchServer(configData.test_server_name)
-        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
-        serverlist_page.actions.clickServerCard(configData.test_server_name)
-        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
-        serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickAddNewServerDiskBtn()
-        serverDisksPage.actions.clickDiskTypeNVMEBtn()
-        serverDisksPage.actions.writeNewDiskNameTxt("+_-().,*&^%$£")
-        serverDisksPage.actions.clickConfirmNewDiskBtn()
-        serverDisksPage.actions.checkNewDiskNameContainsErrorLbl("Неверное название")
-    })
-    it("[PD-691] Создать NVME диск (менее 3 символов)", () => {
+    // it("[PD-690] Add NVME disk (math symbols)", () => {               // This test is not actual as of now field was changed by toggles - no way inserting chars
+    //     cy.login(configData.base_url, configData.login, configData.password)
+    //     sidebar.actions.clickServersIcon()
+    //     server_page.actions.checkServerPageLbl()
+    //     serverlist_page.actions.searchServer(configData.test_server_name)
+    //     serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+    //     serverlist_page.actions.clickServerCard(configData.test_server_name)
+    //     serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
+    //     serverDisksPage.actions.clickServerDisksTab()
+    //     serverDisksPage.actions.clickAddNewServerDiskBtn()
+    //     serverDisksPage.actions.clickDiskTypeNVMEBtn()
+    //     serverDisksPage.actions.writeNewDiskNameTxt("+_-().,*&^%$£")
+    //     serverDisksPage.actions.clickConfirmNewDiskBtn()
+    //     serverDisksPage.actions.checkNewDiskNameContainsErrorLbl("Неверное название")
+    // })
+    it("[PD-691] Add NVME disk (less than 3 chars)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -85,7 +84,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickConfirmNewDiskBtn()
         serverDisksPage.actions.checkNewDiskNameContainsErrorLbl("Минимум 3 символа")
     })
-    it("[PD-692] Создать NVME диск (не латиница)", () => {
+    it("[PD-692] Add NVME disk (not Latin)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -100,7 +99,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickConfirmNewDiskBtn()
         serverDisksPage.actions.checkNewDiskNameContainsErrorLbl("Неверное название")
     })
-    it("[PD-693] Создать NVME диск (только цифры)", () => {
+    it("[PD-693] Add NVME disk (numbers only)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -115,7 +114,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickConfirmNewDiskBtn()
         serverDisksPage.actions.checkNewDiskNameContainsErrorLbl("Неверное название")
     })
-    it("[PD-694] Создать NVME диск — кнопка X", () => {
+    it("[PD-694] Add NVME disk — close button", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -128,7 +127,8 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickModalCloseBtn()
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
-    it("[PD-695] Изменить имя диска NVME - кнопка «Отмена»", () => {
+    it("[PD-695] Rename NVME disk - «Cancel» button", () => {
+        const diskName = "Test-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -137,11 +137,12 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickRenameDiskBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(diskName)
         serverDisksPage.actions.clickCancelBtnInRenameModal()
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
-    it("[PD-667] Изменить имя диска NVME (пустое называние)", () => {
+    it("[PD-667] Rename NVME disk (empty name)", () => {
+        const diskName = "Test-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -150,12 +151,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickRenameDiskBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(diskName)
         serverDisksPage.actions.clearTextInRenameDiskNameModal()
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn()  // just to wait for the error lbl to appear as of now there is no way to check it without this step
         serverDisksPage.actions.checkRenamedDiskNameErrorLbl("Обязательное поле")
     })
-    it("[PD-668] Изменить имя диска NVME (неизмененное называние)", () => {
+    it("[PD-668] Rename NVME disk (unchanged name)", () => {
+        const diskName = "Test-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -164,10 +167,11 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickRenameDiskBtn()
-        serverDisksPage.actions.isDisabledRenameDiskModalConfirmBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(diskName)
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
     })
-    it("[PD-669] Изменить имя диска NVME (математические символы)", () => {
+    it("[PD-669] Rename NVME disk (math symbols)", () => {
+        const diskName = "Test-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -176,12 +180,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickRenameDiskBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(diskName)
         serverDisksPage.actions.editDiskNameTxt("+_-().,*&^%$£")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn()  // just to wait for the error lbl to appear as of now there is no way to check it without this step
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
     })
-    it("[PD-670] Изменить имя диска NVME (менее 3 символов)", () => {
+    it("[PD-670] Rename NVME disk (less than 3 chars)", () => {
+        const diskName = "Test-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -190,12 +196,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickRenameDiskBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(diskName)
         serverDisksPage.actions.editDiskNameTxt("Ab")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn()  // just to wait for the error lbl to appear as of now there is no way to check it without this step
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Минимум 3 символа")
     })
-    it("[PD-671] Изменить имя диска NVME (не латиница)", () => {
+    it("[PD-671] Rename NVME disk (not Latin)", () => {
+        const diskName = "Test-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -204,12 +212,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickRenameDiskBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(diskName)
         serverDisksPage.actions.editDiskNameTxt("тест")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn()  // just to wait for the error lbl to appear as of now there is no way to check it without this step
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
     })
-    it("[PD-672] Изменить имя диска NVME (только цифры)", () => {
+    it("[PD-672] Rename NVME disk (numbers only)", () => {
+        const diskName = "Test-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -218,12 +228,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickRenameDiskBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(diskName)
         serverDisksPage.actions.editDiskNameTxt("123456")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn()  // just to wait for the error lbl to appear as of now there is no way to check it without this step
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
     })
-    it("[PD-666] Изменить имя диска NVME", () => {
+    it("[PD-666] Rename NVME disk (successfully)", () => {
+        const diskName = "Test-NVME-Disk"
         const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -233,12 +245,13 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickRenameDiskBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(diskName)
         serverDisksPage.actions.editDiskNameTxt(editedDiskName)
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.isVisibleCreatedDisk(editedDiskName)
     })
-    it("[PD-678] Увеличить NVME диск вручную - Без перезагрузки сервера", () => {
+    it.only("[PD-678] Increase NVME disk manually - Without server reboot", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
         const number = 20;
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -248,27 +261,26 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(editedDiskName)
         serverDisksPage.actions.clickWithoutServerRebootIncreaseDiskSizeBtn()
-        serverDisksPage.actions.writeDiskSizeUpModalTxt(number)
-        serverDisksPage.actions.clickDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.isVisibleCreatedDisk(number)
     })
-    it("[PD-680] Увеличить NVME диск вручную - Без перезагрузки сервера (математические символы)", () => {
-        cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickServersIcon()
-        server_page.actions.checkServerPageLbl()
-        serverlist_page.actions.searchServer(configData.test_server_name)
-        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
-        serverlist_page.actions.clickServerCard(configData.test_server_name)
-        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
-        serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
-        serverDisksPage.actions.clickWithoutServerRebootIncreaseDiskSizeBtn()
-        serverDisksPage.actions.writeDiskSizeUpModalTxt('+')
-        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
-    })
-    it("[PD-681] Увеличить NVME диск вручную - Без перезагрузки сервера (больше максимального лимита)", () => {
+    // it("[PD-680] Increase NVME disk manually - without server reboot (math symbols)", () => {   This test is not actual as of now field was changed by toggles - no way inserting chars
+    //     cy.login(configData.base_url, configData.login, configData.password)
+    //     sidebar.actions.clickServersIcon()
+    //     server_page.actions.checkServerPageLbl()
+    //     serverlist_page.actions.searchServer(configData.test_server_name)
+    //     serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+    //     serverlist_page.actions.clickServerCard(configData.test_server_name)
+    //     serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
+    //     serverDisksPage.actions.clickServerDisksTab()
+    //     serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+    //     serverDisksPage.actions.clickWithoutServerRebootIncreaseDiskSizeBtn()
+    //     serverDisksPage.actions.writeDiskSizeUpModalTxt('+')
+    //     serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+    // })
+    it.only("[PD-681] Increase NVME disk manually - Without server reboot (more than max limit)", () => {
         const number = 10000;
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -280,11 +292,11 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
         serverDisksPage.actions.clickWithoutServerRebootIncreaseDiskSizeBtn()
-        serverDisksPage.actions.writeDiskSizeUpModalTxt(number)
-        serverDisksPage.actions.clickDiskSizeUpModalBtn()
+        serverDisksPage.actions.setDiskSize(number)
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.checkNewDiskSizeErrorLbl2("Максимальный размер диска 1000 Гб. Для расширения ограничения обратитесь в техническую поддержку Pro-Data")
     })
-    it("[PD-682] Увеличить NVME диск вручную - Без перезагрузки сервера (0)", () => {
+    it.only("[PD-682] Increase NVME disk manually - Without server reboot (0)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -299,7 +311,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickDiskSizeUpModalBtn()
         serverDisksPage.actions.checkNewDiskSizeErrorLbl2('Неверное значение')
     })
-    it("[PD-673] Увеличить NVME диск автоматически - С перезагрузкой серверa", () => {
+    it("[PD-673] Increase NVME disk automatically - With server reboot", () => {
         const number = 30;
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -326,7 +338,7 @@ describe('7.Servers - Disks tab Part2', () => {
         }
         serverDisksPage.actions.isVisibleCreatedDisk(number)
     })
-    it("[PD-675] Увеличить NVME диск автоматически - С перезагрузкой серверa (математические символы)", () => {
+    it("[PD-675] Increase NVME disk automatically - With server reboot (math symbols)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -340,7 +352,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.writeDiskSizeUpModalTxt('+')
         serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
     })
-    it("[PD-676] Увеличить NVME диск автоматически - С перезагрузкой серверa (больше максимального лимита)", () => {
+    it("[PD-676] Increase NVME disk automatically - With server reboot (more than max limit)", () => {
         const number = 10000;
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -356,7 +368,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickDiskSizeUpModalBtn()
         serverDisksPage.actions.checkNewDiskSizeErrorLbl2("Максимальный размер диска 1000 Гб. Для расширения ограничения обратитесь в техническую поддержку Pro-Data")
     })
-    it("[PD-677] Увеличить NVME диск автоматически - С перезагрузкой серверa (0)", () => {
+    it("[PD-677] Increase NVME disk automatically - With server reboot (0)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -371,7 +383,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickDiskSizeUpModalBtn()
         serverDisksPage.actions.checkNewDiskSizeErrorLbl2('Неверное значение')
     })
-    it("[PD-696] Увеличение размерa NVME дискa — кнопка X", () => {
+    it("[PD-696] Increase NVME disk size — X button", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -384,7 +396,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickModalCloseBtn()
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
-    it("[PD-683] Пометить NVME диск как загрузочным", () => {
+    it("[PD-683] Mark NVME disk as bootable", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -398,7 +410,7 @@ describe('7.Servers - Disks tab Part2', () => {
         cy.wait(2000)
         serverDisksPage.actions.checkNvmeDiskChangedToBootDisk()
     })
-    it("[PD-686] Изменить NVME диск с загрузочного диска", () => {
+    it("[PD-686] Change NVME disk from boot disk", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -412,7 +424,7 @@ describe('7.Servers - Disks tab Part2', () => {
         cy.wait(2000)
         serverDisksPage.actions.checkBootDiskChangedToBootDisk()
     })
-    it("[PD-697] Пометить NVME диск как загрузочный -  кнопка «Отмена»", () => {
+    it("[PD-697] Mark NVME disk as bootable - Cancel button", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -426,7 +438,7 @@ describe('7.Servers - Disks tab Part2', () => {
         cy.wait(1000)
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
-    it("[PD-698] Отвязать NVME диск от ВМ - кнопка «Отмена»", () => {
+    it("[PD-698] Detach NVME disk from VM - Cancel button", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -440,7 +452,7 @@ describe('7.Servers - Disks tab Part2', () => {
         cy.wait(1000)
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
-    it("[PD-685] Отвязать NVME диск от ВМ", () => {
+    it("[PD-685] Detach NVME disk from VM", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -456,7 +468,7 @@ describe('7.Servers - Disks tab Part2', () => {
         sidebar.actions.clickDisksIcon()
         serverDisksPage.actions.checkNvmeDiskExists()
     })
-    it("[PD-701] Привязать NVME диск к BM - кнопка X", () => {
+    it("[PD-701] Connect NVME disk to BM - Close button", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -470,7 +482,7 @@ describe('7.Servers - Disks tab Part2', () => {
         cy.wait(1000)
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
-    it("[PD-687] Привязать NVME диск к BM", () => {
+    it("[PD-687] Connect NVME disk to VM", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -486,7 +498,7 @@ describe('7.Servers - Disks tab Part2', () => {
         cy.wait(1000)
         serverDisksPage.actions.checkNvmeDiskExists()
     })
-    it("[PD-700] Удалить NVME диск из BM - кнопка «Отмена»", () => {
+    it("[PD-700] Delete NVME disk from BM - Cancel button", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -500,7 +512,7 @@ describe('7.Servers - Disks tab Part2', () => {
         cy.wait(1000)
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
-    it("[PD-688] Удалить NVME диск из BM", () => {
+    it("[PD-688] Delete NVME disk from BM", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()

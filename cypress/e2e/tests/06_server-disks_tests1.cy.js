@@ -23,7 +23,7 @@ describe('6.Servers - Disks tab Part1', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/resourceMetaData`).as('resourcePrices');
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/disk/${configData.test_server_id}/linkDisk/${configData.test_disk_id}`).as('linkDisk');
     })
-    it("Добавить диск", () => {
+    it("Add new disk", () => {
         const diskName = "Test-Created-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -39,7 +39,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickConfirmNewDiskBtn()
         serverDisksPage.actions.isVisibleCreatedDisk(diskName)
     })
-    it("Добавить диск (неправильное называние)", () => {
+    it("Add new disk (invalid name)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -54,7 +54,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickConfirmNewDiskBtn()
         serverDisksPage.actions.checkNewDiskNameErrorLbl("Неверное название")
     })
-    it("Добавить диск (пустое называние)", () => {
+    it("Add new disk (empty name)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -68,7 +68,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickConfirmNewDiskBtn()
         serverDisksPage.actions.checkNewDiskNameErrorLbl("Обязательное поле")
     })
-    it("Добавить диск (Размер превышает лимит)", () => {
+    it("Add new disk (size exceeds limit)", () => {
         const diskName = faker.lorem.word() + Math.round(Math.random() * 10000)
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -84,7 +84,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.setDiskSize(600)
         serverDisksPage.actions.isDiskSizeIncreaseBtnDisabled()
     })
-    it("Добавить диск (Размер негативное число)", () => {
+    it("Add new disk (size is a negative number)", () => {
         const diskName = faker.lorem.word() + Math.round(Math.random() * 10000)
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -100,7 +100,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.setDiskSize(-100)
         serverDisksPage.actions.isDiskSizeDecreaseBtnDisabled()
     })
-    // it("Добавить диск (Размер математические символы)", () => {              //This test is not actual anymore as field turned into toggle btn - no way inserting chars
+    // it("Add new disk (size contains math symbols)", () => {              //This test is not actual anymore as field turned into toggle btn - no way inserting chars
     //     const diskName = faker.lorem.word() + Math.round(Math.random() * 10000)
     //     cy.login(configData.base_url, configData.login, configData.password)
     //     sidebar.actions.clickServersIcon()
@@ -117,7 +117,7 @@ describe('6.Servers - Disks tab Part1', () => {
     //     serverDisksPage.actions.clickConfirmNewDiskBtn()
     //     serverDisksPage.actions.checkNewDiskSizeErrorLbl("Вне пределов допустимого лимита")
     // })
-    it("Удалить диск (когда сервер не остановлен)", () => {
+    it("Delete disk (when server is not stopped)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -131,7 +131,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.isDeleteBtnDisabled("Test-Created-Disk")
     })
-    it("Добавить диск (когда сервер не остановлен)", () => {
+    it("Add new disk (when server is not stopped)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -142,7 +142,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.checkAddNewDiskServerBtnIsEnabled()
     })
-    it("Привязать Диск (для этого должен быть в наличии свободный глобальный диск)", () => {
+    it("Attach disk (for this any global disk must be available)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -160,7 +160,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickConnectDiskModalBtn()
         serverDisksPage.actions.isVisibleCreatedDisk(configData.test_disk)
     })
-    it("Привязать диск когда сервер не остановлен", () => {
+    it("Attach disk when server is not stopped", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -174,7 +174,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverAction_page.actions.checkStatus(12, 'В работе')
         serverDisksPage.actions.IsaAttachNewServerDiskBtnEnabled()
     })
-    it("Отвязать диск когда сервер не остановлен", () => {
+    it("Detach disk when server is not stopped", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -186,7 +186,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverAction_page.actions.isRunningServer()
         serverDisksPage.actions.isDiskDisconnectBtnDisabled(configData.test_disk)
     })
-    it("Отвязать диск и убедиться, что он появился в разделе глобальных дисков", () => {
+    it("Detach disk and ensure it appears in the global disks page", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -241,19 +241,24 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickAnyDiskChangeNameBtn("HDD-5")
         serverDisksPage.actions.clearTextInRenameDiskNameModal("")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickChangeDiskTypeHDDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Обязательное поле")
         serverDisksPage.actions.editDiskNameTxt("1234")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickChangeDiskTypeHDDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
         serverDisksPage.actions.editDiskNameTxt("!?/@,.#")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickChangeDiskTypeHDDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
         serverDisksPage.actions.editDiskNameTxt("ab")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickChangeDiskTypeHDDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Минимум 3 символа")
         serverDisksPage.actions.editDiskNameTxt("//йцйуф")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.IsDiskSubmitChangesBtnIsDisabled()
+        serverDisksPage.actions.clickChangeDiskTypeHDDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
     })
     it("[PD-705] Renaming any HDD disk out of 10 (successful)", () => {
@@ -267,7 +272,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickAnyDiskChangeNameBtn("HDD-5")
         serverDisksPage.actions.editDiskNameTxt("HDD-55")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.checkDiskUnderThisNameExists("HDD-55")
     })
     it("[PD-714] Changing any HHD disk out of 10 to SSD type", () => {
@@ -279,12 +284,12 @@ describe('6.Servers - Disks tab Part1', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickAnyDiskChangeTypeBtn("HDD-55")
+        serverDisksPage.actions.clickAnyDiskChangeNameBtn("HDD-5")
         serverDisksPage.actions.clickChangeDiskTypeSSDBtn()
-        serverDisksPage.actions.clickChangeDiskTypeConfBtn()
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         cy.wait(3000)
     })
-    it("[PD-728] Marking any HDD disk out of 10 as a Boot Disk", () => {
+    it("[PD-728] Marking any HDD disk out of 10 as a Boot Disk(then correcting back to original)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -397,19 +402,24 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickAnyDiskChangeNameBtn("SSD-5")
         serverDisksPage.actions.clearTextInRenameDiskNameModal("")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickChangeDiskTypeSSDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Обязательное поле")
         serverDisksPage.actions.editDiskNameTxt("1234")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickChangeDiskTypeSSDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
         serverDisksPage.actions.editDiskNameTxt("!?/@,.#")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickChangeDiskTypeSSDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
         serverDisksPage.actions.editDiskNameTxt("ab")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickChangeDiskTypeSSDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Минимум 3 символа")
         serverDisksPage.actions.editDiskNameTxt("//йцйуф")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickChangeDiskTypeSSDBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
     })
     it("[PD-706] Renaming any SSD disk out of 10 (successful)", () => {
@@ -423,7 +433,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickAnyDiskChangeNameBtn("SSD-5")
         serverDisksPage.actions.editDiskNameTxt("SSD-55")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.checkDiskUnderThisNameExists("SSD-55")
     })
     it("[PD-715] Changing any SSD disk out of 10 to HDD type", () => {
@@ -435,12 +445,12 @@ describe('6.Servers - Disks tab Part1', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickAnyDiskChangeTypeBtn("SSD-55")
+        serverDisksPage.actions.clickAnyDiskChangeNameBtn("SSD-55")
         serverDisksPage.actions.clickChangeDiskTypeHDDBtn()
-        serverDisksPage.actions.clickChangeDiskTypeConfBtn()
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         cy.wait(3000)
     })
-    it("[PD-729] Marking any SSD disk out of 10 as a Boot Disk", () => {
+    it("[PD-729] Marking any SSD disk out of 10 as a Boot Disk (then correcting back to original)", () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -553,19 +563,24 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickAnyDiskChangeNameBtn("NVME-5")
         serverDisksPage.actions.clearTextInRenameDiskNameModal("")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Обязательное поле")
         serverDisksPage.actions.editDiskNameTxt("1234")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
         serverDisksPage.actions.editDiskNameTxt("!?/@,.#")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
         serverDisksPage.actions.editDiskNameTxt("ab")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Минимум 3 символа")
         serverDisksPage.actions.editDiskNameTxt("//йцйуф")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+        serverDisksPage.actions.clickNvmeDiskSizeIncreaseBtn() // just to tap some button and trigger validation error messages, otherwise they are not visible
         serverDisksPage.actions.checkRenamedDiskNameContainsErrorLbl("Неверное название")
     })
     it("[PD-707] Renaming any NVME disk out of 10 (successful)", () => {
@@ -579,7 +594,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickAnyDiskChangeNameBtn("NVME-5")
         serverDisksPage.actions.editDiskNameTxt("NVME-55")
-        serverDisksPage.actions.clickConfirmBtnInRenameModal()
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.checkDiskUnderThisNameExists("NVME-55")
     })
     it("[PD-730] Marking any NVME disk out of 10 as a Boot Disk", () => {
@@ -659,5 +674,6 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.elements.diskListItems().should('not.contain.text', 'NVME');   // Final check: make sure no NVME disks remain
     })
 })
+// Test-Server remains Stopped after above tests
 
 

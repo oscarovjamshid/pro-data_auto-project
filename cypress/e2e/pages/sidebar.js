@@ -1,15 +1,15 @@
 class SideBar {
     elements = {
         servers_icon: () => cy.get('[qa-element="nav_link_servers"]'), 
-        networks_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-networks"]'), //sidemenu-nav-services-sublink-services-networks
-        load_balance_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-loadbalancers"]'), //sidemenu-nav-services-sublink-services-loadbalancers
+        networks_icon: () => cy.get('[qa-element="nav_link-networks"]'), //sidemenu-nav-services-sublink-services-networks
+        load_balance_icon: () => cy.get('[qa-element="nav_link_loadbalancers"]'), //sidemenu-nav-services-sublink-services-loadbalancers
         disks_icon: () => cy.get('[qa-element="nav_link_disks"]'), //sidemenu-nav-services-sublink-services-disks 
-        securityGroups_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-security-groups"]'),
-        customOS_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-templates"]'), //sidemenu-nav-services-sublink-services-templates
-        object_storage_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-storage"]'), //sidemenu-nav-services-sublink-services-templates
-        managed_kubernetes_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-clusters"]'), //sidemenu-nav-services-sublink-services-clusters
-        userCredentials_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings"]'), //user-card-toggle
-        manageUser_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-users"]'), //sidemenu-nav-account-settings-sublink-account-users
+        securityGroups_icon: () => cy.get('[qa-element="nav_link-security-groups"]'),
+        customOS_icon: () => cy.get('[qa-element="nav_link-templates"]'), //sidemenu-nav-services-sublink-services-templates
+        object_storage_icon: () => cy.get('[qa-element="nav_link-storage"]'), //sidemenu-nav-services-sublink-services-templates
+        managed_kubernetes_icon: () => cy.get('[qa-element="nav_link-clusters"]'), //sidemenu-nav-services-sublink-services-clusters
+        userCredentials_icon: () => cy.get('[qa-element="nav_link-account-settings"]'), //user-card-toggle
+        manageUser_icon: () => cy.get('[qa-element="nav_link-account-users"]'), //sidemenu-nav-account-settings-sublink-account-users
         userProfileIcon: () => cy.get('[qa-element="user-card-toggle"]'),
         profileLogoutIcon: () => cy.get('[qa-element="logout-show"]').contains('Выйти'), //logout-show
         confLogoutBtn: () => cy.get('[qa-element="logout-submit"]').contains('Да'), //logout-submit

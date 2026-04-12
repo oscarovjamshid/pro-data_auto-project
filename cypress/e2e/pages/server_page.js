@@ -52,6 +52,7 @@ class Server {
         createdServerTitleLbl: (text) => cy.get('.vm-table').contains('div', text),
         serverStatusLbl: () => cy.get('[qa-element="vm-status"]'),
         diskTypeSSDBtn: () => cy.get('[qa-element="disk-type-1"]'),
+        diskTypeNVMEBtn: () => cy.get('[qa-element="disk-type-2"]'),
         diskTxt: () => cy.get('[qa-element="local-disk-size-range-input"]'),
         loginTypeSSHBtn: () => cy.get('[qa-element="authorize-ssh"]'),
         osErrorLbl: () => cy.get('[qa-element="version-error"]'),
@@ -269,6 +270,9 @@ class Server {
         },
         clickDiskTypeSSDBtn: () => {
             this.elements.diskTypeSSDBtn().click()
+        },
+        clickDiskTypeNVMEBtn: () => {
+            this.elements.diskTypeNVMEBtn().click()
         },
         typeDiskSize: (text) => {
             this.elements.diskTxt().clear()

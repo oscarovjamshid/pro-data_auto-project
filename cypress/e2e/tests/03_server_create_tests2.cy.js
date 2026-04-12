@@ -21,7 +21,7 @@ describe('3.Create Server Tests Part2', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/prepare`).as('createServerRequest');
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/resourceMetaData`).as('resourcePrices');
     })
-    it('[PD-111] Создать новый сервер с неправильными ресурсами (HDD Disk больше лимита)', () => {
+    it('[PD-111] Add new server with invalid resources (HDD Disk more than limit)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -37,7 +37,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.setDisk(500000)
         server_page.actions.isDiskIncreaseBtnDisabled()
     })
-    it('[PD-112] Создать новый сервер с неправильными ресурсами (HDD Disk негативное число)', () => {
+    it('[PD-112] Add new server with invalid resources (HDD Disk negative number)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -53,7 +53,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.setDisk(-50)
         server_page.actions.isDiskDescreaseBtnDisabled()
     })
-    // it('[PD-26] Создать новый сервер с неправильным называнием Бэкапа (кириллица)', () => {      NOT ACTUAL ANYMORE (cyrilic can be entered now)
+    // it('[PD-26] Add new server with invalid backup name (cyrillic)', () => {      NOT ACTUAL ANYMORE (cyrilic can be entered now)
     //     const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
     //     cy.login(configData.base_url, configData.login, configData.password)
@@ -75,7 +75,7 @@ describe('3.Create Server Tests Part2', () => {
     //     server_page.actions.writeTimeSelector(0)
     //     server_page.actions.clickConfirmBackupBtn()
     // })
-    it('[PD-27] Создать новый сервер с неправильным названием расписания Бэкапа ( пустое значение )', () => {
+    it('[PD-27] Add new server with invalid backup schedule name (empty value)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -96,7 +96,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.writeTimeSelector(0)
         server_page.actions.isBackupCopyBtnDisabled()
     })
-    it('[PD-29] Создать новый сервер с 0 копией Бэкапа', () => {
+    it('[PD-29] Add new server with invalid backup copies (zero)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -114,7 +114,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.clickBackupCopiesBtn()
         server_page.actions.writeBackupCopiesTxt('0')
     })
-    it('[PD-23] Создать новый сервер с неправильными ресурсами (SSD Disk больше лимита)', () => {
+    it('[PD-23] Add new server with invalid resources (SSD Disk more than limit)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -131,7 +131,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.setDisk(500000)
         server_page.actions.isDiskIncreaseBtnDisabled()
     })
-    it('[PD-24] Создать новый сервер с неправильными ресурсами (SSD Disk негативное число)', () => {
+    it('[PD-24] Add new server with invalid resources (SSD Disk negative number)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -148,7 +148,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.setDisk(-50)
         server_page.actions.isDiskDescreaseBtnDisabled()
     })
-    it('[PD-30] Создать новый сервер с новой локальной сетью и некорректный формат поля IP (остальные поле корректные)', () => {
+    it('[PD-30] Add new server with invalid local network IP format (other fields correct)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
         const localIpName = faker.lorem.word()
         cy.login(configData.base_url, configData.login, configData.password)
@@ -171,7 +171,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.clickLocalIpAddConfBtn()
         server_page.actions.checkLocalIpErrorLbl("Неверное значение")
     })
-    it('[PD-31] Создать новый сервер с новой локальной сетью и пустое поле Адрес подсети (остальные поле корректные)', () => {
+    it('[PD-31] Add new server with invalid local network subnet address (other fields correct)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
         const localIpName = faker.lorem.word()
         cy.login(configData.base_url, configData.login, configData.password)
@@ -191,7 +191,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.writeLocalIpNameTxt(`Test_IP_${localIpName}`)
         server_page.actions.isLocalIpAddConfBtnDisabled()
     })
-    it('[PD-114] Создать новый сервер с указанием локального IP и пустым названием новой сети', () => {
+    it('[PD-114] Add new server with invalid local network name (empty value)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -207,7 +207,7 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.clickLocalIpAddNewBtn()
         server_page.actions.isLocalIpAddConfBtnDisabled()
     })
-    it('[PD-106] Создать новый сервер, с локальным IP, выбрав уже имеющуюся локальную сеть из списка', () => {
+    it('[PD-106] Add new server with existing local network IP, selecting from the list', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -226,3 +226,4 @@ describe('3.Create Server Tests Part2', () => {
         server_page.actions.checkLocalIpTxtNotEmpty()
     })
 })
+//Test-Server won't be touched here

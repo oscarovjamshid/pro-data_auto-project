@@ -21,7 +21,7 @@ describe('2.Create Server Tests Part1', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/prepare`).as('createServerRequest');
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/resourceMetaData`).as('resourcePrices');
     })
-    it('[PD-1] Создать новый сервер с правильными данными (Кейс-1)', () => {
+    it('[PD-1] Add new server-1 (with backup and local net,HDD)', () => {
         const localIpName = faker.lorem.word()
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -66,7 +66,7 @@ describe('2.Create Server Tests Part1', () => {
         serverAction_page.actions.isRunningServer()
 
     })
-    it('[PD-10] Создать новый сервер с правильными данными (Кейс-2)', () => {
+    it('[PD-10] Add new server-2 (without backup, with IP,SSD)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -97,7 +97,7 @@ describe('2.Create Server Tests Part1', () => {
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_without_backup)
         serverAction_page.actions.isRunningServer()
     })
-    it('[PD-11] Создать новый сервер с правильными данными (Кейс-3)', () => {
+    it('[PD-11] Add new server-3 (with custom OS,NVME)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -112,7 +112,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.setRam(4)
         //server_page.actions.writeCpuTxt(2)
         //server_page.actions.writeRamTxt(4)
-        server_page.actions.clickDiskTypeSSDBtn()
+        server_page.actions.clickDiskTypeNVMEBtn()
         server_page.actions.setDisk(10)
         server_page.actions.enablePublicIp()
         server_page.actions.clickConfirmCreateServerBtn()
@@ -129,7 +129,7 @@ describe('2.Create Server Tests Part1', () => {
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_with_customOS)
         serverAction_page.actions.isRunningServer()
     })
-    it('[PD-12] Проверка обязательности полей', () => {
+    it('[PD-12] Mandatory fields validation', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -139,7 +139,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.isVisibleOsRequiredLbl()
         server_page.actions.isVisibleTitleRequiredLbl()
     })
-    it('[PD-13] Создать новый сервер с неправильным называнием (2 слово)', () => {
+    it('[PD-13] Add new server with invalid name (2 words)', () => {
         const serverName = faker.lorem.word() + " " + faker.lorem.word()
         const localIpName = faker.lorem.word()
         cy.login(configData.base_url, configData.login, configData.password)
@@ -167,7 +167,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.clickConfirmCreateServerBtn()
         server_page.actions.checkTitleErrorLbl('Неверное название, только латинские буквы, цифры и символ "-".')
     })
-    it('[PD-15] Создать новый сервер с неправильным называнием (Кириллица)', () => {
+    it('[PD-15] Add new server with invalid name (Cyrillic)', () => {
         const serverName = "ТестСервер"
         const localIpName = faker.lorem.word()
         cy.login(configData.base_url, configData.login, configData.password)
@@ -193,7 +193,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.clickConfirmCreateServerBtn()
         server_page.actions.checkTitleErrorLbl('Неверное название, только латинские буквы, цифры и символ "-".')
     })
-    it('[PD-16] Создать новый сервер с неправильным называнием (Только символы)', () => {
+    it('[PD-16] Add new server with invalid name (symbols only)', () => {
         const serverName = faker.string.symbol()
         const localIpName = faker.lorem.word()
         cy.login(configData.base_url, configData.login, configData.password)
@@ -219,7 +219,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.clickConfirmCreateServerBtn()
         server_page.actions.checkTitleErrorLbl('Минимум 3 символа')
     })
-    it('[PD-17] Создать новый сервер с неправильными ресурсами (CPU больше лимита)', () => {
+    it('[PD-17] Add new server with invalid resources (CPU more than limit)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -233,7 +233,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.setCpu(2000)
         server_page.actions.isCpuIncreaseBtnDisabled()
     })
-    it('[PD-18] Создать новый сервер с неправильными ресурсами (CPU негативное число)', () => {
+    it('[PD-18] Add new server with invalid resources (CPU negative number)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -248,7 +248,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.setCpu(-1)
         server_page.actions.isCpuDescreaseBtnDisabled()
     })
-    /*it('[PD-19] Создать новый сервер с неправильными ресурсами (CPU математические символы +/-)', () => {   //not actual as input fields for CPU was removed in new design
+    /*it('[PD-19] Add new server with invalid resources (CPU math symbols +/-)', () => {   //not actual as input fields for CPU was removed in new design
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -266,7 +266,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.writeCpuTxt("+")
         server_page.actions.checkCpuErrorLbl("Неверное значение")
     }) */
-    it('[PD-20] Создать новый сервер с неправильными ресурсами (RAM больше лимита)', () => {
+    it('[PD-20] Add new server with invalid resources (RAM more than limit)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -280,7 +280,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.setRam(2000)
         server_page.actions.isRamIncreaseBtnDisabled()
     })
-    it('[PD-21] Создать новый сервер с неправильными ресурсами (RAM негативное число)', () => {
+    it('[PD-21] Add new server with invalid resources (RAM negative number)', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -294,7 +294,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.setRam(-1)
         server_page.actions.isRamDescreaseBtnDisabled()
     })
-    /*it('[PD-22] Создать новый сервер с неправильными ресурсами (RAM математические символы +/-)', () => { //not actual as input fields for CPU was removed in new design
+    /*it('[PD-22] Add new server with invalid resources (RAM math symbols +/-)', () => { //not actual as input fields for CPU was removed in new design
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
 
         cy.login(configData.base_url, configData.login, configData.password)
@@ -314,3 +314,4 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.checkRamErrorLbl("Неверное значение")
     }) */
 })
+//Test-Server won't be touched here

@@ -22,7 +22,7 @@ describe('4.Servers - Configuration tab', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/${configData.test_server_id}/edit`).as('serverEditNegativeCpu');
 
     })
-    it('Удалить сервер с публичным IP. (должна появиться галка об отключении IP)', () => {
+    it('Delete server with public IP (checkbox should appear)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -44,7 +44,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.clickVerifiedDeleteBtn()
         configuration_page.actions.isVisibleDeletedVMMessage("Сервер успешно удален")
     })
-    it('[PD-126] Удалить сервер с пользовательким образом', () => {
+    it('[PD-126] Delete server with custom image', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -66,7 +66,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.clickVerifiedDeleteBtn()
         configuration_page.actions.isVisibleDeletedVMMessage("Сервер успешно удален")
     })
-    it('Редактировать конфигурацию сервера ( слова с пробелами )', () => {
+    it('Edit server configuration with invalid data (words with spaces)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -76,7 +76,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.enterServerNameLbl("рыввыор№3873hshdshj")
         configuration_page.actions.clickEditServerNameBtnDisabled()
     })
-    it('Редактировать конфигурацию сервера ( пустое называние )', () => {
+    it('Edit server configuration with invalid data (empty name)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -86,7 +86,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.enterServerNameLbl("                          ")
         configuration_page.actions.clickEditServerNameBtnDisabled()
     })
-    it('Редактировать конфигурацию сервера (не латиница)', () => {
+    it('Edit server configuration with invalid data (non-Latin characters)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -96,7 +96,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.enterServerNameLbl("Редактировать конфигурацию сервера (не латиница)")
         configuration_page.actions.clickEditServerNameBtnDisabled()
     })
-    it('Удалить сервер, имеющим бекапы. (должен появиться запрет и предупреждение)', () => {
+    it('Delete server with backups (warning and restriction should appear)', () => {
         // Buni ishlatmaslikni tavsiya qilinadi !!!!!!!!!!!!!
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -112,7 +112,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.clickVerifiedDeleteBtn()
         configuration_page.actions.isVisibleDeletedVMMessage("Сервер успешно удален")
     })
-    it('Редактировать конфигурацию сервера (CPU - негативное число )', () => {
+    it('Edit server configuration with invalid data (CPU - negative number)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -123,7 +123,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.clickEditServerNameBtn2();
         configuration_page.actions.clickEditServerNameBtnDisabled()
     })
-    it('Редактировать конфигурацию сервера ( CPU - математическый символ )', () => {
+    it('Edit server configuration with invalid data (CPU - math symbol)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -133,7 +133,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.setCpu("-+-+")
         configuration_page.actions.clickEditServerNameBtnDisabled()
     })
-    // it('Редактировать конфигурацию сервера ( CPU - превышает лимит )', () => {
+    // it('Edit server configuration with invalid data (CPU - exceeds limit)', () => {
     //     cy.login(configData.base_url, configData.login, configData.password)
     //     sidebar.actions.clickServersIcon()
     //     server_page.actions.checkServerPageLbl()
@@ -143,7 +143,7 @@ describe('4.Servers - Configuration tab', () => {
     //     configuration_page.actions.setCpu("600")
     //     configuration_page.actions.isEditCPUIncreaseBtnDisabled()
     // })
-    it('Редактировать конфигурацию сервера ( RAM - негативное число )', () => {
+    it('Edit server configuration with invalid data (RAM - negative number)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -153,7 +153,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.setRam("-4872")
         configuration_page.actions.clickEditServerNameBtnDisabled()
     })
-    it('Редактировать конфигурацию сервера ( RAM - математическый символ )', () => {
+    it('Edit server configuration with invalid data (RAM - math symbol)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -164,7 +164,7 @@ describe('4.Servers - Configuration tab', () => {
         configuration_page.actions.clickEditServerNameBtnDisabled()
 
     })
-    // it('Редактировать конфигурацию сервера ( RAM - превышает лимит )', () => {
+    // it('Edit server configuration with invalid data (RAM - exceeds limit)', () => {
     //     cy.login(configData.base_url, configData.login, configData.password)
     //     sidebar.actions.clickServersIcon()
     //     server_page.actions.checkServerPageLbl()
@@ -175,5 +175,4 @@ describe('4.Servers - Configuration tab', () => {
     //     configuration_page.actions.clickEditServerNameBtnDisabled()
     // })
 })
-
 // Test-Server remains Stopped after above tests
