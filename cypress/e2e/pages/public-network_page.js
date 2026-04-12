@@ -1,20 +1,22 @@
 class PublicNetwork {
     elements = {
-        public_networkTxt: () => cy.get('[qa-element="tab-3"]'),
-        public_networkNameTxt: () => cy.contains('NTesterUchun'),
-        public_networkName2Txt: () => cy.contains('Nurillo'),
-        public_ipPageTxt: () => cy.get('[qa-element="tab-1"]'),
+        networksTab: () => cy.get('[qa-element="tab-2"]'),
+        public_networkTxt: () => cy.get('[qa-element="network-type-1"]'),
+        public_networkNameTxt: (text) => cy.contains(text),
+        public_networkName2Txt: (text) => cy.contains(text),
+        public_ipTabInLocalNetworksPage: () => cy.get('[qa-element="undefined-1"]'),
         public_networkVisible: (text) => cy.contains(text),
     }
     actions = {
-        isVisibleNetworkTxt: () => {
-            this.elements.public_networkNameTxt().should("be.visible")
+        isVisibleNetworkTxt: (text) => {
+            this.elements.public_networkNameTxt(text).should("be.visible")
         },
-        clickPuclickTxt: () => {
+        clickPublicIpTab: () => {   
+            this.elements.networksTab().click()
             this.elements.public_networkTxt().click()
         },
-        clickSelectIpLbl: () => {
-            this.elements.public_networkNameTxt().click()
+        clickSelectIpLbl: (text) => {
+            this.elements.public_networkNameTxt(text).click()
         },
         publicIpSuccessAdded: () => {
             cy.wait('@publicIpSuccessAdd', { timeout: 10000 }).then((interception) => {
@@ -27,7 +29,7 @@ class PublicNetwork {
             });
         },
         clickPublicIpPageTxt: () => {
-            this.elements.public_ipPageTxt().click()
+            this.elements.public_ipTabInLocalNetworksPage().click()
         },
         isVisiblePublicIpConnect: (text) => {
             this.elements.public_networkVisible(text).should("be.visible")
@@ -35,15 +37,9 @@ class PublicNetwork {
         isNotVisiblePublicIpTxt: (text) => {
             this.elements.public_networkVisible(text).should('not.exist'); 
         },
-        clickSelectIpTestingLbl: () => {
-            this.elements.public_networkName2Txt().click()
+        clickSelectIpTestingLbl: (text) => {
+            this.elements.public_networkName2Txt(text).click()
         },
-        
     }
 }
-
-
-
-
-
 module.exports = new PublicNetwork()

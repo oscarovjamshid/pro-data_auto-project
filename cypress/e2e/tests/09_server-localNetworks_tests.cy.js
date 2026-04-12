@@ -211,3 +211,4 @@ describe('9.Servers - Local Network tab', () => {
         localNetworks_page.actions.isNotVisibleNetworkEditeBtn()
     })
 })
+// Test-Server remains in Running status
