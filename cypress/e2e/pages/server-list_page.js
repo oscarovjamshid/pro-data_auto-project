@@ -4,7 +4,7 @@ class ServerList {
         server_idLbl: (id, vmId) => cy.get(`tbody > :nth-child(${id + 1}) > :nth-child(2)`).contains(vmId),
         server_searchTxt: () => cy.get('[qa-element="search-input"]'),
         server_searchLbl: (text) => cy.contains(text),
-        server_searchLblInp: () => cy.contains("Test-Server"),
+        server_searchLblInp: (text) => cy.contains(text),
         server_searchIpLbl: () => cy.get('.selectable > :nth-child(7)').contains("td", "100.100.100.164"),
         server_detailLbl: (text) => cy.get('.font-lg-semibold').contains(text),
         server_disabledLbl: () => cy.get('.disabledSelect').first(),
@@ -67,8 +67,8 @@ class ServerList {
         isVisibleDisableTooltip: () => {
             this.elements.server_NotVisible().should('be.visible');
         },
-        isVisibleTestServerTxt: () => {
-            this.elements.server_searchLblInp().should('be.visible')
+        isVisibleTestServerTxt: (text) => {
+            this.elements.server_searchLblInp(text).should('be.visible')
         },
         clickNavigateToMainBtn: () => {
             this.elements.server_backNavigateBtn().click()

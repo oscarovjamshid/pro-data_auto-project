@@ -23,37 +23,37 @@ describe('13.Servers list Tests ', () => {
         cy.intercept('GET', `${configData.base_url}panel-main/api/panel/vm/list`).as('serverListRequest');
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/prepare`).as('createServerRequest');
     })
-    it('Отображение список серверов', () => {
+    it('Display server list', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
-        // server_page.actions.checkServerPageLbl()
+        server_page.actions.checkServerPageLbl()
         serverlist_page.actions.checkServerList()
     })
-    it('Поиск серверов по называнию', () => {
+    it('Search servers by name', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
-        // server_page.actions.checkServerPageLbl()
+        server_page.actions.checkServerPageLbl()
         serverlist_page.actions.searchServer(configData.test_server_name)
-        serverlist_page.actions.isVisibleTestServerTxt()
+        serverlist_page.actions.isVisibleTestServerTxt(configData.test_server_name)
     })
-    // it('Поиск серверов по IP адресс', () => {
+    // it('Search servers by IP address', () => {
     //     cy.login(configData.base_url, configData.login, configData.password)
     //     sidebar.actions.clickServersIcon()
     //     server_page.actions.checkServerPageLbl()
     //     serverlist_page.actions.searchServer("192.168.1.0")
     //     serverlist_page.actions.isVisibleSearchIpServer()
     // })
-    it('Открыть детали сервера (с нажатием на сервер в списке)', () => {
+    it('Open server details (by clicking on server in the list)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
-        // server_page.actions.checkServerPageLbl()
+        server_page.actions.checkServerPageLbl()
         serverlist_page.actions.searchServer(configData.test_server_name)
         serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
     })
     /*
-    it('PD-107 Если в списке есть сервер, в статусе Восстановление бэкапа, то невозможно зайти в его детали', () => {
+    it('PD-107 If there is a server  with the status "Restoring backup", it is not possible to access its details', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -91,7 +91,7 @@ describe('13.Servers list Tests ', () => {
         cy.wait(2000)
         backup_page.actions.isNotVisibleBackupDeleteBtn()
     })
-    it('Если в списке есть сервер, в статусе Новый, то невозможно зайти в его детали', () => {
+    it('If there is a server with the status "New", it is not possible to access its details', () => {
         const serverName = faker.lorem.word() + Math.round(Math.random() * 10000)
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()

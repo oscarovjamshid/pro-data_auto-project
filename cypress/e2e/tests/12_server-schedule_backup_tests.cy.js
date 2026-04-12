@@ -160,3 +160,4 @@ describe('12.Servers - Schedule Backup tab', () => {
         // backupSchedule_page.actions.isNotVisibleBackupScheduleDeleteBtn()
     })
 })
+//Test-Server remains in Stopped status after above tests
