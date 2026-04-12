@@ -11,7 +11,7 @@ class ServerList {
         server_NotVisible: () => cy.get('.tooltip-inner'),
         server_backNavigateBtn: () => cy.get('[qa-element="to-back"]'),
         server_detailNotVisible: () => cy.get('[qa-element="vm-delete-show"]'),
-
+        serverRowByName: (name) => cy.contains('tr', name),
 
     }
     actions = {
@@ -44,6 +44,9 @@ class ServerList {
         },
         isNotVisibleServerDetail: (text) => {
             this.elements.server_detailLbl(text).should('not.be.visible');
+        },
+        waitForServerStatus: (name, status, timeout = 120000) => {
+            this.elements.serverRowByName(name).contains(status, { timeout }).should('be.visible');
         },
         checkServerListStatus: () => {
             cy.wait('@serverListStatus', {wait: 10000}).then((interception) => {

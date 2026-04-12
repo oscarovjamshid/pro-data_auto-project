@@ -109,3 +109,4 @@ describe('10.Servers - Public IPs tab', () => {
         publicNetwork_page.actions.isNotVisiblePublicIpTxt(configData.test_server_name)
     })
 })
+//Test-Server remains in Running status after above tests
