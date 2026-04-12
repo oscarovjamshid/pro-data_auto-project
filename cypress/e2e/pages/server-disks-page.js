@@ -36,7 +36,7 @@ class ServerDisks {
         diskSizeUpModalErrorLbl: () => cy.get('div[role="alert"].alert-danger'),
         connectDiskSelector: () => cy.get('[qa-element="select-disk-toggle"]'), 
         connectDiskOption: (text) => cy.contains('button', text),
-        connectNvmeDiskOption: (text) => cy.get('.modal-body').find('div#input-dropdown').contains('a', text), 
+        connectNvmeDiskOption: (text) => cy.contains('button', text), 
         connectDiskModalBtn: () => cy.get('[qa-element="link-disk-submit"]').contains('Добавить'), 
         disconnectDiskModalBtn: () => cy.get('[qa-element="unlink-disk-submit"]'), 
         modalCloseBtn: () => cy.get('button[type="button"][class*="CloseButton"]').first(),
@@ -47,7 +47,7 @@ class ServerDisks {
         renameDiskNameErrorLbl: () => cy.get('[qa-element="rename-error"]'), 
         nvmeDiskSizeUpBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="disk-increase-size"]').first(), 
         changeDiskSizeWithoutServerRebootRadioBtn: () => cy.get('[qa-element="manual-increase"]'),
-        changeDiskSizeWithServerRebootRadioBtn: () => cy.get('qa-element="auto-increase"]'),
+        changeDiskSizeWithServerRebootRadioBtn: () => cy.get('[qa-element="auto-increase"]'),
         nvmeDiskChangeToBootBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="as-boot-show"]').first(),
         bootDiskChangeToBootBtn: (text) => cy.get('tbody').contains('tr', text).find('[qa-element="as-boot-show"]').first(),
         nvmeDiskChangeToBootCancelBtn: () => cy.get('[qa-element="as-boot-cancel"]').first(),
@@ -281,43 +281,43 @@ class ServerDisks {
         clickWithoutServerRebootIncreaseDiskSizeBtn: () => {
             this.elements.changeDiskSizeWithoutServerRebootRadioBtn().click()
         },
-        clickNvmeDiskChangeToBootDiskBtn: () => {
-            this.elements.nvmeDiskChangeToBootBtn().click();
+        clickNvmeDiskChangeToBootDiskBtn: (text) => {
+            this.elements.nvmeDiskChangeToBootBtn(text).click();
         },
-        clickBootDiskChangeToBootDiskBtn: () => {
-            this.elements.bootDiskChangeToBootBtn().click();
+        clickBootDiskChangeToBootDiskBtn: (boot) => {
+            this.elements.bootDiskChangeToBootBtn(boot).click();
         },
         clickChangeToBootDiskModalCancelBtn: () => {
             this.elements.nvmeDiskChangeToBootCancelBtn().click();
         },
-        checkNvmeDiskChangedToBootDisk: () => {
-            this.elements.nvmeDiskChangeToBootBtn().should('be.disabled')
-            this.elements.bootDiskChangeToBootBtn().should('be.enabled')
+        checkNvmeDiskChangedToBootDisk: (nvme, boot) => {
+            this.elements.nvmeDiskChangeToBootBtn(nvme).should('be.disabled')
+            this.elements.bootDiskChangeToBootBtn(boot).should('be.enabled')
         },
-        checkBootDiskChangedToBootDisk: () => {
-            this.elements.bootDiskChangeToBootBtn().should('be.disabled')
-            this.elements.nvmeDiskChangeToBootBtn().should('be.enabled')
+        checkBootDiskChangedToBootDisk: (boot, nvme) => {
+            this.elements.bootDiskChangeToBootBtn(boot).should('be.disabled')
+            this.elements.nvmeDiskChangeToBootBtn(nvme).should('be.enabled')
         },
-        clickNvmeDiskDetachBtn: () => {
-            this.elements.nvmeDiskDetachBtn().click();
+        clickNvmeDiskDetachBtn: (text) => {
+            this.elements.nvmeDiskDetachBtn(text).click();
         },
         clickNvmeDiskDetachModalCancelBtn: () => {
             this.elements.nvmeDiskDetachModalCancelBtn().click();
         },
-        checkNvmeDiskNotExists: () => {
-            this.elements.nvmeDiskRowInServersDisksTab().should('not.exist')
+        checkNvmeDiskNotExists: (text) => {
+            this.elements.nvmeDiskRowInServersDisksTab(text).should('not.exist')
         },
-        checkNvmeDiskExists: () => {
-            this.elements.nvmeDiskRowInServersDisksTab().should('exist')
+        checkNvmeDiskExists: (text) => {
+            this.elements.nvmeDiskRowInServersDisksTab(text).should('exist')
         },
-        selectConnectNvmeDiskOption: () => {
-            this.elements.connectNvmeDiskOption().click();
+        selectConnectNvmeDiskOption: (text) => {
+            this.elements.connectNvmeDiskOption(text).click();
         },
         clickNvmeDiskDeleteModalCancelBtn: () => {
             this.elements.nvmeDiskDeleteModalCancelBtn().click();
         },
-        clickNvmeDiskDeleteBtn: () => {
-            this.elements.nvmeDiskDeleteBtn().click();
+        clickNvmeDiskDeleteBtn: (text) => {
+            this.elements.nvmeDiskDeleteBtn(text).click();
         },
         getDiskCount: () => {
             return this.elements.diskListItems().its('length');

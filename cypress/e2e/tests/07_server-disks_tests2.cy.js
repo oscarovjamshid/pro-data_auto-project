@@ -250,7 +250,7 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.isVisibleCreatedDisk(editedDiskName)
     })
-    it.only("[PD-678] Increase NVME disk manually - Without server reboot", () => {
+    it("[PD-678] Increase NVME disk manually - Without server reboot", () => { // here we need qa-element for diskSizeValue otherwise it will keep failing
         const editedDiskName = "Test-Edited-NVME-Disk"
         const number = 20;
         cy.login(configData.base_url, configData.login, configData.password)
@@ -280,7 +280,8 @@ describe('7.Servers - Disks tab Part2', () => {
     //     serverDisksPage.actions.writeDiskSizeUpModalTxt('+')
     //     serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
     // })
-    it.only("[PD-681] Increase NVME disk manually - Without server reboot (more than max limit)", () => {
+    it("[PD-681] Increase NVME disk manually - Without server reboot (more than max limit)", () => { // qa-lement for diskSizeValue is needed
+        const editedDiskName = "Test-Edited-NVME-Disk"
         const number = 10000;
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -290,13 +291,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(editedDiskName)
         serverDisksPage.actions.clickWithoutServerRebootIncreaseDiskSizeBtn()
         serverDisksPage.actions.setDiskSize(number)
         serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.checkNewDiskSizeErrorLbl2("Максимальный размер диска 1000 Гб. Для расширения ограничения обратитесь в техническую поддержку Pro-Data")
     })
-    it.only("[PD-682] Increase NVME disk manually - Without server reboot (0)", () => {
+    it("[PD-682] Increase NVME disk manually - Without server reboot (0)", () => { // qa-lement for diskSizeValue is needed here as well
+        const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -305,13 +307,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(editedDiskName)
         serverDisksPage.actions.clickWithoutServerRebootIncreaseDiskSizeBtn()
-        serverDisksPage.actions.writeDiskSizeUpModalTxt('0')
-        serverDisksPage.actions.clickDiskSizeUpModalBtn()
+        serverDisksPage.actions.setDiskSize('0')
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.checkNewDiskSizeErrorLbl2('Неверное значение')
     })
-    it("[PD-673] Increase NVME disk automatically - With server reboot", () => {
+    it("[PD-673] Increase NVME disk automatically - With server reboot", () => { // qa-lement for diskSizeValue is needed here as well 
+        const editedDiskName = "Test-Edited-NVME-Disk"
         const number = 30;
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -321,15 +324,13 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(editedDiskName)
         serverDisksPage.actions.clickWithServerRebootIncreaseDiskSizeBtn()
-        serverDisksPage.actions.writeDiskSizeUpModalTxt(number)
-        serverDisksPage.actions.clickDiskSizeUpModalBtn()
+        serverDisksPage.actions.setDiskSize(number)
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         cy.wait(50000)
         serverAction_page.actions.clickServerActionsBtn()
-        cy.wait(2000)
         serverAction_page.actions.clickStopServerBtn()
-        cy.wait(2000)
         try {
             serverAction_page.actions.isServerStoppedStatus()
         } catch {
@@ -338,21 +339,22 @@ describe('7.Servers - Disks tab Part2', () => {
         }
         serverDisksPage.actions.isVisibleCreatedDisk(number)
     })
-    it("[PD-675] Increase NVME disk automatically - With server reboot (math symbols)", () => {
-        cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickServersIcon()
-        server_page.actions.checkServerPageLbl()
-        serverlist_page.actions.searchServer(configData.test_server_name)
-        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
-        serverlist_page.actions.clickServerCard(configData.test_server_name)
-        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
-        serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
-        serverDisksPage.actions.clickWithServerRebootIncreaseDiskSizeBtn()
-        serverDisksPage.actions.writeDiskSizeUpModalTxt('+')
-        serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
-    })
-    it("[PD-676] Increase NVME disk automatically - With server reboot (more than max limit)", () => {
+    // it("[PD-675] Increase NVME disk automatically - With server reboot (math symbols)", () => { // This test is not actual as of now field was changed by toggles - no way inserting chars
+    //     cy.login(configData.base_url, configData.login, configData.password)
+    //     sidebar.actions.clickServersIcon()
+    //     server_page.actions.checkServerPageLbl()
+    //     serverlist_page.actions.searchServer(configData.test_server_name)
+    //     serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+    //     serverlist_page.actions.clickServerCard(configData.test_server_name)
+    //     serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
+    //     serverDisksPage.actions.clickServerDisksTab()
+    //     serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+    //     serverDisksPage.actions.clickWithServerRebootIncreaseDiskSizeBtn()
+    //     serverDisksPage.actions.writeDiskSizeUpModalTxt('+')
+    //     serverDisksPage.actions.isDisabledDiskSizeUpModalBtn()
+    // })
+    it("[PD-676] Increase NVME disk automatically - With server reboot (more than max limit)", () => { //qa-element for diskSizeValue is needed here as well
+        const editedDiskName = "Test-Edited-NVME-Disk"
         const number = 10000;
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
@@ -362,13 +364,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(editedDiskName)
         serverDisksPage.actions.clickWithServerRebootIncreaseDiskSizeBtn()
-        serverDisksPage.actions.writeDiskSizeUpModalTxt(number)
-        serverDisksPage.actions.clickDiskSizeUpModalBtn()
+        serverDisksPage.actions.setDiskSize(number)
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.checkNewDiskSizeErrorLbl2("Максимальный размер диска 1000 Гб. Для расширения ограничения обратитесь в техническую поддержку Pro-Data")
     })
-    it("[PD-677] Increase NVME disk automatically - With server reboot (0)", () => {
+    it("[PD-677] Increase NVME disk automatically - With server reboot (0)", () => { //qa-element for diskSizeValue is needed here as well
+        const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -377,13 +380,14 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(editedDiskName)
         serverDisksPage.actions.clickWithServerRebootIncreaseDiskSizeBtn()
-        serverDisksPage.actions.writeDiskSizeUpModalTxt('0')
-        serverDisksPage.actions.clickDiskSizeUpModalBtn()
+        serverDisksPage.actions.setDiskSize('0')
+        serverDisksPage.actions.clickDiskSaveBtnInChangesModal()
         serverDisksPage.actions.checkNewDiskSizeErrorLbl2('Неверное значение')
     })
     it("[PD-696] Increase NVME disk size — X button", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -392,11 +396,13 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeIncreaseDiskSizeBtn()
+        serverDisksPage.actions.clickRenameDiskBtn(editedDiskName)
         serverDisksPage.actions.clickModalCloseBtn()
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
     it("[PD-683] Mark NVME disk as bootable", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
+        const bootDiskName = "Загрузочный диск"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -405,12 +411,13 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeDiskChangeToBootDiskBtn()
+        serverDisksPage.actions.clickNvmeDiskChangeToBootDiskBtn(editedDiskName)
         serverDisksPage.actions.clickDiskmakeUploadConfirmBtn()
-        cy.wait(2000)
-        serverDisksPage.actions.checkNvmeDiskChangedToBootDisk()
+        serverDisksPage.actions.checkNvmeDiskChangedToBootDisk(editedDiskName, bootDiskName)
     })
     it("[PD-686] Change NVME disk from boot disk", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
+        const bootDiskName = "Загрузочный диск"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -419,12 +426,12 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickBootDiskChangeToBootDiskBtn()
+        serverDisksPage.actions.clickBootDiskChangeToBootDiskBtn(bootDiskName)
         serverDisksPage.actions.clickDiskmakeUploadConfirmBtn()
-        cy.wait(2000)
-        serverDisksPage.actions.checkBootDiskChangedToBootDisk()
+        serverDisksPage.actions.checkBootDiskChangedToBootDisk(bootDiskName, editedDiskName)
     })
     it("[PD-697] Mark NVME disk as bootable - Cancel button", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -433,12 +440,13 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeDiskChangeToBootDiskBtn()
-        serverDisksPage.actions.clickChangeToBootDiskModalCancelBtn()
+        serverDisksPage.actions.clickNvmeDiskChangeToBootDiskBtn(editedDiskName)
         cy.wait(1000)
+        serverDisksPage.actions.clickChangeToBootDiskModalCancelBtn()
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
     it("[PD-698] Detach NVME disk from VM - Cancel button", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -447,12 +455,12 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeDiskDetachBtn()
+        serverDisksPage.actions.clickNvmeDiskDetachBtn(editedDiskName)
         serverDisksPage.actions.clickNvmeDiskDetachModalCancelBtn()
-        cy.wait(1000)
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
     it("[PD-685] Detach NVME disk from VM", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -461,12 +469,11 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeDiskDetachBtn()
+        serverDisksPage.actions.clickNvmeDiskDetachBtn(editedDiskName)
         serverDisksPage.actions.clickDisconnectDiskModalBtn()
-        cy.wait(3000)
-        serverDisksPage.actions.checkNvmeDiskNotExists()
+        serverDisksPage.actions.checkNvmeDiskNotExists(editedDiskName)
         sidebar.actions.clickDisksIcon()
-        serverDisksPage.actions.checkNvmeDiskExists()
+        serverDisksPage.actions.checkNvmeDiskExists(editedDiskName)
     })
     it("[PD-701] Connect NVME disk to BM - Close button", () => {
         cy.login(configData.base_url, configData.login, configData.password)
@@ -479,10 +486,10 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickConnectNewServerDiskBtn()
         serverDisksPage.actions.clickModalCloseBtn()
-        cy.wait(1000)
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
     it("[PD-687] Connect NVME disk to VM", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -493,12 +500,12 @@ describe('7.Servers - Disks tab Part2', () => {
         serverDisksPage.actions.clickServerDisksTab()
         serverDisksPage.actions.clickConnectNewServerDiskBtn()
         serverDisksPage.actions.clickConnectDiskSelector()
-        serverDisksPage.actions.selectConnectNvmeDiskOption()
+        serverDisksPage.actions.selectConnectNvmeDiskOption(editedDiskName)
         serverDisksPage.actions.clickConnectDiskModalBtn()
-        cy.wait(1000)
-        serverDisksPage.actions.checkNvmeDiskExists()
+        serverDisksPage.actions.checkNvmeDiskExists(editedDiskName)
     })
     it("[PD-700] Delete NVME disk from BM - Cancel button", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -507,12 +514,12 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeDiskDeleteBtn()
+        serverDisksPage.actions.clickNvmeDiskDeleteBtn(editedDiskName)
         serverDisksPage.actions.clickNvmeDiskDeleteModalCancelBtn()
-        cy.wait(1000)
         serverDisksPage.actions.checkAddDiskBtnExists()
     })
     it("[PD-688] Delete NVME disk from BM", () => {
+        const editedDiskName = "Test-Edited-NVME-Disk"  
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
@@ -521,9 +528,9 @@ describe('7.Servers - Disks tab Part2', () => {
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverDisksPage.actions.clickServerDisksTab()
-        serverDisksPage.actions.clickNvmeDiskDeleteBtn()
+        serverDisksPage.actions.clickNvmeDiskDeleteBtn(editedDiskName)
         serverDisksPage.actions.clickConfDeleteBtn()
         cy.wait(1000)
-        serverDisksPage.actions.checkNvmeDiskNotExists()
+        serverDisksPage.actions.checkNvmeDiskNotExists(editedDiskName)
     })
 })
