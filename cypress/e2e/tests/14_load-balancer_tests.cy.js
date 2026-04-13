@@ -7,6 +7,7 @@ import server_page from "../pages/server_page";
 import load_balancer_page from "../pages/load_balancer_page";
 import localNetworks_page from "../pages/localNetworks_page";
 import serverAction_page from "../pages/server-action_page";
+import serverlist_page from "../pages/server-list_page";
 
 describe('14.Load Balancer Tests', () => {
     let configData;
@@ -52,14 +53,16 @@ describe('14.Load Balancer Tests', () => {
 
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
-        localNetworks_page.actions.checkServerStatusStopped3()
+        serverlist_page.actions.searchServer(configData.test_server_name)
+        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+        serverlist_page.actions.clickServerCard(configData.test_server_name)
+        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         localNetworks_page.actions.clickLocalNetworkTxt()
         localNetworks_page.actions.clickAddNetworkBtn()
         localNetworks_page.actions.isVisibleSelectListNetwork()
         localNetworks_page.actions.clickSelectListNetwork()
-        localNetworks_page.actions.isVisibleNetworkIp('Test_Local_Ip')
-        localNetworks_page.actions.clickNetworkIpBtn('Test_Local_Ip')
-        cy.wait(2000)
+        localNetworks_page.actions.isVisibleNetworkIp(configData.test_local_ip)
+        localNetworks_page.actions.clickNetworkIpBtn(configData.test_local_ip)
         localNetworks_page.actions.clickAddNetworkSuccessBtn()
 
         sidebar.actions.clickLoadBalanceIcon()
@@ -68,7 +71,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeOuterBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerProtocolTCPBtn()
         load_balancer_page.actions.clickBalancerPortAddBtn()
         load_balancer_page.actions.typeBalancerPort(testData.balancerPort)             //     Create - LB with same ports
@@ -78,7 +81,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.checkBalancerBackOption(testData.serverName)
         load_balancer_page.actions.clickbalancerBackendConfBtn()
         load_balancer_page.actions.clickBalancerCreateConfBtn()
-        cy.wait(10000)
+        cy.wait(10000)             // wait is needed since giper system needs time to create LB and reflect it in UI, otherwise the next LB creation might have issues
         load_balancer_page.actions.isVisibleCreatedBalancer(testData.balancerName)
     })
     it('[PD-820, PD-451] Create - External LB with UDP', () => {            // 2 test cases in 1 autotest
@@ -96,7 +99,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeOuterBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
         load_balancer_page.actions.clickBalancerPortAddBtn()
         load_balancer_page.actions.typeBalancerPort(testData.balancerPort)
@@ -106,7 +109,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.checkBalancerBackOption(testData.serverName)      // Create - LB with backend group - attaching single server
         load_balancer_page.actions.clickbalancerBackendConfBtn()
         load_balancer_page.actions.clickBalancerCreateConfBtn()
-        cy.wait(10000)
+        cy.wait(10000) //wait is needed since giper system needs time to create LB and reflect it in UI, otherwise the next LB creation might have issues
         load_balancer_page.actions.isVisibleCreatedBalancer(testData.balancerName)
     })
     it('[PD-821] Create - Internal LB with TCP', () => {
@@ -124,7 +127,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolTCPBtn()
@@ -136,7 +139,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.checkBalancerBackOption(testData.serverName)
         load_balancer_page.actions.clickbalancerBackendConfBtn()
         load_balancer_page.actions.clickBalancerCreateConfBtn()
-        cy.wait(10000)
+        cy.wait(10000) //wait is needed since giper system needs time to create LB and reflect it in UI, otherwise the next LB creation might have issues
         load_balancer_page.actions.isVisibleCreatedBalancer(testData.balancerName)
     })
     it('[PD-136, PD-446] Create - Internal LB with UDP', () => {           // 2 test cases in 1 autotest
@@ -154,7 +157,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
@@ -166,10 +169,10 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.checkBalancerBackOption(testData.serverName)
         load_balancer_page.actions.clickbalancerBackendConfBtn()
         load_balancer_page.actions.clickBalancerCreateConfBtn()
-        cy.wait(10000)
+        cy.wait(10000) //wait is needed since giper system needs time to create LB and reflect it in UI, otherwise the next LB creation might have issues
         load_balancer_page.actions.isVisibleCreatedBalancer(testData.balancerName)
     })
-    it('[PD-138] Create - LB with existing entity name (unsuccessful))', () => {
+    it('[PD-138] Create - LB with existing entity name (unsuccessful)', () => {
         const testData = {
             balancerName: 'Internal-LB-UDP',
             balancerDescription: 'Test Inner Balancer UDP',
@@ -184,7 +187,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
@@ -198,7 +201,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.clickBalancerCreateConfBtn()
         load_balancer_page.actions.isVisibleBalancerNameErrorLbl("Балансировщик с таким именем уже существует")
     })
-    it('[PD-445] Create - LB with empty name (unsuccessful))', () => {
+    it('[PD-445] Create - LB with empty name (unsuccessful)', () => {
         const testData = {
             balancerName: 'Internal-LB-UDP',
             balancerDescription: 'Test Inner Balancer UDP',
@@ -212,7 +215,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
@@ -226,7 +229,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.clickBalancerCreateConfBtn()
         load_balancer_page.actions.isVisibleBalancerNameErrorLbl("Обязательное поле")
     })
-    it('[PD-822] Create - LB with symbols (unsuccessful))', () => {
+    it('[PD-822] Create - LB with symbols (unsuccessful)', () => {
         const testData = {
             balancerName: ".,/;[]()'-=",
             balancerDescription: 'Test Inner Balancer UDP',
@@ -241,7 +244,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
@@ -295,7 +298,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
@@ -320,7 +323,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
@@ -368,7 +371,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
@@ -399,7 +402,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeInnerBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerSelectIpNagruz()
         load_balancer_page.actions.clickBalancerIpOption('192.168.1.4')
         load_balancer_page.actions.clickBalancerProtocolUDPBtn()
@@ -435,7 +438,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerDescription(testData.balancerDescription)
         load_balancer_page.actions.clickBalancerTypeOuterBtn()
         load_balancer_page.actions.clickLocalNetworkSelector()
-        load_balancer_page.actions.clickLocalNetworkOption('Test_Local_Ip')
+        load_balancer_page.actions.clickLocalNetworkOption(configData.test_local_ip)
         load_balancer_page.actions.clickBalancerProtocolTCPBtn()
         load_balancer_page.actions.clickBalancerPortAddBtn()
         load_balancer_page.actions.typeBalancerPort(testData.balancerPort)

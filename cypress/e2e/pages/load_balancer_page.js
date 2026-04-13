@@ -1,21 +1,21 @@
 class LoadBalancer {
     elements = {
-        termsOfServiceLink: () => cy.get('.text-start li:nth-child(1) a'),
-        priceListLink: () => cy.get('.text-start li:nth-child(2) a'),
+        termsOfServiceLink: () => cy.contains('Пользовательское соглашение'), //qa-element is needed here
+        priceListLink: () => cy.contains('Прейскурант'), //qa-element is needed here
         createLoadBalancerBtn: () => cy.get('[qa-element="to-create-lb"]').last(),
         balancer_nameTxt: () => cy.get('[qa-element="lb-create-name"]'),
         balancer_descriptionTxt: () => cy.get('[qa-element="lb-create-desc"]'),
-        balancerTypeOuterBtn: () => cy.get('[qa-element="external-internal-0"]'),
-        balancerTypeInnerBtn: () => cy.get('[qa-element="external-internal-1"]'),
-        balancerLocalNetworkSelector: () => cy.get('[qa-element="lb-subnet-open"]').first(),
+        balancerTypeOuterBtn: () => cy.get('#external'), //qa-element is needed here
+        balancerTypeInnerBtn: () => cy.get('#internal'), //qa-element is needed here
+        balancerLocalNetworkSelector: () => cy.get('[qa-element="lb-subnet"]').first(),
         balancerIpSelector: () => cy.get('[qa-element="lb-subnet-0"]').last(),
-        balancerLocalNetwrokOption: (name) => cy.get('.dropdown-menu').find('a').contains(name),
-        balancerIpOption: (name) => cy.get('.dropdown-menu').find('a').contains(name),
-        balancerProtocolTCPBtn: () => cy.get('[qa-element="tcp-udp-0"]'),
-        balancerProtocolUDPBtn: () => cy.get('[qa-element="tcp-udp-1"]'),
+        balancerLocalNetwrokOption: (name) => cy.contains(name),
+        balancerIpOption: (name) => cy.contains(name),
+        balancerProtocolTCPBtn: () => cy.get('#tcp'), //qa-element is needed here
+        balancerProtocolUDPBtn: () => cy.get('#udp'), //qa-element is needed here
         balancerPortAddBtn: () => cy.get('[qa-element="lb-ports-add"]'),
         balancerPortTxt: () => cy.get('[qa-element="lb-port"]'),
-        balancerPortConfBtn: () => cy.get('[qa-element="lb-ports-submit"]'),
+        balancerPortConfBtn: () => cy.get('[qa-element="lb-ports-submit"][type="submit"]'),
         loadBalancerPortInvalidErrorLbl: () => cy.get('[qa-element="lb-ports-balancer-error"]'),
         backendGroupPortInvalidErrorLbl: () => cy.get('[qa-element="lb-ports-backend-error"]'),
         balancerBackPortTxt: () => cy.get('[qa-element="backend-port"]'),
@@ -26,11 +26,11 @@ class LoadBalancer {
         createdBalancer: (name) => cy.get('tbody > tr').contains(name),
         balancerStatusPerRowName: (name) => cy.get('tbody > tr').contains(name).parent().find('td').eq(5),
         balancerNameErrorLbl: () => cy.get('[qa-element="create-lb-name-error"]'),
-        balancerIpNagruzkaLbl: () => cy.get('[qa-element="lb-ip-open"]'),
+        balancerIpNagruzkaLbl: () => cy.get('[qa-element="lb-ip-toggle"]'),
         createdPort: (name) => cy.get('tbody > tr').contains(name),
-        editPortBtn: () => cy.get('[qa-element="lb-ports-edit-0"]'),
-        deletePortBtn: () => cy.get('[qa-element="ports-delete-0-show"]'),
-        deleteBackendBtn: () => cy.get('[qa-element="backend-delete-0-show"]'),
+        editPortBtn: () => cy.get('[qa-element="lb-ports-edit"]'),
+        deletePortBtn: () => cy.get('[qa-element="ports-delete-show"]'),
+        deleteBackendBtn: () => cy.get('[qa-element="backend-delete-show"]'),
         createdBackendGroup: (name) => cy.get('tbody > tr').contains(name),
         confirmDeletePortBtn: () => cy.get('[qa-element="ports-delete-submit"]'),
         confirmDeleteBackendBtn: () => cy.get('[qa-element="backend-delete-submit"]'),
