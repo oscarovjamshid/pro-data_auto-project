@@ -130,3 +130,4 @@ describe('17.Networks - Dns tab', () => {
         dns_page.actions.isNotExistDeletedDns(dnsName)
     })
 })
+//Test-Server won't be touched in this test suite

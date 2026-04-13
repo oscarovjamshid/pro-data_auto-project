@@ -14,7 +14,7 @@ class SideBar {
         profileLogoutIcon: () => cy.get('[qa-element="logout-show"]').contains('Выйти'),
         confLogoutBtn: () => cy.get('[qa-element="logout-submit"]').contains('Да'), 
         consuption_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-reports"]'),
-        backup_icon: () => cy.get('[qa-element="sidemenu-nav-services-sublink-services-backups"]'), 
+        backup_icon: () => cy.get('[qa-element="nav_link_backups"]'), 
         action_history_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-log"]'),
         account_history: () => cy.get('[qa-element="sidemenu-nav-account-settings"]'),
         

@@ -10,6 +10,7 @@ import serverList_page from "../pages/server-list_page";
 
 describe('20.Backups Tests', () => {
     let configData;
+    const backupName = "TesterUchun";
     before(() => {
         cy.fixture('examples').then((data) => {
             configData = data;
@@ -21,51 +22,54 @@ describe('20.Backups Tests', () => {
         cy.intercept('GET', `${configData.base_url}panel-main/api/panel/vm/list`).as('serverStatusStopped3');
         cy.intercept('GET', `${configData.base_url}panel-main/api/panel/backups/list`).as('backupListRequest');
     })
-    it('PD-190 Отображение список Бэкапы', () => {
+    it('PD-190 Display backup list', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
-        localNetworks_page.actions.checkServerStatusStopped3()
-        backup_page.actions.clickBackupTxt()
-        cy.wait(2000)
+        serverList_page.actions.searchServer(configData.test_server_name)
+        serverList_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+        serverList_page.actions.clickServerCard(configData.test_server_name)
+        serverList_page.actions.isVisibleServerDetail(configData.test_server_name)
+        backup_page.actions.clickBackupTab()
         backup_page.actions.isVisibleCreateNewBackupBtn()
         backup_page.actions.clickCreateBackup()
-        backup_page.actions.enterBackupNameInp("TesterUchun")
+        backup_page.actions.enterBackupNameInp(backupName)
         backup_page.actions.clickVerifiedBackupCreateBtn()
-        cy.wait(1000)
-        backup_page.actions.isVisibleProgressBar()
-        cy.wait(100000)
+        //cy.wait(10000) // appearing progress bar takes time
+        // backup_page.actions.isVisibleProgressBar() qa-element is needed for bar
+        backup_page.actions.waitForBackupSuccess(backupName)
         backup_page.actions.isVisibleSuccessAddbackup()
     })
-    it('PD-191 Поиск бэкапы по названию', () => {
+    it('PD-191 Search backups by backup name', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickBackupIcon()
-        cy.wait(2000)
-        serverList_page.actions.searchServer("TesterUchun")
+        serverList_page.actions.searchServer(backupName)
         backup2_page.actions.isVisibleShowTxt()
     })
-    it('PD-192 Поиск бэкапы по названию сервера', () => {
+    it('PD-192 Search backups by server name', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickBackupIcon()
-        cy.wait(2000)
-        serverList_page.actions.searchServer("Test")
+        serverList_page.actions.searchServer(configData.test_server_name)
         backup2_page.actions.isVisibleShowTxt2()
     })
-    it('PD-193 Восстановить бэкап', () => {
+    it('PD-193 Restore backup (replace current one)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickBackupIcon()
-        cy.wait(1000)
         backup2_page.actions.clickRestoreBackup2Btn()
         backup2_page.actions.clickRestoreConfirmBtnFn()
-        cy.wait(7000)
+        sidebar.actions.clickServersIcon()
+        server_page.actions.checkServerPageLbl()
+        serverList_page.actions.searchServer(configData.test_server_name)
+        serverList_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+        serverList_page.actions.waitForServerStatus(configData.test_server_name, "Восстановление бэкапа")
+        serverList_page.actions.waitForServerStatus(configData.test_server_name, "Остановлен")
     })
-    it('PD-195 Удалить бэкап', () => {
+    it('PD-195 Delete backup', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickBackupIcon()
         backup2_page.actions.clickDeleteBackup2Btn()
         backup2_page.actions.clickDeleteBackup2ConfirmBtn()
-        cy.wait(2000)
         backup_page.actions.isNotVisibleBackupDeleteBtn()
-
     })
 })
+//Test-Server remains in Stopped status after above tests
