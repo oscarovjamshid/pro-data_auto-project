@@ -8,7 +8,7 @@ import publicNetwork_page from "../pages/public-network_page";
 import serverlist_page from "../pages/server-list_page";
 
 describe('10.Servers - Public IPs tab', () => {
-    const publicIP = 'NTesterUchun';
+    const publicIP = 'Test_Public_Ip';
     let configData;
     before(() => {
         cy.fixture('examples').then((data) => {

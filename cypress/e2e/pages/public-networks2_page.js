@@ -1,21 +1,18 @@
 class PublicNetworks2 {
     elements = {
-        public_networkNavigate: () => cy.get('[qa-element="tab-1"]'),
+        public_ip_tab: () => cy.get('[qa-element="undefined-1"]'),
         clickAddNetworkBtn: () => cy.get('[qa-element="network-create-ip-add"]'),
         inValidValidationMessage: () => cy.contains('div', 'Недопустимые символы'),
         enterNetworkNameInp: () => cy.get('[qa-element="network-create-name"]'),
         clickAddBtn: () => cy.get('[qa-element="network-create-submit"]'),
-        deleteNewNetworkBtn: () => cy.get('[qa-element="delete-nework-0-show"]'),
         confDeleteDiskBtn: () => cy.get('[qa-element="delete-nework-submit"]'),
-        deleteBtnDisabled: () => cy.get('[qa-element="delete-nework-0-show"]'),
+        deleteBtn: (name) => cy.contains('tr', name).find('[qa-element^="delete-nework-"]'),
         clickServerListsLbl: () => cy.get('[qa-element="local-network-id-open"]'),
         clickModalTitleTxt1: () => cy.get('.modal-title')
-        // qa-element="delete-nework-submit"
-
     }
     actions = {
-        isVisibleNetworkTxt: () => {
-            this.elements.public_networkNavigate().click()
+        clickPublicIpTab: () => {
+            this.elements.public_ip_tab().click()
         },
         clickModalTxtTitleFn: () => {
             this.elements.clickModalTitleTxt1().click()
@@ -34,8 +31,8 @@ class PublicNetworks2 {
                 expect(interception.response.statusCode).to.eq(200);
             });
         },
-        clickDeleteNewSuccessNetwork: () => {
-            this.elements.deleteNewNetworkBtn().click({ multiple: true, force: true });
+        clickDeleteNewSuccessNetwork: (text) => {
+            this.elements.deleteBtn(text).click({ multiple: true, force: true });
         },
         clickVerifyDeleteBtn: () => {
             this.elements.confDeleteDiskBtn().click();
@@ -43,18 +40,12 @@ class PublicNetworks2 {
         isVisibleShowMessage: () => {
             this.elements.inValidValidationMessage().should('be.visible')
         },
-        clickDeleteBtnDisabled: () => {
-            this.elements.deleteBtnDisabled().should('be.disabled');
+        clickDeleteBtnDisabled: (text) => {
+            this.elements.deleteBtn(text).should('be.disabled');
         },
         clickSelectServerListsFn: () => {
             this.elements.clickServerListsLbl().click()
         }
-        
     }
 }
-
-
-
-
-
 module.exports = new PublicNetworks2()
