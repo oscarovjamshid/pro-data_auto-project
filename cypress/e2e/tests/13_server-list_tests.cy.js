@@ -6,7 +6,7 @@ import server_page from "../pages/server_page";
 import sidebar from "../pages/sidebar";
 import serverlist_page from "../pages/server-list_page";
 import backup_page from "../pages/backup_page";
-import localNetworks_page from "../pages/localNetworks_page";
+import localNetworks_page from "../pages/local-networks_page";
 import configuration_page from "../pages/configuration_page";
 import serverAction_page from "../pages/server-action_page";
 

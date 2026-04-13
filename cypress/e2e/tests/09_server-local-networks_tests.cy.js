@@ -3,7 +3,7 @@ cy.on('uncaught:exception', (err, runnable) => {
 });
 import server_page from "../pages/server_page";
 import sidebar from "../pages/sidebar";
-import localNetworks_page from "../pages/localNetworks_page";
+import localNetworks_page from "../pages/local-networks_page";
 import serverlist_page from "../pages/server-list_page";
 
 describe('9.Servers - Local Network tab', () => {

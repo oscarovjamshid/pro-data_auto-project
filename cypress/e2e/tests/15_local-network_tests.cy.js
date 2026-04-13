@@ -2,11 +2,12 @@ cy.on('uncaught:exception', (err, runnable) => {
     return false;
 });
 import sidebar from "../pages/sidebar";
-import localNetworks_page from "../pages/localNetworks_page";
-import publicNetwork_page from "../pages/public-network_page";
-import publicNetworks_page from "../pages/publicNetworks_page";
-import localNetworks2_page from "../pages/localNetworks2_page";
+import localNetworks_page from "../pages/local-networks_page";
+import publicNetworks_page from "../pages/public-networks2_page";
+import localNetworks2_page from "../pages/local-networks2_page";
 import server_page from "../pages/server_page";
+import serverlist_page from "../pages/server-list_page";
+import serverAction_page from "../pages/server-action_page";
 
 describe('15.Networks - Local Network tab ', () => {
     let configData;
@@ -23,7 +24,7 @@ describe('15.Networks - Local Network tab ', () => {
         cy.intercept('GET', `${configData.base_url}panel-main/api/panel/netList`).as('localSuccessProjects');
         cy.intercept('POST', `${configData.base_url}panel-main/api/panel/vm/${configData.test_server_id}/unlinkNet`).as('networkSuccessDelete');
     })
-    it('PD-172 Создать сети (Локальные сети)', () => {
+    it('PD-172 Create local network', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         sidebar.actions.clickNetworksIcon()
@@ -35,7 +36,7 @@ describe('15.Networks - Local Network tab ', () => {
         publicNetworks_page.actions.clickAddNetworkModalBtn2()
         localNetworks2_page.actions.LocalIpSuccessAddedNew2()
     })
-    it('PD-173 Создать сети с одинаковые названия (Локальные сети)', () => {
+    it('PD-173 Create local network (with existing name)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         sidebar.actions.clickNetworksIcon()
@@ -47,7 +48,7 @@ describe('15.Networks - Local Network tab ', () => {
         publicNetworks_page.actions.clickAddNetworkModalBtn2()
         localNetworks2_page.actions.LocalIpErrorAddedNew2()
     })
-    it('PD-174 Создать сети с Неверный сетевой адрес (Локальные сети)', () => {
+    it('PD-174 Create local network (with invalid network address)', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         sidebar.actions.clickNetworksIcon()
@@ -60,59 +61,67 @@ describe('15.Networks - Local Network tab ', () => {
         localNetworks2_page.actions.LocalIpErrorAddedNew3()
 
     })
-    it('PD-176 Назначить видимость локальной сети для другого проекта', () => {
-        cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickServersIcon()
-        sidebar.actions.clickNetworksIcon()
-        localNetworks2_page.actions.clickLocalVisibleIconFn()
-        localNetworks2_page.actions.clickProjectsSelectListFn()
-        localNetworks2_page.actions.clickLocalModalVerifyBtn()
-        localNetworks2_page.actions.LocalSuccessProjectsLists()
-
-    })
-    it('PD-177 Подключение и проверка локальной сети на сервере', () => {
+    // it('PD-176 Assign visibility of local network to another project', () => {   this test is not actual anymore since visibility icon was removed from UI
+    //     cy.login(configData.base_url, configData.login, configData.password)
+    //     sidebar.actions.clickServersIcon()
+    //     sidebar.actions.clickNetworksIcon()
+    //     localNetworks2_page.actions.clickLocalVisibleIconFn()
+    //     localNetworks2_page.actions.clickProjectsSelectListFn()
+    //     localNetworks2_page.actions.clickLocalModalVerifyBtn()
+    //     localNetworks2_page.actions.LocalSuccessProjectsLists()
+    // })
+    it('PD-177 Connect and check local network on server', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
-        localNetworks_page.actions.checkServerStatusStopped3()
+        serverlist_page.actions.searchServer(configData.test_server_name)
+        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+        serverlist_page.actions.clickServerCard(configData.test_server_name)
+        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         localNetworks_page.actions.clickLocalNetworkTxt()
         localNetworks_page.actions.clickAddNetworkBtn()
         localNetworks2_page.actions.clickListServerLocalFn()
         localNetworks_page.actions.isVisibleNetworkIp('TestUchunLocal')
         localNetworks_page.actions.clickNetworkIpBtn('TestUchunLocal')
-        cy.wait(2000)
         localNetworks_page.actions.clickAddNetworkSuccessBtn()
-        cy.wait(1000)
         sidebar.actions.clickNetworksIcon()
-        localNetworks2_page.actions.isVisibleServerNameLocalPg('Test-Server')
-
+        localNetworks2_page.actions.isVisibleServerNameLocalPg(configData.test_server_name)
     })
-    it('PD-178 Удалить сеть привязанную к серверу (Локальные сети)', () => {
+    it('PD-178 Detach local network from server', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         sidebar.actions.clickNetworksIcon()
-        localNetworks2_page.actions.isVisibleServerNameLocalPg('Test-Server')
+        localNetworks2_page.actions.isVisibleServerNameLocalPg(configData.test_server_name)
         sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
-        localNetworks_page.actions.checkServerStatusStopped3()
+        serverlist_page.actions.searchServer(configData.test_server_name)
+        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+        serverlist_page.actions.clickServerCard(configData.test_server_name)
+        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         localNetworks_page.actions.clickLocalNetworkTxt()
-        localNetworks_page.actions.isVisibleNetworkDeleteBtn()
-        cy.wait(3000)
-        localNetworks_page.actions.clickDeleteNetworkBtn()
+        localNetworks_page.actions.isVisibleNetworkDetachBtn()
+        localNetworks_page.actions.clickDetachNetworkBtn()
         localNetworks_page.actions.clickConfirmCheckbox()
         localNetworks_page.actions.clickNetworkDeleteConfirmBtn()
-        cy.wait(3000)
-        cy.reload()
         localNetworks_page.actions.isNotVisibleNetworkEditeBtn()
-
     })
-    it('PD-247 Удалить сеть не привязанную к серверу (Локальные сети)', () => {
+    it('PD-247 Delete local network which is not connected to server', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         sidebar.actions.clickNetworksIcon()
-        localNetworks2_page.actions.clickLocalDeleteIpFn()
+        localNetworks2_page.actions.clickLocalDeleteIpFn('TestUchunLocal')
         localNetworks2_page.actions.clickNetworkDeleteConfirmBtn()
         localNetworks2_page.actions.isNotVisibleServerNameLocal('TestUchunLocal')
-
+        // need to turn off server after above tests
+        sidebar.actions.clickServersIcon()
+        server_page.actions.checkServerPageLbl()
+        serverlist_page.actions.searchServer(configData.test_server_name)
+        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+        serverlist_page.actions.clickServerCard(configData.test_server_name)
+        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
+        serverAction_page.actions.clickServerActionsBtn()
+        serverAction_page.actions.clickStopServerBtn()
+        serverAction_page.actions.checkStatus(25, 'Остановлен')
     })
 })
+// Test-Server remains in Stopped status after above tests

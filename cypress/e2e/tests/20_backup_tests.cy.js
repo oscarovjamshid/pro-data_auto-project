@@ -3,7 +3,7 @@ cy.on('uncaught:exception', (err, runnable) => {
 });
 import server_page from "../pages/server_page";
 import sidebar from "../pages/sidebar";
-import localNetworks_page from "../pages/localNetworks_page";
+import localNetworks_page from "../pages/local-networks_page";
 import backup_page from "../pages/backup_page";
 import backup2_page from "../pages/backup2_page";
 import serverList_page from "../pages/server-list_page";

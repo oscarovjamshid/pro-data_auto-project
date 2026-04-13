@@ -3,7 +3,7 @@ cy.on('uncaught:exception', (err, runnable) => {
 });
 import sidebar from "../pages/sidebar";
 import dns_page from "../pages/dns-server-addresses_page";
-import localNetworks2_page from "../pages/localNetworks2_page";
+import localNetworks2_page from "../pages/local-networks2_page";
 
 describe('17.Networks - Dns tab', () => {
     let configData;

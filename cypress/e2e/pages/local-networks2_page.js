@@ -11,12 +11,10 @@ class LocalNetworks2 {
         localServerDeleteBtn: () => cy.get('[qa-element="network-change-show-1"]'),
         network_deleteConfirmNetworks: () => cy.get('[qa-element="delete-nework-submit"]'),
         LocalNetworksNameTxt: (text) => cy.contains('td', text),
-        localNetworksClickListsLbl: () => cy.get('[qa-element="local-network-id-open"]'),
-        localDeleteIpBtn: () => cy.get('[qa-element="delete-nework-1-show"]')
-
+        localNetworksClickListsLbl: () => cy.get('[qa-element="local-network-id-toggle"]'),
+        localDeleteIpBtn: (name) => cy.contains('tr', name).find('[qa-element^="delete-nework-"]')
     }
     actions = {
-        
         clickAddNewLocalNetworksBtn: () => {
             this.elements.clickAddLocalNetworkBtn().click()
         },
@@ -80,15 +78,9 @@ class LocalNetworks2 {
         clickListServerLocalFn: () => {
             this.elements.localNetworksClickListsLbl().click()
         },
-        clickLocalDeleteIpFn: () => {
-            this.elements.localDeleteIpBtn().click()
-        }
-        
+        clickLocalDeleteIpFn: (text) => {
+            this.elements.localDeleteIpBtn(text).click()
+        }  
     }
 }
-
-
-
-
-
 module.exports = new LocalNetworks2()

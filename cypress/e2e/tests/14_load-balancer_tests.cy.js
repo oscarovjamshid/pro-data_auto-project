@@ -5,7 +5,7 @@ cy.on('uncaught:exception', (err, runnable) => {
 import sidebar from "../pages/sidebar";
 import server_page from "../pages/server_page";
 import load_balancer_page from "../pages/load_balancer_page";
-import localNetworks_page from "../pages/localNetworks_page";
+import localNetworks_page from "../pages/local-networks_page";
 import serverAction_page from "../pages/server-action_page";
 import serverlist_page from "../pages/server-list_page";
 
@@ -268,29 +268,22 @@ describe('14.Load Balancer Tests', () => {
         }
 
         cy.login(configData.base_url, configData.login, configData.password)
-        /*sidebar.actions.clickServersIcon()
+        sidebar.actions.clickServersIcon()
         server_page.actions.checkServerPageLbl()
-        localNetworks_page.actions.checkServerStatusStopped3()
+        serverlist_page.actions.searchServer(configData.test_server_name)
+        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+        serverlist_page.actions.clickServerCard(configData.test_server_name)
+        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         localNetworks_page.actions.clickLocalNetworkTxt()
-        localNetworks_page.actions.isVisibleNetworkDeleteBtn()
-        cy.wait(3000)
-        localNetworks_page.actions.clickDeleteNetworkBtn()
+        localNetworks_page.actions.isVisibleNetworkDetachBtn()
+        localNetworks_page.actions.clickDetachNetworkBtn()
         localNetworks_page.actions.clickConfirmCheckbox()
         localNetworks_page.actions.clickNetworkDeleteConfirmBtn()
-        cy.wait(3000)
-        localNetworks_page.actions.networkSuccessDeleted()
-        cy.reload()
         localNetworks_page.actions.isNotVisibleNetworkEditeBtn()
-        cy.wait(3000)
         serverAction_page.actions.clickServerActionsBtn()
-        cy.wait(2000)
         serverAction_page.actions.clickStopServerBtn()
-        try {
-            serverAction_page.actions.isServerStoppedStatus()
-        } catch {
-            cy.wait(30000)
-            serverAction_page.actions.isServerStoppedStatus()
-        } */
+        serverAction_page.actions.clickStopServerBtn()
+        serverAction_page.actions.checkStatus(25, 'Остановлен')
 
         sidebar.actions.clickLoadBalanceIcon()
         load_balancer_page.actions.clickCreateLoadBalancerBtn()
@@ -562,3 +555,4 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.isVisiblePriceListLink()
     })
 })
+//Test-Server remains in Stopped status after above tests

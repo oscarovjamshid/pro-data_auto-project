@@ -2,9 +2,9 @@ cy.on('uncaught:exception', (err, runnable) => {
     return false;
 });
 import sidebar from "../pages/sidebar";
-import localNetworks_page from "../pages/localNetworks_page";
+import localNetworks_page from "../pages/local-networks_page";
 import publicNetwork_page from "../pages/public-network_page";
-import publicNetworks_page from "../pages/publicNetworks_page";
+import publicNetworks_page from "../pages/public-networks2_page";
 
 describe('16.Networks - Public IPs tab', () => {
     let configData;

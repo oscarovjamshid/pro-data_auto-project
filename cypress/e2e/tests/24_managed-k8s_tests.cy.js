@@ -3,8 +3,8 @@ cy.on('uncaught:exception', (err, runnable) => {
 });
 
 import sidebar from "../pages/sidebar";
-import localNetworks2_page from "../pages/localNetworks2_page";
-import publicNetworks_page from "../pages/publicNetworks_page";
+import localNetworks2_page from "../pages/local-networks2_page";
+import publicNetworks_page from "../pages/public-networks2_page";
 import managedKubernetes_page from "../pages/managed-k8s_page";
 
 describe('24.Managed Kubernetes Tests', () => {
