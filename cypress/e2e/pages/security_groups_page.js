@@ -1,17 +1,18 @@
 class SecurityGroups {
     elements = {
-        addBtn: () => cy.get('[qa-element="create-security-group-show"]'),
+        addBtnInSecurityGroupsPageWhenNoRecords: (text) => cy.get('a').contains(text),
+        addBtn: () => cy.get('[qa-element="firewall-add-show"]'),
         groupNameField: () => cy.get('[qa-element="firewall-name"]'),
         groupNameErrorLbl: () => cy.get('[qa-element="firewall-error"]'),
         submitBtnInAddGroupPopUp: () => cy.get('[qa-element="create-firewall-submit"]'),
         cancelBtnInAddGroupPopUp: () => cy.get('[qa-element="create-firewall-cancel"]'),
         addRuleBtn: () => cy.get('[qa-element="add-rule"]'),
-        addRuleActionDropdownList: () => cy.get('[qa-element="firewall-action-open"]'),
+        addRuleActionDropdownList: () => cy.get('[qa-element="firewall-action-toggle"]'),
         acceptActionOption: () => cy.get('[qa-element="firewall-action-0"]'),
         rejectActionOption: () => cy.get('[qa-element="firewall-action-1"]'),
-        addRuleTemplateDropdownList: () => cy.get('[qa-element="firewall-template-open"]'),
-        addRuleProtocolDropdownList: () => cy.get('[qa-element="firewall-protocol-open"]'),
-        addRuleProtocolOptions: () => cy.get('div.dropdown-menu.show ul a'),
+        addRuleTemplateDropdownList: () => cy.get('[qa-element="firewall-template-toggle"]'),
+        addRuleProtocolDropdownList: () => cy.get('[qa-element="firewall-protocol-toggle"]'),
+        addRuleProtocolOptions: (name) => cy.get(`button[qa-element^="firewall-protocol-"]`).contains(name),
         inboundSourcePortsInputField: () => cy.get('[qa-element="source"]'),
         inboundIpDestinationIpRangeInputField: () => cy.get('[qa-element="destination-port"]'),
         outboundSourcePortsInputField: () => cy.get('[qa-element="source-port"]'),
@@ -34,7 +35,7 @@ class SecurityGroups {
         detachRulesPopUpCancelBtn: () => cy.get('[qa-element="unlink-vm-cancel"]'),
         addedInboundRuleRowByName: (name) => cy.get('tbody').eq(0).find('tr').contains(name),
         addedOutboundRuleRowByName: (name) => cy.get('tbody').eq(1).find('tr').contains(name),
-        createdSecurityGroupRow: (name) => cy.get('tbody tr').contains(name),
+        createdSecurityGroupRow: (name) => cy.contains(name),
         resourceVisibilityIconPerRowName: (name) => cy.get('tbody').contains('tr', name).find('[qa-element="change-resource-visibility"]'),
         resourceVisibilityProjectDropdownList: () => cy.get('[qa-element="select-project"]'),
         resourceVisibilityProjectDropdownListFirstActiveOption: () => cy.get('[qa-element="project-1"]'),
@@ -51,6 +52,9 @@ class SecurityGroups {
         a: () => cy.get('[qa-element=""]'),
     }
     actions = {
+        clickAddBtnInSecurityGroupsPageWhenNoRecords: (text) => {
+            this.elements.addBtnInSecurityGroupsPageWhenNoRecords(text).should('be.visible').click()
+        },
         clickAddSecurityGroupBtn: () => {
             this.elements.addBtn().click();
         },
@@ -97,7 +101,7 @@ class SecurityGroups {
         },
         selectProtocolOptionByName: (name) => {
             this.elements.addRuleProtocolDropdownList().click()
-            this.elements.addRuleProtocolOptions().contains(name).click()
+            this.elements.addRuleProtocolOptions(name).click()
         },
         typeDestinationPortNumberForInbound: (number) => {
             this.elements.inboundIpDestinationIpRangeInputField().clear()
@@ -133,6 +137,9 @@ class SecurityGroups {
         },
         clickSubmitBtnInAddRulePopUp: () => {
             this.elements.addRuleSubmitBtn().click()
+        },
+        isDisabledSubmitBtnInAddRulePopUp: () => {
+            this.elements.addRuleSubmitBtn().should('be.disabled');
         },
         clickCancelBtnInAddRulePopUp: () => {
             this.elements.addRulesCancelBtn().click()
