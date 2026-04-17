@@ -5,7 +5,7 @@ class SideBar {
         load_balance_icon: () => cy.get('[qa-element="nav_link_loadbalancers"]'), 
         disks_icon: () => cy.get('[qa-element="nav_link_disks"]'), 
         securityGroups_icon: () => cy.get('[qa-element="nav_link_security-groups"]'),
-        customOS_icon: () => cy.get('[qa-element="nav_link-templates"]'), 
+        customOS_icon: () => cy.get('[qa-element="nav_link_templates"]'), 
         object_storage_icon: () => cy.get('[qa-element="nav_link-storage"]'), 
         managed_kubernetes_icon: () => cy.get('[qa-element="nav_link-clusters"]'), 
         userCredentials_icon: () => cy.get('[qa-element="nav_link-account-settings"]'), 

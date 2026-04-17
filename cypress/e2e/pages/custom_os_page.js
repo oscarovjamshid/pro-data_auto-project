@@ -5,7 +5,7 @@ class CustomOs {
         customOsFileBtn: () => cy.get('[qa-element="upload-file"]'),
         customOsFileTxt: () => cy.get('#template-upload-input'),
         customOsFileConfBtn: () => cy.get('[qa-element="os-upload-submit"]'),
-        customOsUploadProgress: () => cy.get('.progress'),
+        customOsUploadProgress: (text) => cy.contains(text),            // qa-element neeed here for progress element bar
         customOsMinParamsCheckbox: () => cy.get('.form-check').find('input[type="checkbox"]'),
         customOsUploadModal: () => cy.get('.modal-content'),
         customOsNameErrorLbl: () => cy.get('[qa-element="os-upload-name-error"], [qa-element="os-upload-file-error"]'),
@@ -15,6 +15,7 @@ class CustomOs {
         createdCustomOsDeleteBtn: (name) => cy.get('tbody').find('tr').contains(name).parent().find('td').last().find('button').last(),
         createdCustomDiskDeleteBtn: () => cy.get('tbody').find('tr').contains(name).parent().find('td'),
         deleteCustomOsFileConfBtn: () => cy.get('[qa-element="delete-vm-template-submit"]'),
+        isVisibleCreatedCustomOsName: (name) => cy.get('tbody').find('tr').contains(name),
     }
     actions = {
         clickUploadNewCustomOsBtn: () => {
@@ -42,8 +43,8 @@ class CustomOs {
         clickCustomOsFileConfBtn: () => {
             this.elements.customOsFileConfBtn().click()
         },
-        isVisibleCustomOsUploadProgress: () => {
-            this.elements.customOsUploadProgress()
+        isVisibleCustomOsUploadProgress: (text) => {
+            this.elements.customOsUploadProgress(text).should('be.visible')
         },
         checkCustomOsMinParamsCheckbox: () => {
             this.elements.customOsMinParamsCheckbox().check()
@@ -76,12 +77,27 @@ class CustomOs {
         },
         clickdeleteCustomOsFileConfBtn: () => {
             this.elements.deleteCustomOsFileConfBtn().click()
-        }
-    }
+        },
+        isVisibleCreatedCustomOsName: (name) => {
+            this.elements.isVisibleCreatedCustomOsName(name).should('be.visible')
+        },
+        waitForCustomOsReadyStatus: (name) => {                         // Used to wait any custom OS till it becomes Успешно
+            cy.log(`Waiting for custom OS "${name}" to become Успешно...`)
+            cy.wrap(null).then(() => {
+                const checkStatus = () => {
+                    this.elements.balancerStatusPerRowName(name).invoke('text').then((text) => {
+                        const status = text.trim()
+                        cy.log(`Current status: ${status}`)
+                        if (status !== 'Успешно') {
+                            cy.wait(5000).then(checkStatus)                  // re-checks in every 5 seconds
+                        } else {
+                            cy.log(`Custom OS "${name}" is Успешно`)
+                        }
+                    })
+                }
+                checkStatus()
+            })
+        },
 }
-
-
-
-
-
+}
 module.exports = new CustomOs()

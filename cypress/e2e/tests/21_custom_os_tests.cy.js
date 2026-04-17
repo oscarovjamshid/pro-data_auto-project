@@ -17,8 +17,7 @@ describe('21.Custom Templates Tests', () => {
         cy.viewport(1280, 720)
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
     })
-
-    it('[PD-163] Загрузить новый пользовательский образ (без указание минимальных параметров)', () => {
+    it.only('[PD-163] upload custom OS (without specifying minimum parameters)', () => {
         const osName = `Custom_OS_without_min`
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
@@ -28,10 +27,10 @@ describe('21.Custom Templates Tests', () => {
         custom_os_page.actions.clickCustomOsfileBtn()
         custom_os_page.actions.attachFileCustomOsFileTxt()
         custom_os_page.actions.clickCustomOsFileConfBtn()
-        custom_os_page.actions.isVisibleCustomOsUploadProgress()
-        cy.wait(5000)
+        custom_os_page.actions.isVisibleCustomOsUploadProgress("Идет загрузка, не закрывайте браузер")
+        custom_os_page.actions.waitForCustomOsReadyStatus(osName);
     })
-    it('[PD-167] Загрузить новый пользовательский образ (с указанием минимальных параметров)', () => {
+    it.only('[PD-167] upload custom OS (with specifying minimum parameters)', () => {
         const osName = `Custom_OS_with_min`
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
@@ -42,11 +41,10 @@ describe('21.Custom Templates Tests', () => {
         custom_os_page.actions.attachFileCustomOsFileTxtForMin()
         custom_os_page.actions.checkCustomOsMinParamsCheckbox()
         custom_os_page.actions.clickCustomOsFileConfBtn()
-        custom_os_page.actions.isVisibleCustomOsUploadProgress()
-        cy.wait(5000)
-        custom_os_page.actions.isModalClosed()
+        custom_os_page.actions.isVisibleCustomOsUploadProgress("Идет загрузка, не закрывайте браузер")
+        custom_os_page.actions.waitForCustomOsReadyStatus(osName);
     })
-    it('[PD-166] Загрузить новый пользовательский образ (Нет называние)', () => {
+    it.only('[PD-166] Upload custom OS (without name)', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickCustomOS_icon()
@@ -56,7 +54,7 @@ describe('21.Custom Templates Tests', () => {
         custom_os_page.actions.clickCustomOsFileConfBtn()
         custom_os_page.actions.isVisibleCustomOsNameErrorLbl()
     })
-    it('[PD-170] Создать сервер с загруженным пользовательским образом', () => {
+    it('[PD-170] Create server with uploaded custom OS', () => {
         const osName = `Custom_OS_with_min`
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
@@ -67,10 +65,10 @@ describe('21.Custom Templates Tests', () => {
         custom_os_page.actions.attachFileCustomOsFileTxt3()
         custom_os_page.actions.clickCustomOsFileConfBtn()
         custom_os_page.actions.isVisibleCustomOsUploadProgress()
-        cy.wait(5000)
+        custom_os_page.actions.waitForCustomOsReadyStatus(osName);
         //* Need to add create server test with custom os
     })
-    it('[PD-168] Загрузить новый пользовательский образ (с указанием минимальных параметров до максимума)', () => {
+    it('[PD-168] Upload new custom OS (with specifying minimum parameters up to maximum)', () => {
         const osName = `Custom_OS_with_min`
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
@@ -85,7 +83,7 @@ describe('21.Custom Templates Tests', () => {
         custom_os_page.actions.typeMinDiskTxt(500)
         custom_os_page.actions.clickCustomOsFileConfBtn()
     })
-    it('[PD-169] Загрузить новый пользовательский образ (с указанием минимальных параметров превышая максимума)', () => {
+    it('[PD-169] Upload new custom OS (with specifying minimum parameters exceeding maximum)', () => {
         const osName = `Custom_OS_with_min`
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
@@ -100,13 +98,12 @@ describe('21.Custom Templates Tests', () => {
         custom_os_page.actions.typeMinDiskTxt(10240)
         custom_os_page.actions.clickCustomOsFileConfBtn()
     })
-    it('[PD-171] Удалить пользовательский образ, не связанный с серверами', () => {
+    it('[PD-171] Delete custom OS not attached to servers', () => {
         const osName = `Custom_OS_without_min`
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickCustomOS_icon()
         custom_os_page.actions.createdCustomOsDeleteBtn(osName)
-        cy.wait(2000)
         custom_os_page.actions.clickdeleteCustomOsFileConfBtn()
     })
 })
