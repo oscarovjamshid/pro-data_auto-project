@@ -42,7 +42,8 @@ class Server {
         publicIpBtn: () => cy.get('[qa-element="public-ip"]'),
         localIpBtn: () => cy.get('[qa-element="local-ip"]'),
         localIpNameTxt: () => cy.get('[qa-element="network-create-name"]'),
-        localIpAddressTxt: () => cy.get('[qa-element="local-nets-toggle"]'),
+        localIpAddressTxt: () => cy.get('[qa-element="local-nets-toggle"]'), 
+        localIpAddressTxtforCustomOS: () => cy.get('[qa-element="address-mask"]'), 
         localIpGatewayTxt: () => cy.get('[qa-element="gateway-mask"]').last(),
         localIpTxt: () => cy.get('[qa-element="free-ip-address-toggle"]'),
         confirmCreateServerBtn: () => cy.get('[qa-element="vm-craete-submit"]').last(),
@@ -228,6 +229,10 @@ class Server {
         writeLocalIpAddressTxt: (text) => {
             this.elements.localIpAddressTxt().clear()
             this.elements.localIpAddressTxt().type(text)
+        },
+        writeLocalIpAddressTxtforCustomOS: (text) => {
+            this.elements.localIpAddressTxtforCustomOS().clear()
+            this.elements.localIpAddressTxtforCustomOS().type(text)
         },
         writeLocalIpGatewayTxt: (text) => {
             this.elements.localIpGatewayTxt().clear()

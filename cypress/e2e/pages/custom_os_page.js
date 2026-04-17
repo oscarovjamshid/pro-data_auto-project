@@ -6,7 +6,7 @@ class CustomOs {
         customOsFileTxt: () => cy.get('#template-upload-input'),
         customOsFileConfBtn: () => cy.get('[qa-element="os-upload-submit"]'),
         customOsUploadProgress: (text) => cy.contains(text),            // qa-element neeed here for progress element bar
-        customOsMinParamsCheckbox: () => cy.get('.form-check').find('input[type="checkbox"]'),
+        customOsMinParamsCheckbox: () => cy.get('[qa-element="use-min-params"]'),
         customOsUploadModal: () => cy.get('.modal-content'),
         customOsNameErrorLbl: () => cy.get('[qa-element="os-upload-name-error"], [qa-element="os-upload-file-error"]'),
         minCpuTxt: () => cy.get('[qa-element="os-upload-cpu-cores-range-input"]'),
@@ -15,7 +15,17 @@ class CustomOs {
         createdCustomOsDeleteBtn: (name) => cy.get('tbody').find('tr').contains(name).parent().find('td').last().find('button').last(),
         createdCustomDiskDeleteBtn: () => cy.get('tbody').find('tr').contains(name).parent().find('td'),
         deleteCustomOsFileConfBtn: () => cy.get('[qa-element="delete-vm-template-submit"]'),
-        isVisibleCreatedCustomOsName: (name) => cy.get('tbody').find('tr').contains(name),
+        isVisibleCreatedCustomOsRowName: (name) => cy.contains(name),
+        createServerBtnPerRowName: (name) => cy.contains('tr', name).find('[qa-element^="to-create-vm-custom-template-"]'),
+        customOsCpuValue: () => cy.get('[qa-element="os-upload-cpu-cores-range"]'),
+        customOsRamValue: () => cy.get('[qa-element="os-upload-ram-range"]'),
+        customOsDiskValue: () => cy.get('[qa-element="os-upload-disk-range"]'),
+        customOsCpuDecreaseBtn: () => cy.get('[qa-element="os-upload-cpu-cores-range-decrease"]'),
+        customOsCpuIncreaseBtn: () => cy.get('[qa-element="os-upload-cpu-cores-range-increase"]'),
+        customOsRamDecreaseBtn: () => cy.get('[qa-element="os-upload-ram-range-decrease"]'),
+        customOsRamIncreaseBtn: () => cy.get('[qa-element="os-upload-ram-range-increase"]'),
+        customOsDiskDecreaseBtn: () => cy.get('[qa-element="os-upload-disk-range-decrease"]'),
+        customOsDiskIncreaseBtn: () => cy.get('[qa-element="os-upload-disk-range-increase"]'),
     }
     actions = {
         clickUploadNewCustomOsBtn: () => {
@@ -29,19 +39,22 @@ class CustomOs {
             this.elements.customOsFileBtn().click()
         },
         attachFileCustomOsFileTxt: () => {
-            this.elements.customOsFileTxt().attachFile('custom_os.iso', { force: true }); 
+            this.elements.customOsFileTxt().attachFile('custom_os.iso', { force: true });
         },
         attachFileCustomOsFileTxtForMin: () => {
-            this.elements.customOsFileTxt().attachFile('TinyIsoTesty.iso', { force: true }); 
+            this.elements.customOsFileTxt().attachFile('TinyIsoTesty.iso', { force: true });
         },
         attachFileCustomOsFileTxt2: () => {
-            this.elements.customOsFileTxt().attachFile('custom_os_2.iso', { force: true }); 
+            this.elements.customOsFileTxt().attachFile('custom_os_2.iso', { force: true });
         },
         attachFileCustomOsFileTxt3: () => {
-            this.elements.customOsFileTxt().attachFile('custom_os_3.iso', { force: true }); 
+            this.elements.customOsFileTxt().attachFile('custom_os_3.iso', { force: true });
         },
         clickCustomOsFileConfBtn: () => {
             this.elements.customOsFileConfBtn().click()
+        },
+        isCustomOsFileConfBtnDisabled: () => {
+            this.elements.customOsFileConfBtn().should('be.disabled')
         },
         isVisibleCustomOsUploadProgress: (text) => {
             this.elements.customOsUploadProgress(text).should('be.visible')
@@ -79,25 +92,57 @@ class CustomOs {
             this.elements.deleteCustomOsFileConfBtn().click()
         },
         isVisibleCreatedCustomOsName: (name) => {
-            this.elements.isVisibleCreatedCustomOsName(name).should('be.visible')
+            this.elements.isVisibleCreatedCustomOsRowName(name).should('be.visible')
         },
         waitForCustomOsReadyStatus: (name) => {                         // Used to wait any custom OS till it becomes Успешно
             cy.log(`Waiting for custom OS "${name}" to become Успешно...`)
-            cy.wrap(null).then(() => {
-                const checkStatus = () => {
-                    this.elements.balancerStatusPerRowName(name).invoke('text').then((text) => {
-                        const status = text.trim()
-                        cy.log(`Current status: ${status}`)
-                        if (status !== 'Успешно') {
-                            cy.wait(5000).then(checkStatus)                  // re-checks in every 5 seconds
-                        } else {
-                            cy.log(`Custom OS "${name}" is Успешно`)
-                        }
-                    })
-                }
-                checkStatus()
+            cy.contains('tr', name, { timeout: 600000 }).should('contain', 'Успешно')
+        },
+        clickCreateServerBtnPerRowName: (name) => {
+            this.elements.createServerBtnPerRowName(name).click()
+        },
+        setCustomOsCpu: (target) => {
+            this.elements.customOsCpuValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 13
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.customOsCpuIncreaseBtn() : this.elements.customOsCpuDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
             })
         },
-}
+        setCustomOsRam: (target) => {
+            this.elements.customOsRamValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 4
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.customOsRamIncreaseBtn() : this.elements.customOsRamDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+        setCustomOsDisk: (target) => {
+            this.elements.customOsDiskValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 10
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.customOsDiskIncreaseBtn() : this.elements.customOsDiskDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+        isCustomOsCpuIncreaseBtnDisabled: () => {
+            this.elements.customOsCpuIncreaseBtn().should('be.disabled')
+        },
+        isCustomOsRamIncreaseBtnDisabled: () => {
+            this.elements.customOsRamIncreaseBtn().should('be.disabled')
+        },
+        isCustomOsDiskIncreaseBtnDisabled: () => {
+            this.elements.customOsDiskIncreaseBtn().should('be.disabled')
+        },
+    }
 }
 module.exports = new CustomOs()
