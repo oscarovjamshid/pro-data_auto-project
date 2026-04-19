@@ -146,3 +146,4 @@ describe('21.Custom Templates Tests', () => {
         custom_os_page.actions.clickdeleteCustomOsFileConfBtn()
     })
 })
+//Test-Server won't be touched in this test suite
