@@ -25,12 +25,11 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickServersIcon()
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
-        object_storage_page.actions.clickAddNewBucketBtn()
+        object_storage_page.actions.clickAddNewBucketBtnWhenNoBuckets()
         object_storage_page.actions.enterTextToBucketNameInputField(testData.bucketName)
         object_storage_page.actions.clickCreateBtnInAddModal()
         object_storage_page.actions.isVisibleCreatedBucket(testData.bucketName)
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkGetCheckbox()
@@ -49,7 +48,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkPostCheckbox()
@@ -68,7 +66,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkPutCheckbox()
@@ -87,7 +84,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkDeleteCheckbox()
@@ -106,7 +102,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkHeadCheckbox()
@@ -125,7 +120,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.clickAddBtnUnderAllowedOriginsField()
@@ -146,7 +140,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkGetCheckbox()
@@ -169,7 +162,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkGetCheckbox()
@@ -190,7 +182,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkGetCheckbox()
@@ -211,7 +202,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.checkGetCheckbox()
@@ -221,19 +211,16 @@ describe('23.Object Storage CORS Rules Tests', () => {
         object_storage_cors_page.actions.clickOnSaveCorsRulesBtnInAddModal()
         object_storage_cors_page.actions.isVisibleCreatedCorsRule(testData.maxAgeSeconds)
     })
-    /*it('PD-585 Settings - Adding CORS rules with empty values', () => {             will uncomment ones I got qa-element selectors for invalid msgs  
+    it('PD-585 Settings - Adding CORS rules with empty values', () => {
+        const testData = { bucketName: 'cors-rules-bucket' }
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()        
-        object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)       
-        cy.wait(1000)
+        object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
-        object_storage_cors_page.actions.clickOnSaveCorsRulesBtnInAddModal()
-        object_storage_cors_page.actions.checkInvalidMsgForAllowedOriginsField('Обязательное поле')        
-        object_storage_cors_page.actions.checkInvalidMsgForAllowedHeadersField('Обязательное поле')
-        object_storage_cors_page.actions.checkInvalidMsgForExposeHeadersField('Обязательное поле')
-    })*/
+        object_storage_cors_page.actions.isDisabledSaveBtnInAddModal()
+    })
     it('PD-779-781 Settings - Adding - remove Allowed Origins/Headers/Expose btn', () => {  // 3 test cases in 1 autotest
         const testData =
         {
@@ -244,7 +231,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()
         object_storage_cors_page.actions.clickAddBtnUnderAllowedOriginsField()
         object_storage_cors_page.actions.clickRemoveBtnInAllowedOriginsField()
@@ -263,7 +249,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()    // X icon in Add modal
         object_storage_page.actions.clickCloseBtnInModal()
         object_storage_cors_page.actions.clickOnAddCorsRulesBtn()    // Cancel button in Add modal
@@ -279,7 +264,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickCorsRuleEditBtnPerRowName('5')
         object_storage_cors_page.actions.enterTextToAllowedOriginsInputField(testData.allowedOriginName)
         object_storage_cors_page.actions.enterTextToAllowedHeadersInputField(testData.allowedHeadersName)
@@ -288,22 +272,22 @@ describe('23.Object Storage CORS Rules Tests', () => {
         object_storage_cors_page.actions.clickOnSaveCorsRulesBtnInAddModal()
         object_storage_cors_page.actions.isVisibleCreatedCorsRule('edited')
     })
-    /*it('PD-776 Settings - Editing CORS rules - with invalid data', () => {        will uncomment ones I got qa-element selectors for invalid msgs  
+    it('PD-776 Settings - Editing CORS rules - with invalid data', () => {       
+        const testData =
+        {
+            bucketName: 'cors-rules-bucket'
+        }
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()        
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)       
-        cy.wait(1000)
         object_storage_cors_page.actions.clickCorsRuleEditBtnPerRowName('6')
         object_storage_cors_page.actions.clearAllowedOriginsField()
         object_storage_cors_page.actions.clearAllowedHeadersField()
         object_storage_cors_page.actions.clearExposeHeadersField()
-        object_storage_cors_page.actions.clickOnSaveCorsRulesBtnInAddModal()
-        object_storage_cors_page.actions.checkInvalidMsgForAllowedOriginsField('Обязательное поле')        
-        object_storage_cors_page.actions.checkInvalidMsgForAllowedHeadersField('Обязательное поле')
-        object_storage_cors_page.actions.checkInvalidMsgForExposeHeadersField('Обязательное поле') 
-    }) */
+        object_storage_cors_page.actions.isDisabledSaveBtnInAddModal()
+    }) 
     it('PD-777-778 Settings - Deleting CORS rules, Cancel button in Delete modal', () => {  // 2 test cases in 1 autotest
         const testData =
         {
@@ -314,7 +298,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         sidebar.actions.clickObjectStorageIcon()
         object_storage_page.actions.isVisibleObjectStoragePage()
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
-        cy.wait(1000)
         object_storage_cors_page.actions.clickCorsRuleDeleteBtnPerRowName('6')
         object_storage_cors_page.actions.clickOnCancelBtnInDeleteModal()            // Cancel button in Delete modal
         object_storage_cors_page.actions.clickCorsRuleDeleteBtnPerRowName('6')
@@ -324,7 +307,6 @@ describe('23.Object Storage CORS Rules Tests', () => {
         object_storage_page.actions.clickObjectStorageBucketDeleteBtnPerName(testData.bucketName)
         object_storage_page.actions.enterTextToDeleteBucketInputField(testData.bucketName)
         object_storage_page.actions.clickDeleteBtnInConfirmDeleteModal()
-        cy.wait(1000)
         object_storage_page.actions.IsNotAvailableDeletedBucket(testData.bucketName)
     })
 })

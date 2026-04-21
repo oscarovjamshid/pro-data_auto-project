@@ -108,6 +108,9 @@ class ObjectStorageCorsRules {
             this.elements.saveBtn().click()
             this.elements.allowedOriginsInputField().should('not.exist')
         },
+        isDisabledSaveBtnInAddModal: () => {
+            this.elements.saveBtn().should('be.disabled')
+        },
         checkInvalidMsgForAllowedOriginsField: (text) => {
             this.elements.invalidErrorMsgForAllowedOriginsField().should('be.visible')
             this.elements.invalidErrorMsgForAllowedOriginsField().contains(text)

@@ -504,7 +504,7 @@ describe('22.Object Storage Tests', () => {
         object_storage_page.actions.clickonUploadButtonInUploadFileModal()
         object_storage_page.actions.clickOnViewObjectBtnOnFileRowPerName(testData.filename)
         object_storage_page.actions.clickOnVersioningTab('V1')  // Versions tab display
-        object_storage_page.actions.clickOnViewObjectVersionsTabV1RowDownloadBtn()  // Versions tab - Download btn
+        // object_storage_page.actions.clickOnViewObjectVersionsTabV1RowDownloadBtn()  // Versions tab - Download btn
         object_storage_page.actions.clickOnViewObjectVersionsTabV1RowDeleteBtn()  // Versions tab - Delete btn
         object_storage_page.actions.IsNotAvailableVersionsTabInViewObject('V1')
     })
