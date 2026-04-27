@@ -1,24 +1,26 @@
 class SideBar {
     elements = {
-        servers_icon: () => cy.get('[qa-element="nav_link_servers"]'), 
-        networks_icon: () => cy.get('[qa-element="nav_link_networks"]'), 
-        load_balance_icon: () => cy.get('[qa-element="nav_link_loadbalancers"]'), 
-        disks_icon: () => cy.get('[qa-element="nav_link_disks"]'), 
+        servers_icon: () => cy.get('[qa-element="nav_link_servers"]'),
+        networks_icon: () => cy.get('[qa-element="nav_link_networks"]'),
+        load_balance_icon: () => cy.get('[qa-element="nav_link_loadbalancers"]'),
+        disks_icon: () => cy.get('[qa-element="nav_link_disks"]'),
         securityGroups_icon: () => cy.get('[qa-element="nav_link_security-groups"]'),
-        customOS_icon: () => cy.get('[qa-element="nav_link_templates"]'), 
-        object_storage_icon: () => cy.get('[qa-element="nav_link_storage"]'), 
-        managed_kubernetes_icon: () => cy.get('[qa-element="nav_link_clusters"]'), 
-        userCredentials_icon: () => cy.get('[qa-element="nav_link-account-settings"]'), 
-        manageUser_icon: () => cy.get('[qa-element="nav_link-account-users"]'), 
-        userProfileIcon: () => cy.get('[qa-element="user-card-toggle"]'),
-        profileLogoutIcon: () => cy.get('[qa-element="logout-show"]').contains('Выйти'),
-        confLogoutBtn: () => cy.get('[qa-element="logout-submit"]').contains('Да'), 
+        customOS_icon: () => cy.get('[qa-element="nav_link_templates"]'),
+        object_storage_icon: () => cy.get('[qa-element="nav_link_storage"]'),
+        managed_kubernetes_icon: () => cy.get('[qa-element="nav_link_clusters"]'),
+        userManagement_icon: () => cy.get('[qa-element="nav_link_users"]'),
+        manageUser_icon: () => cy.get('[qa-element="nav_link-account-users"]'),
+        settingsIcon: () => cy.get('[qa-element="account-settings"]'),
+        logOutBtn: () => cy.get('[qa-element="sign-out"]'),
+        confLogoutBtn: () => cy.get('[qa-element="logout-submit"]').contains('Да'),
         consuption_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-reports"]'),
-        backup_icon: () => cy.get('[qa-element="nav_link_backups"]'), 
+        backup_icon: () => cy.get('[qa-element="nav_link_backups"]'),
         action_history_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-log"]'),
         account_history: () => cy.get('[qa-element="sidemenu-nav-account-settings"]'),
-        
-        region_icon: () => cy.get('[qa-element="region-selector"]')
+
+        region_icon: () => cy.get('[qa-element="region-selector"]'),
+        user_icon: () => cy.get('[qa-element="user-menu-toggle"]'),
+        confirmLogoutBtn: () => cy.get('[qa-element="confirm-logout"]')
 
     }
     actions = {
@@ -46,20 +48,24 @@ class SideBar {
         clickManagedKubernetesIcon: () => {
             this.elements.managed_kubernetes_icon().click()
         },
-        clickUserCredentials: () => {
-            this.elements.userCredentials_icon().click()
+        clickUserManagement: () => {
+            this.elements.userManagement_icon().click()
         },
         clickManageUser: () => {
             this.elements.manageUser_icon().click()
         },
-        clickUserProfileIcon: () => {
-            this.elements.userProfileIcon().click()
+        clickUserIcon: () => {
+            this.elements.user_icon().click()
         },
-        clickProfileLogoutIcon: () => {
-            this.elements.profileLogoutIcon().click()
+        clickSettingsIcon: () => {
+            this.elements.settingsIcon().click()
+        },
+        clickLogOutBtn: () => {
+            this.elements.user_icon().click()
+            this.elements.logOutBtn().click()
         },
         clickConfLogoutBtn: () => {
-            this.elements.confLogoutBtn().click()
+            this.elements.confirmLogoutBtn().click()
         },
         clickConsuptionIcon: () => {
             this.elements.consuption_icon().click()

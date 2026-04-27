@@ -2,7 +2,6 @@ cy.on('uncaught:exception', (err, runnable) => {
     return false;
 });
 
-import { test } from "mocha";
 import login_page from "../pages/login_page";
 import forgot_password_page from "../pages/forgot_password_page";
 

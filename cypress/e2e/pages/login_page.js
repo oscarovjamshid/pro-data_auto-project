@@ -6,6 +6,7 @@ class Login {
         languageBtn: () => cy.get('[qa-element="language-selector"]'),
         russianTxt: () => cy.get('#root > main > aside:first-child > div:first-child > div:first-child > ul > li:first-child'), //later change this to qa-element tag
         passwordErrorLbl: () => cy.get('[qa-element="password-error"]'), 
+        blockedPasswordErrorLbl: () => cy.get('[qa-element="auth-password-error"]'),
     }
     actions = {
         isVisibleLoginTxt: () => {
@@ -74,11 +75,10 @@ class Login {
             this.elements.passwordErrorLbl().should('be.visible')
             this.elements.passwordErrorLbl().contains(text)
         },
+        isVisiblePasswordErrorTextForBlockedOrNotFound: (text) => {
+            this.elements.blockedPasswordErrorLbl().should('be.visible')
+            this.elements.blockedPasswordErrorLbl().contains(text)
+        },
     }
 }
-
-
-
-
-
 module.exports = new Login()
