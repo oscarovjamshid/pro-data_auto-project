@@ -54,7 +54,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtnWhenNoRecords()
         managedKubernetes_page.actions.enterKlassterNameInp("   ")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectFirstOldVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
     it('[PD-134] Create cluster: Cyrillic letters', () => {
@@ -63,7 +63,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtnWhenNoRecords()
         managedKubernetes_page.actions.enterKlassterNameInp("ровыпаоыврраыв")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
     it('[PD-140] Create cluster: capital letters', () => {
@@ -72,17 +72,17 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtnWhenNoRecords()
         managedKubernetes_page.actions.enterKlassterNameInp("THISISTEST")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
-    it('[PD-128,784,787, 791, 792] Create cluster: with Basic-Private type', () => {                       //  5 test cases in 1 autotest
+    it('[PD-128,784,787, 791, 792] Create cluster: with Basic-Private type (v.1.29.6)', () => {                       //  5 test cases in 1 autotest
         const clusterName = "basic-priv";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickCreateClusterBtnWhenNoRecords()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()                       // 784 - Create cluster: with existing local network
@@ -109,14 +109,14 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.wait(5000)
         managedKubernetes_page.actions.isVisibleCreatedKuberCluster(clusterName)
     })
-    it('[PD-130, PD-787] Create cluster: with Basic-Public type (v.1.29.6)', () => {         // 2 test cases in 1 autotest
+    it('[PD-130, PD-787] Create cluster: with Basic-Public type (v.1.34.3)', () => {         // 2 test cases in 1 autotest
         const clusterName = "basic-pub";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("34.3")  //v.1.34.3
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.clickPublicClusterSwitchLabel()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
@@ -145,7 +145,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("34.3")  //v.1.34.3
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.clickPublicClusterSwitchLabel()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
@@ -163,7 +163,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.enterKlassterNameInp("ha-pub")
         managedKubernetes_page.actions.clickHaControlGroupSwitchLabel()
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectMiddleVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("30.5")  //v.1.30.5
         managedKubernetes_page.actions.clickUploadYourPublicKeyRadioBtn()               // 782 - Creating cluster: with 'Upload your public SSH key'
         managedKubernetes_page.actions.attachSshFileForPublicKeyFilepicker()
         managedKubernetes_page.actions.clickNextPageContinueBtn()
@@ -188,7 +188,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.clickHaControlGroupSwitchLabel()
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("31.4")  //v.1.31.4
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -213,7 +213,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -229,7 +229,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -245,7 +245,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -260,7 +260,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0")
         managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
@@ -271,7 +271,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -288,7 +288,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -305,7 +305,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -322,7 +322,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -339,7 +339,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -356,7 +356,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -373,7 +373,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("test")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -392,7 +392,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("test")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -405,13 +405,13 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.setWorkerNodeMax(2)
         managedKubernetes_page.actions.isVisibleInvalidWorkerNodeSizeText('Максимальное количество воркер-нод должно быть больше минимального')
     })
-    // it('[PD-788] Create cluster: with autoscaling - invalid values (unsuccessful)', () => {  // not possible to enter 0
+    // it('[PD-788] Create cluster: with autoscaling - invalid values (unsuccessful)', () => {  // inactual test scenario since now it's not possible to enter 0
     //     cy.login(configData.base_url, configData.login, configData.password)
     //     sidebar.actions.clickManagedKubernetesIcon()
     //     managedKubernetes_page.actions.clickCreateClusterBtn()
     //     managedKubernetes_page.actions.enterKlassterNameInp("test")
     //     managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-    //     managedKubernetes_page.actions.selectNewLatestVersionFromListFn()
+    //     managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
     //     managedKubernetes_page.actions.clickNextPageContinueBtn()
     //     managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
     //     managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -434,22 +434,23 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCancelBtnInAddPage()
         managedKubernetes_page.actions.isVisibleCreateClusterBtn()
     })
-    it.only('[PD-793] Configuration: Update Kubernetes Version to valid version', () => {
+    it('[PD-793] Configuration: Update Kubernetes Version to valid version', () => {
         const clusterName = "basic-priv";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
         managedKubernetes_page.actions.isVisibleClusterStatus('В работе')
+        managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickUpdateKuberVersionBtn()
         managedKubernetes_page.actions.clickUpdateKuberVersionDropdownList()
-        managedKubernetes_page.actions.selectMediumKuberVersion()            // updating from v.29 to v.30
+        managedKubernetes_page.actions.selectKuberVersionByNumber("30.5")           // updating from v.29.6 to v.30.5
         managedKubernetes_page.actions.clickSubmitBtnInUpdateKuberVersionList()
         managedKubernetes_page.actions.isVisibleClusterStatus('Конфигурируется')
         managedKubernetes_page.actions.clickCancelBtnInAddPage() // this is back btn here
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.isVisibleClusterKuberTextInConfigurationTab('Версия:', 'v1.30.5')
+        managedKubernetes_page.actions.isVisibleClusterKuberTextInConfigurationTab("Версия:", "v1.30.5")
     })
     it('[PD-794] Configuration: Update Kubernetes Version to invalid version (from higher to lower)', () => {
         const clusterName = "basic-priv";
@@ -457,12 +458,11 @@ describe('24.Managed Kubernetes Tests', () => {
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleClusterStatus('В работе')
+        managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickUpdateKuberVersionBtn()
         managedKubernetes_page.actions.clickUpdateKuberVersionDropdownList()
-        cy.wait(1000)
-        managedKubernetes_page.actions.isDisabledKuberVersionOptionInList()
+        managedKubernetes_page.actions.isDisabledKuberVersionOptionInList("30.5")
     })
     it('[PD-795] Configuration: Change control group from lower to higher config', () => {
         const clusterName = "basic-priv";
@@ -470,18 +470,16 @@ describe('24.Managed Kubernetes Tests', () => {
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleClusterStatus('В работе')
+        managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickChangeControlGroupBtn()
         managedKubernetes_page.actions.clickChangeControlGroupDropdownList()
-        cy.wait(1000)
         managedKubernetes_page.actions.selectFirstOptionInChangeControlGroupList()            // updating from 2CPU to 8CPU config
         managedKubernetes_page.actions.clickSubmitBtnInChangeControlGroupPopUp()
-        cy.wait(2000)
+        cy.wait(2000) //after clicked Submit btn, it takes time to appear pop-up with Close btn
         managedKubernetes_page.actions.clickCloseBtnInPopUpAppearsAfterChangedControlGroup()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleClusterKuberTextInConfigurationTab('Группа управления:', 'Базовая, 8 CPU, 16 Гб RAM, 50 Гб SSD')
     })
     it('[PD-796] Configuration: Change control group from higher to lower config', () => {
@@ -490,18 +488,16 @@ describe('24.Managed Kubernetes Tests', () => {
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleClusterStatus('В работе')
+        managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickChangeControlGroupBtn()
         managedKubernetes_page.actions.clickChangeControlGroupDropdownList()
-        cy.wait(1000)
         managedKubernetes_page.actions.selectFirstOptionInChangeControlGroupList()            // updating from 8CPU to 2CPU config
         managedKubernetes_page.actions.clickSubmitBtnInChangeControlGroupPopUp()
-        cy.wait(2000)
+        cy.wait(2000) //after clicked Submit btn, it takes time to appear pop-up with Close btn
         managedKubernetes_page.actions.clickCloseBtnInPopUpAppearsAfterChangedControlGroup()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleClusterKuberTextInConfigurationTab('Группа управления:', 'Базовая, 2 CPU, 4 Гб RAM, 20 Гб SSD')
     })
     it('[PD-797] Connection: Downloading v1.29.6 cluster config.yaml file (validating contents)', () => {
@@ -510,7 +506,6 @@ describe('24.Managed Kubernetes Tests', () => {
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleClusterStatus('В работе')
         managedKubernetes_page.actions.clickConnectionTab()
         managedKubernetes_page.actions.clickDownloadConfigYamlBtn()
@@ -535,7 +530,6 @@ describe('24.Managed Kubernetes Tests', () => {
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleClusterStatus('В работе')
         managedKubernetes_page.actions.clickConnectionTab()
         managedKubernetes_page.actions.clickDownloadConfigYamlBtn()
@@ -585,7 +579,6 @@ describe('24.Managed Kubernetes Tests', () => {
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleClusterStatus('В работе')
         managedKubernetes_page.actions.clickConnectionTab()
         managedKubernetes_page.actions.clickDownloadConfigYamlBtn()
@@ -595,7 +588,7 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
+        managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickDeleteClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.clickDeleteClusterSubmitBtn()
@@ -606,7 +599,7 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
+        managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickDeleteClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.clickDeleteClusterSubmitBtn()
@@ -617,7 +610,7 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
+        managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickDeleteClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.clickDeleteClusterSubmitBtn()
@@ -630,13 +623,12 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
         managedKubernetes_page.actions.clickAddPoolBtn()
         managedKubernetes_page.actions.enterKubernetesVunkerCode(newPoolName)
         managedKubernetes_page.actions.clickAutoscalingCheckbox()
-        managedKubernetes_page.actions.clickCreatePoolBtn()
-        cy.wait(2000)
+        managedKubernetes_page.actions.clickNextPageContinueBtn()
+        managedKubernetes_page.actions.openWorkerNodePoolTabWhenReady(clusterName, defaultPoolName)
         managedKubernetes_page.actions.waitForWorkerNodePoolReady(newPoolName)
         managedKubernetes_page.actions.isVisibleCreatedKuberCluster(newPoolName)  // here it refers to worker node pool row - (Автомасштабируемый)
     })
@@ -647,12 +639,11 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
         managedKubernetes_page.actions.clickAddPoolBtn()
         managedKubernetes_page.actions.enterKubernetesVunkerCode(newPoolName)
-        managedKubernetes_page.actions.clickCreatePoolBtn()
-        cy.wait(2000)
+        managedKubernetes_page.actions.clickNextPageContinueBtn()
+        managedKubernetes_page.actions.openWorkerNodePoolTabWhenReady(clusterName, defaultPoolName)
         managedKubernetes_page.actions.waitForWorkerNodePoolReady(newPoolName)
         managedKubernetes_page.actions.isVisibleCreatedKuberCluster(newPoolName)  // here it refers to worker node pool row
     })
@@ -662,10 +653,9 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
         managedKubernetes_page.actions.clickAddPoolBtn()
-        managedKubernetes_page.actions.clickCreatePoolBtn()
+        managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.isVisibleInvalidWorkerNodePoolText("Обязательное поле")  // here it refers to worker node pool row
     })
     it('[PD-802] Worker Node Pool: Create New: negative numbers to configs (unsuccessful)', () => {
@@ -674,14 +664,13 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
         managedKubernetes_page.actions.clickAddPoolBtn()
         managedKubernetes_page.actions.enterKubernetesVunkerCode(defaultPoolName)
-        managedKubernetes_page.actions.enterWorkerNodeRamData('-743578435847373893')
-        managedKubernetes_page.actions.enterWorkerNodeCpuData('-57843584373893')
-        managedKubernetes_page.actions.enterWorkerNodeDiskData('-743578435847373893')
-        managedKubernetes_page.actions.clickCreatePoolBtn()
+        managedKubernetes_page.actions.setPoolCpu('-743578435847373893')
+        managedKubernetes_page.actions.setPoolRam('-57843584373893')
+        managedKubernetes_page.actions.setPoolDisk('-743578435847373893')
+        managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
     it('[PD-803] Worker Node Pool: Create New: out of limit numbers to configs (unsuccessful)', () => {
         const clusterName = "basic-priv";
@@ -689,14 +678,13 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
         managedKubernetes_page.actions.clickAddPoolBtn()
         managedKubernetes_page.actions.enterKubernetesVunkerCode(defaultPoolName)
-        managedKubernetes_page.actions.enterWorkerNodeRamData('743578435847373893')
-        managedKubernetes_page.actions.enterWorkerNodeCpuData('74357843584373893')
-        managedKubernetes_page.actions.enterWorkerNodeDiskData('743578435847373893')
-        managedKubernetes_page.actions.clickCreatePoolBtn()
+        managedKubernetes_page.actions.setPoolRam('743578435847373893')
+        managedKubernetes_page.actions.setPoolCpu('74357843584373893')
+        managedKubernetes_page.actions.setPoolDisk('743578435847373893')
+        managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
     it('[PD-804] Worker Node Pool: Deleting pool (if there is extra pool)', () => {
         const clusterName = "basic-priv";
@@ -705,9 +693,7 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(newPoolName1)
-        cy.wait(2000)
         managedKubernetes_page.actions.clickClusterRowPerName(newPoolName1)        // here it refers to the pool row
         managedKubernetes_page.actions.clickDeletePoolBtn()
         managedKubernetes_page.actions.enterTextToDeletePoolField(newPoolName1)
@@ -725,16 +711,10 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        cy.wait(2000)
         managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
         managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
-        cy.wait(1000)
-        managedKubernetes_page.actions.enterWorkerNodeMinSize(0)
-        managedKubernetes_page.actions.isVisibleInvalidWorkerNodeSizeText('Неверное значение')
-        managedKubernetes_page.actions.enterWorkerNodeMinSize(-1)
-        managedKubernetes_page.actions.isVisibleInvalidWorkerNodeSizeText('Неверное значение')
+        managedKubernetes_page.actions.isWorkerNodeDecreaseBtnDisabled()
     })
     it('[PD-805] Worker Node Pool: Configure Worker Node Pool Size: enable autoscaling', () => {
         const clusterName = "basic-priv";
@@ -742,14 +722,12 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        cy.wait(2000)
         managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
         managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
         managedKubernetes_page.actions.clickAutoscalingCheckbox()
-        managedKubernetes_page.actions.clickCreatePoolBtn()
-        cy.wait(2000)
+        managedKubernetes_page.actions.clickWorkedNodeIncreaseBtn()
+        managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.waitForWorkerNodePoolReady(defaultPoolName)
         managedKubernetes_page.actions.isVisibleCreatedKuberCluster(defaultPoolName + " (Автомасштабируемый)")  // here it refers to worker node pool row - 
     })
@@ -759,18 +737,14 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        cy.wait(2000)
         managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
         managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
         managedKubernetes_page.actions.clickAutoscalingCheckbox()
-        managedKubernetes_page.actions.clickCreatePoolBtn()
-        cy.wait(2000)
+        managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.waitForWorkerNodePoolReady(defaultPoolName)
         managedKubernetes_page.actions.isVisibleCreatedKuberCluster(defaultPoolName)  // here it refers to worker node pool row 
         managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
-        cy.wait(2000)
         managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
         managedKubernetes_page.actions.IsAutoScalingNotChecked()
     })
@@ -780,9 +754,7 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        cy.wait(2000)
         managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
         managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
         managedKubernetes_page.actions.clickAutoscalingCheckbox()
@@ -800,7 +772,6 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleConfigurationTabMainData(configFields)
     })
     it('[PD-810] Virtual Servers: Worker Node: Local Network tab (assertion)', () => {
@@ -809,7 +780,6 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
-        cy.wait(1000)
         managedKubernetes_page.actions.clickLocalNetworkTab()
         managedKubernetes_page.actions.isVisibleConfigurationTabMainData(configFields)
     })
@@ -818,7 +788,6 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleRebootBtn()
         managedKubernetes_page.actions.clickRebootBtn()
         managedKubernetes_page.actions.waitForWorkerNodeReady()
@@ -828,15 +797,14 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
-        cy.wait(1000)
         managedKubernetes_page.actions.isVisibleConsoleBtn()
     })
-    it('[PD-809] Delete cluster: Basic-Private type', () => {
+    it.only('[PD-809] Delete cluster: Basic-Private type', () => {
         const clusterName = "basic-priv";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        cy.wait(1000)
+        managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickDeleteClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.clickDeleteClusterSubmitBtn()

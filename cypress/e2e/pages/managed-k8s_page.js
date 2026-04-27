@@ -7,10 +7,7 @@ class ManagedKubernetes {
         createClusterBtn: () => cy.get('[qa-element="to-new-cluster"]'),
         enterNameToCluster: () => cy.get('[qa-element="cluster-name"]'),
         selectVersionKuber: () => cy.get('[qa-element="kuber-version-toggle"]'),
-        selectOldVersion: () => cy.get('[qa-element="kuber-version-0"]'), // v.31.4
-        selectMiddleVersion: () => cy.get('[qa-element="kuber-version-0"]'), // v.30.5
-        updateToMediumVersion: () => cy.get('[qa-element="update-kuber-version-1"]'),
-        selectNewLatestVersion: () => cy.get('[qa-element="kuber-version-2"]'), // // v.29.6
+        selectKuberVersionByNumber: (versionNumber) => cy.get(`li[data-value*="${versionNumber}"] button`),
         continueNextpageBtn: () => cy.get('[qa-element="create-cluster-continue"]'),
         kubernetes_isVisibleInValidTxt: (text) => cy.get('[qa-element="cluster-name-error"]').contains(text),
         kubernetes_podovInp: () => cy.get('[qa-element="pod-subnet-mask"]').last(),
@@ -43,24 +40,25 @@ class ManagedKubernetes {
         cancelBtnInAddClusterPage: () => cy.get('[qa-element="to-cluster-list"]'),
         clusterStatusPerRowName: (name) => cy.contains('tr', name).find('[qa-element="cluster-status"]'),
         clusterStatus: () => cy.get('[qa-element="cluster-status"]'),
-        updateKuberVersionBtn: () => cy.get('[qa-element="show-kuber-version"]'),
-        updateKuberVersionDropdownList: () => cy.get('[qa-element="update-kuber-version-open"]'),
+        actionBtnInCluster: () => cy.contains('button', "Действия"), // qa-element is needed here
+        updateKuberVersionBtn: () => cy.contains("Обновить версию Kubernetes"), // qa-element is needed here
+        updateKuberVersionDropdownList: () => cy.get('[qa-element="update-kuber-version-toggle"]'),
         clusterVersionSubmitBtnInUpdateList: () => cy.get('[qa-element="cluster-version-submit"]'),
         clusterKuberVersionInConfigurationTab: () => cy.get('.fw-medium'),
         clusterChangeControlGroupBtn: () => cy.get('[qa-element="show-update-master-config"]'),
-        clusterChangeControlGroupDropdownList: () => cy.get('[qa-element="master-node-config-id-open"]'),
+        clusterChangeControlGroupDropdownList: () => cy.get('[qa-element="master-node-config-id-toggle"]'),
         changeControlGroupSubmitBtn: () => cy.get('[qa-element="update-master-config-submit"]'),
         changeControlGroupListFirstOption: () => cy.get('[qa-element="master-node-config-id-0"]'),
-        closeButtonInPopUpAfterChangedControlGroup: () => cy.get('button.btn-close.btn-close-white'),
-        connectionTab: () => cy.get('[qa-element="tab-1"]'),
-        workerNodePoolsTab: () => cy.get('[qa-element="tab-2"]'),
+        closeButtonInPopUpAfterChangedControlGroup: () => cy.get('[class^="Modal_Header_closeButton"]'),
+        connectionTab: () => cy.get('[qa-element="undefined-1"]'),
+        workerNodePoolsTab: () => cy.get('[qa-element="undefined-2"]'),
         downloadConfigYamlBtnInConfigurationTab: () => cy.get('[qa-element="download-yaml"]'),
         copyYamlIconInConfigurationTab: () => cy.get('[qa-element="copy-yaml"]'),
         createNewWorkerNodePoolBtn: () => cy.get('[qa-element="show-add-node-pool"]'),
         createNewPoolBtnInAddNewPoolPopUp: () => cy.get('[qa-element="add-node-pool"]'),
         configureWorkerNodePoolSizeBtn: () => cy.get('[qa-element="configure-pool-show"]'),
         deletePoolBtn: () => cy.get('[qa-element="show-delete-pool"]'),
-        deleteClusterBtn: () => cy.get('[qa-element="show-cluster-delete"]'),
+        deleteClusterBtn: () => cy.contains('span', 'Удалить'), // qa-element is needed here
         deleteClusterSubmitBtn: () => cy.get('[qa-element="cluster-delete-submit"]'),
         workerNodePoolStatusPerRowNameInWorkerNodePoolsTab: (name) => cy.contains('tr', name).find('[qa-element="worker-node-status"]'),
         workerNodePool_isVisibleInValidTxtVunker: () => cy.get('[qa-element="create-pool-name-error"]'),
@@ -76,7 +74,8 @@ class ManagedKubernetes {
         configureWorkerNodePoolSizeMinNodeFieldError: () => cy.get('[qa-element="worker-replicas-min-range-error"]'),
         rebootBtn: () => cy.get('[qa-element="node-reboot"]'),
         consoleBtn: () => cy.get('[qa-element="node-pools-console"]'),
-        workerNodeStatus: () => cy.get('[qa-element="vm-status"]'),
+        workerNodeStatus: () => cy.get('[class^="mr-auto Badge"]'),
+        clusterKuberConfigTextInConfigurationTab: (label) => cy.contains('td', label).next('td'),
 
         // new selectors for cpu and ram, disk by buttons instead of typing fields
         minWorkerNodeDecreaseBtn: () => cy.get('[qa-element="worker-replicas-range-decrease"]').eq(0),
@@ -94,6 +93,15 @@ class ManagedKubernetes {
         workerNodeCpuValue: () => cy.get('[qa-element="worker-cpu-range"]'),
         workerNodeRamValue: () => cy.get('[qa-element="worker-ram-range"]'),
         workerNodeDiskValue: () => cy.get('[qa-element="worker-disk-size-range"]'),
+        poolCpuValue: () => cy.get('[qa-element="create-pool-worker-cpu-range"]'),
+        poolRamValue: () => cy.get('[qa-element="create-pool-worker-ram-range"]'),
+        poolDiskValue: () => cy.get('[qa-element="create-pool-worker-disk-size-range"]'),
+        poolCpuIncreaseBtn: () => cy.get('[qa-element="create-pool-worker-cpu-range-increase"]'),
+        poolCpuDecreaseBtn: () => cy.get('[qa-element="create-pool-worker-cpu-range-decrease"]'),
+        poolRamIncreaseBtn: () => cy.get('[qa-element="create-pool-worker-ram-range-increase"]'),
+        poolRamDecreaseBtn: () => cy.get('[qa-element="create-pool-worker-ram-range-decrease"]'),
+        poolDiskIncreaseBtn: () => cy.get('[qa-element="create-pool-worker-disk-size-range-increase"]'),
+        poolDiskDecreaseBtn: () => cy.get('[qa-element="create-pool-worker-disk-size-range-decrease"]'),
     }
     actions = {
         clickOnUserAgreementLink: () => {
@@ -129,14 +137,8 @@ class ManagedKubernetes {
         selectVersionKubernetesKlasster: () => {
             this.elements.selectVersionKuber().click()
         },
-        selectFirstOldVersionFromListFn: () => {
-            this.elements.selectOldVersion().click()
-        },
-        selectNewLatestVersionFromListFn: () => {
-            this.elements.selectNewLatestVersion().click()
-        },
-        selectMiddleVersionFromListFn: () => {
-            this.elements.selectMiddleVersion().click()
+        selectKuberVersionByNumber: (number) => {  // select version by number
+            this.elements.selectKuberVersionByNumber(number).click()
         },
         clickNextPageContinueBtn: () => {
             this.elements.continueNextpageBtn().click()
@@ -233,6 +235,7 @@ class ManagedKubernetes {
         },
         clickAutoscalingCheckbox: () => {
             this.elements.autoscalingCheckbox().click()
+            this.elements.autoscalingCheckbox().should('be.checked')
         },
         enterWorkerNodeMinSize: (number) => {
             this.elements.autoscalingWorkerNodeMinField().clear().type(number)
@@ -284,6 +287,9 @@ class ManagedKubernetes {
         isVisibleClusterStatus: (text) => {
             this.elements.clusterStatus().contains(text).should('be.visible')
         },
+        clickActionBtnInCluster: () => {
+            this.elements.actionBtnInCluster().click()
+        },
         // Update Kuber Version Section
         clickUpdateKuberVersionBtn: () => {
             this.elements.updateKuberVersionBtn().click()
@@ -292,16 +298,18 @@ class ManagedKubernetes {
             this.elements.updateKuberVersionDropdownList().click()
         },
         selectMediumKuberVersion: () => {
-            this.elements.updateToMediumVersion().click()
+            this.elements.selectMiddleVersion().click()
         },
         clickSubmitBtnInUpdateKuberVersionList: () => {
             this.elements.clusterVersionSubmitBtnInUpdateList().click()
         },
         isVisibleClusterKuberTextInConfigurationTab: (label, text) => {
-            cy.contains('span.fw-medium', label).next('span').should('contain.text', text).and('be.visible')
+            this.elements.clusterKuberConfigTextInConfigurationTab(label)
+                .should('contain.text', text)
+                .and('be.visible')
         },
-        isDisabledKuberVersionOptionInList: () => {
-            this.elements.updateToMediumVersion().should('have.class', 'disabled')
+        isDisabledKuberVersionOptionInList: (version) => {
+            this.elements.selectKuberVersionByNumber(version).should('be.disabled')
         },
         // Change Control Group section
         clickChangeControlGroupBtn: () => {
@@ -338,6 +346,49 @@ class ManagedKubernetes {
         clickWorkerNodePoolTab: (text) => {
             this.elements.workerNodePoolsTab().click()
             this.elements.managedKubernetesRowPerName(text).should('be.visible')
+        },
+        openWorkerNodePoolTabWhenReady: (clusterName, poolName, timeoutMs = 180000, refreshIntervalMs = 10000) => {
+            cy.log(`Waiting for worker-node-pool configuration on "${clusterName}" to finish...`)
+            const startedAt = Date.now()
+            const workerNodePoolsTabSelector = '[qa-element="undefined-2"]'
+            const workerNodePoolTooltipText = 'Идёт конфигурация пула воркер-нод'
+
+            const tryOpen = () => {
+                if (Date.now() - startedAt > timeoutMs) {
+                    throw new Error(`Timed out waiting for worker-node-pool configuration to finish for cluster "${clusterName}"`)
+                }
+
+                cy.reload()
+                this.elements.managedKubernetesRowPerName(clusterName)
+                    .scrollIntoView()
+                    .trigger('mouseenter', { force: true })
+                    .trigger('mousemove', { force: true })
+
+                cy.get('body').then(($body) => {
+                    const tooltipVisible = $body.text().includes(workerNodePoolTooltipText)
+
+                    if (tooltipVisible) {
+                        cy.wait(refreshIntervalMs).then(tryOpen)
+                        return
+                    }
+
+                    this.elements.managedKubernetesRowPerName(clusterName).click()
+
+                    cy.get('body').then(($detailsBody) => {
+                        const tabVisible = $detailsBody.find(workerNodePoolsTabSelector).length > 0
+
+                        if (!tabVisible) {
+                            cy.wait(refreshIntervalMs).then(tryOpen)
+                            return
+                        }
+
+                        cy.get(workerNodePoolsTabSelector).should('be.visible').click()
+                        this.elements.managedKubernetesRowPerName(poolName).should('be.visible')
+                    })
+                })
+            }
+
+            tryOpen()
         },
         clickAddPoolBtn: () => {
             this.elements.createNewWorkerNodePoolBtn().click()
@@ -509,6 +560,51 @@ class ManagedKubernetes {
                 }
             })
         },
+        setPoolCpu: (target) => {
+            this.elements.poolCpuValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 20
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.poolCpuIncreaseBtn() : this.elements.poolCpuDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+        setPoolRam: (target) => {
+            this.elements.poolRamValue().then(($el) => {
+                const min = Number($el.attr('min')) || 1
+                const max = Number($el.attr('max')) || 20
+                const current = Number($el.val())
+                const desired = Math.min(max, Math.max(min, Number(target)))
+                const diff = desired - current
+                const button = diff > 0 ? this.elements.poolRamIncreaseBtn() : this.elements.poolRamDecreaseBtn()
+                Cypress._.times(Math.abs(diff), () => button.click())
+            })
+        },
+        setPoolDisk: (target) => {
+            this.elements.poolDiskValue().then(($el) => {
+                const max = Number($el.attr('max')) || 300
+                const current = Number($el.val())
+                const desired = Math.min(max, Number(target))
+                const diff = desired - current
+                if (diff > 0) {
+                    let clicks = 0
+                    const clickIncrease = () => {
+                        if (clicks >= Math.abs(diff)) return
+                        this.elements.poolDiskIncreaseBtn().then(($btn) => {
+                            if ($btn.is(':disabled')) return
+                            cy.wrap($btn).click({ force: true })
+                            clicks++
+                            clickIncrease()
+                        })
+                    }
+                    clickIncrease()
+                } else if (diff < 0) {
+                    Cypress._.times(Math.abs(diff), () => this.elements.poolDiskDecreaseBtn().click({ force: true }))
+                }
+            })
+        },
         isWorkerNodeCpuIncreaseBtnDisabled: () => {
             this.elements.workerNodeCpuIncreaseBtn().should('be.disabled')
         },
@@ -518,6 +614,15 @@ class ManagedKubernetes {
         isWorkerNodeDiskIncreaseBtnDisabled: () => {
             this.elements.workerNodeDiskIncreaseBtn().should('be.disabled')
         },
+        isPoolCpuIncreaseBtnDisabled: () => {
+            this.elements.poolCpuIncreaseBtn().should('be.disabled')
+        },
+        isPoolRamIncreaseBtnDisabled: () => {
+            this.elements.poolRamIncreaseBtn().should('be.disabled')
+        },
+        isPoolDiskIncreaseBtnDisabled: () => {
+            this.elements.poolDiskIncreaseBtn().should('be.disabled')
+        },
         isWorkerNodeCpuDecreaseBtnDisabled: () => {
             this.elements.workerNodeCpuDecreaseBtn().should('be.disabled')
         },
@@ -526,6 +631,21 @@ class ManagedKubernetes {
         },
         isWorkerNodeDiskDecreaseBtnDisabled: () => {
             this.elements.workerNodeDiskDecreaseBtn().should('be.disabled')
+        },
+        isPoolCpuDecreaseBtnDisabled: () => {
+            this.elements.poolCpuDecreaseBtn().should('be.disabled')
+        },
+        isPoolRamDecreaseBtnDisabled: () => {
+            this.elements.poolRamDecreaseBtn().should('be.disabled')
+        },
+        isPoolDiskDecreaseBtnDisabled: () => {
+            this.elements.poolDiskDecreaseBtn().should('be.disabled')
+        },
+        isWorkerNodeDecreaseBtnDisabled: () => {
+            this.elements.minWorkerNodeDecreaseBtn().should('be.disabled')
+        },
+        clickWorkedNodeIncreaseBtn: () => {
+            this.elements.minWorkerNodeIncreaseBtn().click()
         },
     }
 }
