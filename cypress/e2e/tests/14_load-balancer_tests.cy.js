@@ -279,7 +279,8 @@ describe('14.Load Balancer Tests', () => {
         localNetworks_page.actions.clickDetachNetworkBtn()
         localNetworks_page.actions.clickConfirmCheckbox()
         localNetworks_page.actions.clickNetworkDeleteConfirmBtn()
-        localNetworks_page.actions.isNotVisibleNetworkEditeBtn()
+        load_balancer_page.actions.networkCannotBeDeletedPopUpIsVisible("Данная сеть и сервер входят в backend группу балансировщика нагрузки")
+        /*localNetworks_page.actions.isNotVisibleNetworkEditeBtn() // this flow has been changed - now it's impossible to detach LN from server if it's used in LB
         serverAction_page.actions.clickServerActionsBtn()
         serverAction_page.actions.clickStopServerBtn()
         serverAction_page.actions.clickStopServerBtn()
@@ -299,7 +300,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerPort(testData.balancerPort)
         load_balancer_page.actions.typeBackendPort(testData.backendPort)
         load_balancer_page.actions.clickBalancerPortConfBtn()
-        load_balancer_page.actions.isDisabledBalancerCreateConfBtn()
+        load_balancer_page.actions.isDisabledBalancerCreateConfBtn() */ 
     })
     it('[PD-447] Create - LB with port number > 65536 (unsuccessful)', () => {
         const testData = {
@@ -456,6 +457,7 @@ describe('14.Load Balancer Tests', () => {
         const balancerName = 'External-LB-TCP';
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickLoadBalanceIcon()
+        load_balancer_page.actions.waitForLoadBalancerReadyStatus(balancerName)
         load_balancer_page.actions.clickEditLoadBalancerBtnPerRowName(balancerName)
         load_balancer_page.actions.clickCancelBtnInEditPage()
         load_balancer_page.actions.isVisibleCreateBtn()
@@ -467,6 +469,7 @@ describe('14.Load Balancer Tests', () => {
         }
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickLoadBalanceIcon()
+        load_balancer_page.actions.waitForLoadBalancerReadyStatus(testData.balancerName)
         load_balancer_page.actions.clickEditLoadBalancerBtnPerRowName(testData.balancerName)
         load_balancer_page.actions.editBalancerName(testData.invalidLbName)
         load_balancer_page.actions.clickConfirmBtnInEditPage()
@@ -480,6 +483,7 @@ describe('14.Load Balancer Tests', () => {
         }
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickLoadBalanceIcon()
+        load_balancer_page.actions.waitForLoadBalancerReadyStatus(testData.balancerName)
         load_balancer_page.actions.clickEditLoadBalancerBtnPerRowName(testData.balancerName)
         load_balancer_page.actions.editBalancerName(testData.balancerEditedName)
         load_balancer_page.actions.editBalancerDescription(testData.balancerEditedDesc)

@@ -11,7 +11,8 @@ class Server {
         serverOsOption: (index) => cy.get(`[qa-element="filtered-os-type-${index}"]`),
         customOsOption: (index) => cy.get(`[qa-element="custom-template-${index}"]`),
         serverOsOptionByName: (name) => cy.get('div[role="dialog"][aria-modal="true"]').contains('div', name),
-        versionDropdownLabel: () => cy.get('[qa-element="filtered-os-template-toggle"]'), // version of OS list
+        versionDropdownList: () => cy.get('[qa-element="filtered-os-template-toggle"]'), // version of OS list
+        versionNameOption: () => cy.get('[qa-element="filtered-os-template-0"]'), // option of version by name
         confirmOsBtn: () => cy.get('[qa-element="template-selector-submit"]'),
         serverTitleTxt: () => cy.get('[qa-element="vm-create-name"]'),
         serverDescTxt: () => cy.get('[qa-element="vm-create-desc"]'),
@@ -89,6 +90,11 @@ class Server {
         selectServerOsByName: (name) => {
             this.elements.serverOsOptionByName(name).click()
         },
+        selectVersionOs: () => {
+            this.elements.versionDropdownList().click()
+            this.elements.versionNameOption().click()
+        },
+
         selectCustomOs: (id) => {
             const index = id > 0 ? id - 1 : 0;
             this.elements.customOsOption(index).click()

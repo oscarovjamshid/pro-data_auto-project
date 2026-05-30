@@ -799,7 +799,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
         managedKubernetes_page.actions.isVisibleConsoleBtn()
     })
-    it.only('[PD-809] Delete cluster: Basic-Private type', () => {
+    it('[PD-809] Delete cluster: Basic-Private type', () => {
         const clusterName = "basic-priv";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()

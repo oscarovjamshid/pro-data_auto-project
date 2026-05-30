@@ -16,7 +16,7 @@ class SideBar {
         consuption_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-reports"]'),
         backup_icon: () => cy.get('[qa-element="nav_link_backups"]'),
         action_history_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-log"]'),
-        account_history: () => cy.get('[qa-element="sidemenu-nav-account-settings"]'),
+        access_keys_icon: () => cy.get('[qa-element="nav_link_access-keys"]'),
 
         region_icon: () => cy.get('[qa-element="region-selector"]'),
         user_icon: () => cy.get('[qa-element="user-menu-toggle"]'),
@@ -76,8 +76,9 @@ class SideBar {
         clickAction_history_icon: () => {
             this.elements.action_history_icon().click()
         },
-        clickAccount_history: () => {
-            this.elements.account_history().click()
+        clickAccessKeysIcon: () => {
+            this.elements.access_keys_icon().click()
+            cy.wait(1000)
         },
         selectRegionByName: (name) => {                 // selecting region like UZ3, UZ5, UZ6
             this.elements.region_icon().contains(name).click()

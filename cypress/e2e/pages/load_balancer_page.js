@@ -24,7 +24,7 @@ class LoadBalancer {
         balancerBackendConfBtn: () => cy.get('[qa-element="add-backend-confirm"]'),
         balancerCreateConfBtn: () => cy.get('[qa-element="create-lb-submit"]'),
         createdBalancer: (name) => cy.get('tbody > tr').contains(name),
-        balancerStatusPerRowName: (name) => cy.get('tbody > tr').contains(name).parent().find('td').eq(5),
+        balancerStatusPerRowName: (name) => cy.contains('tbody > tr', name).find('[qa-element="loadbalancer-status"]'),
         balancerNameErrorLbl: () => cy.get('[qa-element="create-lb-name-error"]'),
         balancerIpNagruzkaLbl: () => cy.get('[qa-element="lb-ip-toggle"]'),
         createdPort: (name) => cy.get('tbody > tr').contains(name),
@@ -34,15 +34,16 @@ class LoadBalancer {
         createdBackendGroup: (name) => cy.get('tbody > tr').contains(name),
         confirmDeletePortBtn: () => cy.get('[qa-element="ports-delete-submit"]'),
         confirmDeleteBackendBtn: () => cy.get('[qa-element="backend-delete-submit"]'),
-        deleteBalancerBtnPerRowName: (name) => cy.get('tbody > tr').contains(name).parent().find('td').eq(7),
+        deleteBalancerBtnPerRowName: (name) => cy.get('tbody > tr').contains(name).closest('tr').find('[qa-element="delete-lb-show"]'),
         confirmDeleteBalancerBtn: () => cy.get('[qa-element="delete-lb-submit"]'),
-        editBalancerBtnPerRowName: (name) => cy.get('tbody > tr').contains(name).parent().find('td').eq(6),
+        editBalancerBtnPerRowName: (name) => cy.contains('tbody > tr', name).find('[qa-element="to-view-lb"]').first(),
         cancelButtonInEditPage: () => cy.get('[qa-element="to-lb-list"]'),
         cancelButtonInAddPage: () => cy.get('[qa-element="to-create-lb"]'),
         confirmBtnInEditPage: () => cy.get('[qa-element="edit-lb-submit"]'),
         invalidBalancerNameErrorLblInEditPage: () => cy.get('[qa-element="edit-lb-name-error"]'),
         balancerNameFieldEditPage: () => cy.get('[qa-element="lb-edit-name"]'),
-        balancerDescFieldEditPage: () => cy.get('[qa-element="lb-edit-desc"]')
+        balancerDescFieldEditPage: () => cy.get('[qa-element="lb-edit-desc"]'),
+        networkCannotBeDeletedPopUp: (text) => cy.contains(text), //qa-element is needed here
     }
     actions = {
         clickOnTermsOfServiceLink: () => {
@@ -193,7 +194,7 @@ class LoadBalancer {
             this.elements.confirmDeleteBackendBtn().click()
         },
         clickEditLoadBalancerBtnPerRowName: (name) => {
-            this.elements.editBalancerBtnPerRowName(name).click()
+            this.elements.editBalancerBtnPerRowName(name).should('be.visible').click({ force: true })
         },
         clickCancelBtnInAddPage: () => {
             this.elements.cancelButtonInAddPage().click()
@@ -217,6 +218,9 @@ class LoadBalancer {
             this.elements.invalidBalancerNameErrorLblInEditPage().should('be.visible');
             this.elements.invalidBalancerNameErrorLblInEditPage().contains(errorTxt);
         },
+        networkCannotBeDeletedPopUpIsVisible: (text) => {
+            this.elements.networkCannotBeDeletedPopUp(text).should('be.visible')
+        }
     }
 }
 module.exports = new LoadBalancer()

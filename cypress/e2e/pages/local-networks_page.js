@@ -108,7 +108,11 @@ class LocalNetworks {
             this.elements.network_confirmCheckbox().click()
         },
         clickNetworkDeleteConfirmBtn: () => {
-            this.elements.network_deleteConfirmNetworks().click()
+            cy.get('[qa-element="network-unlink-submit"]', { timeout: 10000 })
+                .filter(':visible')
+                .last()
+                .should('be.visible')
+                .click({ force: true })
         },
         isNotVisibleNetworkEditeBtn: () => {
             this.elements.network_editBtn().should("not.exist");
