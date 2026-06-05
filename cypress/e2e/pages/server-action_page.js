@@ -44,6 +44,9 @@ class ServerActions {
         clickServerHibernationBtn: () => {
             this.elements.serverHibernationBtn().should('be.visible').click()
         },
+        getServerStatusText: () => {
+            return this.elements.serverStatusLbl().invoke('text')
+        },
 
         isRunningServer: () => {
             this.elements.serverRunningStatus().should('be.visible')

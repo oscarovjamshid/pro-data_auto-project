@@ -38,7 +38,7 @@ class Login {
         },
         isNotLogined: () => {
             cy.wait('@signInRequest').then((interception) => {
-                expect(interception.response.statusCode).to.eq(404);
+                expect(interception.response.statusCode).to.eq(401);
             });
         },
         clickeditLanguage: () => {

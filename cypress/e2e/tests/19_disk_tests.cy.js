@@ -25,7 +25,7 @@ describe('19.Disks Tests', () => {
         cy.viewport(1280, 720)
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
     })
-    it('[PD-149] Создать диск (SSD)', () => {
+    it('[PD-149] Create Disk (SSD)', () => {
         const testData = {
             diskName: 'TestFastDisk',
             diskSize: '10'
@@ -39,7 +39,7 @@ describe('19.Disks Tests', () => {
         disks_page.actions.clickNewDiskCreateConfBtn()
         disks_page.actions.isVisibleCreatedDisk(testData.diskName)
     })
-    it('[PD-150] Создать диск (HDD)', () => {
+    it('[PD-150] Create Disk (HDD)', () => {
         const testData = {
             diskName: 'TestStandartDisk',
             diskSize: '10'
@@ -53,7 +53,7 @@ describe('19.Disks Tests', () => {
         disks_page.actions.clickNewDiskCreateConfBtn()
         disks_page.actions.isVisibleCreatedDisk(testData.diskName)
     })
-    it('[PD-151] Создать диск пустое называние', () => {
+    it('[PD-151] Create Disk with empty name', () => {
         const testData = {
             diskName: '',
             diskSize: '10'
@@ -66,7 +66,7 @@ describe('19.Disks Tests', () => {
         disks_page.actions.clickNewDiskCreateConfBtn()
         disks_page.actions.isVisibleNewDiskNameErrorLbl('Обязательное поле')
     })
-    it('[PD-152] Создать диск неправильное называние', () => {
+    it('[PD-152] Create Disk with invalid name', () => {
         const testData = {
             diskName: 'Test Disk Name',
             diskSize: '10'
@@ -80,7 +80,7 @@ describe('19.Disks Tests', () => {
         disks_page.actions.clickNewDiskCreateConfBtn()
         disks_page.actions.isVisibleNewDiskNameErrorLbl('Неверное название, только латинские буквы, цифры и символ "-".')
     })
-    it('[PD-153] Изменить тип диска с SSD на HDD', () => {
+    it('[PD-153] Change Disk type from SSD to HDD', () => {
         const testData = {
             diskName: 'TestFastDisk'
         }
@@ -102,7 +102,7 @@ describe('19.Disks Tests', () => {
             })
         });
     })
-    it('[PD-154] Изменить тип диска с HDD на SSD', () => {
+    it('[PD-154] Change Disk type from HDD to SSD', () => {
         const testData = {
             diskName: 'TestStandartDisk'
         }
@@ -124,7 +124,7 @@ describe('19.Disks Tests', () => {
             })
         });
     })
-    /*it('[PD-155] Изменить тип диска с HDD на SSD (не хватает лимитов на SSD)', () => {
+    /*it('[PD-155] Change Disk type from HDD to SSD (not enough SSD limits)', () => {
         const testData = {
             diskName: 'TestStandartDisk2',
             diskSize: '500'
@@ -145,7 +145,7 @@ describe('19.Disks Tests', () => {
         cy.wait(2000)
         disks_page.actions.isVisibleDiskChangeTypeErrorLbl("Смена типа данного диска не возможна через панель управления. Обратитесь в техподдержку!")
     })
-    it('[PD-156] Изменить тип диска с SSD на HDD (не хватает лимитов на HDD)', () => {
+    it('[PD-156] Change Disk type from SSD to HDD (not enough HDD limits)', () => {
         const testData = {
             diskName: 'TestFastDisk2',
             diskSize: '470'
@@ -205,7 +205,7 @@ describe('19.Disks Tests', () => {
         disks_page.actions.clickLinkDiskServerSelectorBtn()
         disks_page.actions.isDisabledLinkDiskServerOption(testData.serverName)
     })
-    it('[PD-160] Отвязать диск когда сервер в работе', () => {
+    it('[PD-160] Unlink Disk when Server is Running', () => {
         const testData = {
             diskName: 'TestStandartDisk2'
         }
@@ -213,7 +213,7 @@ describe('19.Disks Tests', () => {
         sidebar.actions.clickDisksIcon()
         disks_page.actions.isDisabledLinkDiskBtn(testData.diskName)
     })
-    it('[PD-159] Отвязать диск когда сервер остановлен', () => {
+    it('[PD-159] Unlink Disk when Server is Stopped', () => {
         const testData = {
             diskName: 'TestStandartDisk2'
         }
@@ -236,7 +236,7 @@ describe('19.Disks Tests', () => {
         disks_page.actions.clickLinkDiskBtn(testData.diskName)
         disks_page.actions.clickUnlinkDiskServerConfBtn()
     })
-    it('[PD-161] Удалить привязанный диск', () => {
+    it('[PD-161] Delete Linked Disk', () => {
         const testData = {
             diskName: 'TestStandartDisk2',
             serverName: configData.test_server_name,
@@ -252,7 +252,7 @@ describe('19.Disks Tests', () => {
         disks_page.actions.isLinkedServer(testData.diskName, testData.serverId)
         disks_page.actions.isDisabledDeleteDiskBtn(testData.diskName)
     })
-    it('[PD-162] Удалить не привязанный диск', () => {
+    it('[PD-162] Delete Unlinked Disk', () => {
         const testData = {
             diskName1: 'TestStandartDisk2',
             diskName2: 'TestFastDisk2',

@@ -98,7 +98,7 @@ describe('6.Servers - Disks tab Part1', () => {
         serverDisksPage.actions.writeNewDiskNameTxt(diskName)
         serverDisksPage.actions.clickDiskTypeHDDBtn()
         serverDisksPage.actions.setDiskSize(-100)
-        serverDisksPage.actions.isDiskSizeDecreaseBtnDisabled()
+        // serverDisksPage.actions.isDiskSizeDecreaseBtnDisabled() // flow has been changed - now button is not disabled, just value won't go to negative
     })
     // it("Add new disk (size contains math symbols)", () => {              //This test is not actual anymore as field turned into toggle btn - no way inserting chars
     //     const diskName = faker.lorem.word() + Math.round(Math.random() * 10000)
@@ -518,7 +518,7 @@ describe('6.Servers - Disks tab Part1', () => {
                 if ($ssdDisks.length > 0) {
                     cy.wrap($ssdDisks.first()).find('[qa-element="delete-disk-show"]').click();
                     serverDisksPage.actions.clickConfDeleteBtn();
-                    cy.wait(1000);         // Wait for the UI to update and then call the function again, otherwise stale exception may happen
+                    cy.wait(2000);         // Wait for the UI to update and then call the function again, otherwise stale exception may happen
                     deleteSSDDisks();
                 }
             });

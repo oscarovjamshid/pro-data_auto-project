@@ -279,12 +279,14 @@ describe('14.Load Balancer Tests', () => {
         localNetworks_page.actions.clickDetachNetworkBtn()
         localNetworks_page.actions.clickConfirmCheckbox()
         localNetworks_page.actions.clickNetworkDeleteConfirmBtn()
-        load_balancer_page.actions.networkCannotBeDeletedPopUpIsVisible("Данная сеть и сервер входят в backend группу балансировщика нагрузки")
-        /*localNetworks_page.actions.isNotVisibleNetworkEditeBtn() // this flow has been changed - now it's impossible to detach LN from server if it's used in LB
-        serverAction_page.actions.clickServerActionsBtn()
-        serverAction_page.actions.clickStopServerBtn()
-        serverAction_page.actions.clickStopServerBtn()
-        serverAction_page.actions.checkStatus(25, 'Остановлен')
+        localNetworks_page.actions.isNotVisibleNetworkEditeBtn() 
+        serverAction_page.actions.getServerStatusText().then((text) => {
+            if (text.includes('В работе')) {
+                serverAction_page.actions.clickServerActionsBtn()
+                serverAction_page.actions.clickStopServerBtn()
+                serverAction_page.actions.checkStatus(25, 'Остановлен')
+            }
+        })
 
         sidebar.actions.clickLoadBalanceIcon()
         load_balancer_page.actions.clickCreateLoadBalancerBtn()
@@ -300,7 +302,7 @@ describe('14.Load Balancer Tests', () => {
         load_balancer_page.actions.typeBalancerPort(testData.balancerPort)
         load_balancer_page.actions.typeBackendPort(testData.backendPort)
         load_balancer_page.actions.clickBalancerPortConfBtn()
-        load_balancer_page.actions.isDisabledBalancerCreateConfBtn() */ 
+        load_balancer_page.actions.isDisabledBalancerCreateConfBtn() 
     })
     it('[PD-447] Create - LB with port number > 65536 (unsuccessful)', () => {
         const testData = {
@@ -426,6 +428,27 @@ describe('14.Load Balancer Tests', () => {
             serverName: configData.test_server_name
         }
         cy.login(configData.base_url, configData.login, configData.password)
+        sidebar.actions.clickServersIcon()
+        server_page.actions.checkServerPageLbl()
+        serverlist_page.actions.searchServer(configData.test_server_name)
+        serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
+        serverlist_page.actions.clickServerCard(configData.test_server_name)
+        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
+        localNetworks_page.actions.clickLocalNetworkTxt()
+        localNetworks_page.actions.clickAddNetworkBtn()
+        localNetworks_page.actions.isVisibleSelectListNetwork()
+        localNetworks_page.actions.clickSelectListNetwork()
+        localNetworks_page.actions.isVisibleNetworkIp(configData.test_local_ip)
+        localNetworks_page.actions.clickNetworkIpBtn(configData.test_local_ip)
+        localNetworks_page.actions.clickAddNetworkSuccessBtn()
+        serverAction_page.actions.getServerStatusText().then((text) => {
+            if (text.includes('В работе')) {
+                serverAction_page.actions.clickServerActionsBtn()
+                serverAction_page.actions.clickStopServerBtn()
+                serverAction_page.actions.checkStatus(25, 'Остановлен')
+            }
+        })
+        
         sidebar.actions.clickLoadBalanceIcon()
         load_balancer_page.actions.clickCreateLoadBalancerBtn()
         load_balancer_page.actions.typeBalancerName(testData.balancerName)

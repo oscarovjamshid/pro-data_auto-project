@@ -67,7 +67,7 @@ class ServerDisks {
         diskSizeIncreaseBtn: () => cy.get('[qa-element="disk-size-range-increase"]'),
         nvmeDiskSizeIncreaseBtn: () => cy.get('[qa-element="increase-disk-size-range-increase"]'),
         diskSizeDecreaseBtn: () => cy.get('[qa-element="disk-size-range-decrease"]'),
-        diskSizeValue: () => cy.get('#disk-add-form > div:nth-child(5) > div:nth-child(1) > div > span')   // -> qa-element is needed
+        diskSizeValue: () => cy.get('[qa-element="disk-size-range-value"]'),   // -> qa-element is needed
     }
     actions = {
         clickServerDisksTab: () => {

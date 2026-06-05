@@ -1,30 +1,30 @@
 class Disk {
     elements = {
-        createDiskBtn: () => cy.get('[qa-element="disk-create-show"]').contains('Создать новый'), //disk-create-show
-        newDiskNameTxt: () => cy.get('[qa-element="disk-name"]'), //disk-name
-        newDiskTypeHDDBtn: () => cy.get('[qa-element="hdd-ssd-0"]').contains('Стандартный'), //hdd-ssd-0
-        newDiskTypeSSDBtn: () => cy.get('[qa-element="hdd-ssd-1"]').contains('Быстрый'), //hdd-ssd-1
-        editDiskTypeHDDBtn: () => cy.get('[qa-element="external-internal-0"]').contains('Стандартный'), //hdd-ssd-0
-        editDiskTypeSSDBtn: () => cy.get('[qa-element="external-internal-1"]').contains('Быстрый'), //hdd-ssd-1
-        newDiskSizeTxt: () => cy.get('[qa-element="create-disk-size-range-input"]'), //create-disk-size-range-input
-        newDiskCreateConfBtn: () => cy.get('[qa-element="add-disk-submit"]').contains('Создать'), //add-disk-submit
+        createDiskBtn: () => cy.get('[qa-element="disk-create-show"]'), 
+        newDiskNameTxt: () => cy.get('[qa-element="disk-name"]'), 
+        newDiskTypeHDDBtn: () => cy.get('[qa-element="hdd-ssd-0"]').contains('Стандартный'), 
+        newDiskTypeSSDBtn: () => cy.get('[qa-element="hdd-ssd-1"]').contains('Быстрый'), 
+        editDiskTypeHDDBtn: () => cy.get('[qa-element="external-internal-0"]').contains('Стандартный'), 
+        editDiskTypeSSDBtn: () => cy.get('[qa-element="external-internal-1"]').contains('Быстрый'), 
+        newDiskSizeTxt: () => cy.get('[qa-element="create-disk-size-range-value"]'), 
+        newDiskCreateConfBtn: () => cy.get('[qa-element="add-disk-submit"]').contains('Создать'), 
         createdDisk: (name) => cy.get('tbody').find('tr').contains(name), 
         deletedDisk: (name) => cy.get('tbody').find('tr').should('not.contain', name),
-        newDiskNameErrorLbl: () => cy.get('[qa-element="-reate-disk-name-error"]'), //-reate-disk-name-error
+        newDiskNameErrorLbl: () => cy.get('[qa-element="create-disk-name-error"]'), 
         changeDiskTypeBtn: (name) => cy.get('tbody').find('tr').contains(name).parent().find('td').last().find('[qa-element="disk-change-type"]').first(),
-        changeDiskTypeConfBtn: () => cy.get('[qa-element="disk-change"]').contains('Изменить'), //disk-change
-        standartDiskLimitsLbl: () => cy.get('[qa-element="hdd-size-limit"]'), //hdd-size-limit
-        fastDiskLimitsLbl: () => cy.get('[qa-element="ssd-size-limit"]'), //ssd-size-limit
+        changeDiskTypeConfBtn: () => cy.get('[qa-element="disk-change"]').contains('Изменить'), 
+        standartDiskLimitsLbl: () => cy.get('[qa-element="hdd-size-limit"]'), 
+        fastDiskLimitsLbl: () => cy.get('[qa-element="ssd-size-limit"]'),
         changeDiskTypeErrorLbl: () => cy.get('.modal-body > .fade'), 
         linkDiskBtn: (name) => cy.get('tbody').find('tr').contains(name).parent().find('td').last().find('[qa-element="disk-link-vm"]').first(),
-        linkDiskServerSelectorBtn: () => cy.get('[qa-element="select-vm-open"]').contains('Выберите сервер'), //select-vm-open
+        linkDiskServerSelectorBtn: () => cy.get('[qa-element="select-vm-open"]').contains('Выберите сервер'), 
         linkDiskServerOption: (name) => cy.get('.dropdown-menu').find('a').contains(name), 
         linkDiskServerOptionDisabled: (name) => cy.get('#input-dropdown > .dropdown-menu > .list-unstyled').find('a').contains(name),
-        linkDiskServerConfBtn: () => cy.get('[qa-element="disk-link-submit"]').contains('Подтвердить'), //disk-link-submit
-        unlinkDiskServerConfBtn: () => cy.get('[qa-element="unlink-disk-submit"]').contains('Подтвердить'), //disk-link-submit
+        linkDiskServerConfBtn: () => cy.get('[qa-element="disk-link-submit"]').contains('Подтвердить'), 
+        unlinkDiskServerConfBtn: () => cy.get('[qa-element="unlink-disk-submit"]').contains('Подтвердить'), 
         diskLinkedServerIdLbl: (name) => cy.get('tbody').find('tr').contains(name).parent().find('td'),
         deleteDiskBtn: (name) => cy.get('tbody').find('tr').contains(name).parent().find('td').last().find('[qa-element="delete-disk-show"]').first(),
-        deleteDiskServerConfBtn: () => cy.get('[qa-element="delete-disk-submit"]').contains('Удалить'), //delete-disk-submit
+        deleteDiskServerConfBtn: () => cy.get('[qa-element="delete-disk-submit"]').contains('Удалить'), 
     }
     actions = {
         clickCreateDiskBtn: () => {

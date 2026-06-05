@@ -13,6 +13,7 @@ class LocalNetworks {
         network_selectIpTxt: (text) => cy.get('button[qa-element^="local-network-id-"]').filter(':visible').contains(text),
         network_selectInValidIpTxt: () => cy.contains('Test_IP'),
         network_addNetworkSuccess: () => cy.get('[qa-element="network-link-submit"]'),
+        network_rowByName: (text) => cy.contains('tbody tr', text),
         network_detachBtn: () => cy.get('[qa-element="network-unlink"]'),
         network_confirmCheckbox: () => cy.get('[qa-element="vm-confirm-reboot"]'),
         network_deleteConfirmNetworks: () => cy.get('[qa-element="network-unlink-submit"]'),
@@ -98,11 +99,19 @@ class LocalNetworks {
         IsAddNetworkSuccessBtn: () => {
             this.elements.network_addNetworkSuccess().should('be.disabled');
         },        
-        isVisibleNetworkDetachBtn: () => {
-            this.elements.network_detachBtn().should("be.visible")
+        isVisibleNetworkDetachBtn: (text) => {
+            if (text) {
+                this.elements.network_rowByName(text).find('[qa-element="network-unlink"]').should("be.visible")
+                return
+            }
+            this.elements.network_detachBtn().filter(':visible').first().should("be.visible")
         },
-        clickDetachNetworkBtn: () => {
-            this.elements.network_detachBtn().click()
+        clickDetachNetworkBtn: (text) => {
+            if (text) {
+                this.elements.network_rowByName(text).find('[qa-element="network-unlink"]').click()
+                return
+            }
+            this.elements.network_detachBtn().filter(':visible').first().click()
         },
         clickConfirmCheckbox: () => {
             this.elements.network_confirmCheckbox().click()

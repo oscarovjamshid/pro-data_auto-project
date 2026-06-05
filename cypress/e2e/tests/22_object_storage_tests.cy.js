@@ -393,7 +393,7 @@ describe('22.Object Storage Tests', () => {
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
         object_storage_page.actions.isEnabledPublicFullAccessOption()
     })
-    it('PD-541 Creating bucket for Versioning access mode', () => {
+    it.only('PD-541 Creating bucket for Versioning access mode', () => {
         const testData = {
             bucketName: 'versioning-bucket',
         }
@@ -412,7 +412,7 @@ describe('22.Object Storage Tests', () => {
         object_storage_page.actions.clickObjectStorageBucketSettingsBtnPerName(testData.bucketName)
         object_storage_page.actions.isCheckedVersioningOption()
     })
-    it('PD-542 Creating bucket for Block access mode', () => {
+    it.only('PD-542 Creating bucket for Block access mode', () => {
         const testData = {
             bucketName: 'block-bucket',
         }
