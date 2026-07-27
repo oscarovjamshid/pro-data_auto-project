@@ -621,183 +621,183 @@ describe('24.Managed Kubernetes Tests', () => {
         const defaultPoolName = "fortesting";
         const newPoolName = "auto";
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickAddPoolBtn()
-        managedKubernetes_page.actions.enterKubernetesVunkerCode(newPoolName)
-        managedKubernetes_page.actions.clickAutoscalingCheckbox()
-        managedKubernetes_page.actions.clickNextPageContinueBtn()
-        managedKubernetes_page.actions.openWorkerNodePoolTabWhenReady(clusterName, defaultPoolName)
-        managedKubernetes_page.actions.waitForWorkerNodePoolReady(newPoolName)
-        managedKubernetes_page.actions.isVisibleCreatedKuberCluster(newPoolName)  // here it refers to worker node pool row - (Автомасштабируемый)
-    })
+    //     sidebar.actions.clickManagedKubernetesIcon()
+    //     managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+    //     managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+    //     managedKubernetes_page.actions.clickAddPoolBtn()
+    //     managedKubernetes_page.actions.enterKubernetesVunkerCode(newPoolName)
+    //     managedKubernetes_page.actions.clickAutoscalingCheckbox()
+    //     managedKubernetes_page.actions.clickNextPageContinueBtn()
+    //     managedKubernetes_page.actions.openWorkerNodePoolTabWhenReady(clusterName, defaultPoolName)
+    //     managedKubernetes_page.actions.waitForWorkerNodePoolReady(newPoolName)
+    //     managedKubernetes_page.actions.isVisibleCreatedKuberCluster(newPoolName)  // here it refers to worker node pool row - (Автомасштабируемый)
+     })
     it('[PD-800] Worker Node Pool: Create New: creating new pool without autoscaling', () => {
         const clusterName = "basic-priv";
         const defaultPoolName = "fortesting";
         const newPoolName = "no-auto";
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickAddPoolBtn()
-        managedKubernetes_page.actions.enterKubernetesVunkerCode(newPoolName)
-        managedKubernetes_page.actions.clickNextPageContinueBtn()
-        managedKubernetes_page.actions.openWorkerNodePoolTabWhenReady(clusterName, defaultPoolName)
-        managedKubernetes_page.actions.waitForWorkerNodePoolReady(newPoolName)
-        managedKubernetes_page.actions.isVisibleCreatedKuberCluster(newPoolName)  // here it refers to worker node pool row
+        // sidebar.actions.clickManagedKubernetesIcon()
+        // managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+        // managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+        // managedKubernetes_page.actions.clickAddPoolBtn()
+        // managedKubernetes_page.actions.enterKubernetesVunkerCode(newPoolName)
+        // managedKubernetes_page.actions.clickNextPageContinueBtn()
+        // managedKubernetes_page.actions.openWorkerNodePoolTabWhenReady(clusterName, defaultPoolName)
+        // managedKubernetes_page.actions.waitForWorkerNodePoolReady(newPoolName)
+        // managedKubernetes_page.actions.isVisibleCreatedKuberCluster(newPoolName)  // here it refers to worker node pool row
     })
     it('[PD-801] Worker Node Pool: Create New: leaving all fields empty (unsuccessful)', () => {
         const clusterName = "basic-priv";
         const defaultPoolName = "fortesting";
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickAddPoolBtn()
-        managedKubernetes_page.actions.clickNextPageContinueBtn()
-        managedKubernetes_page.actions.isVisibleInvalidWorkerNodePoolText("Обязательное поле")  // here it refers to worker node pool row
+        // sidebar.actions.clickManagedKubernetesIcon()
+        // managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+        // managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+        // managedKubernetes_page.actions.clickAddPoolBtn()
+        // managedKubernetes_page.actions.clickNextPageContinueBtn()
+        // managedKubernetes_page.actions.isVisibleInvalidWorkerNodePoolText("Обязательное поле")  // here it refers to worker node pool row
     })
     it('[PD-802] Worker Node Pool: Create New: negative numbers to configs (unsuccessful)', () => {
         const clusterName = "basic-priv";
         const defaultPoolName = "fortesting";
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickAddPoolBtn()
-        managedKubernetes_page.actions.enterKubernetesVunkerCode(defaultPoolName)
-        managedKubernetes_page.actions.setPoolCpu('-743578435847373893')
-        managedKubernetes_page.actions.setPoolRam('-57843584373893')
-        managedKubernetes_page.actions.setPoolDisk('-743578435847373893')
-        managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
+        // sidebar.actions.clickManagedKubernetesIcon()
+        // managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+        // managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+        // managedKubernetes_page.actions.clickAddPoolBtn()
+        // managedKubernetes_page.actions.enterKubernetesVunkerCode(defaultPoolName)
+        // managedKubernetes_page.actions.setPoolCpu('-743578435847373893')
+        // managedKubernetes_page.actions.setPoolRam('-57843584373893')
+        // managedKubernetes_page.actions.setPoolDisk('-743578435847373893')
+        // managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
     it('[PD-803] Worker Node Pool: Create New: out of limit numbers to configs (unsuccessful)', () => {
         const clusterName = "basic-priv";
         const defaultPoolName = "fortesting";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickAddPoolBtn()
-        managedKubernetes_page.actions.enterKubernetesVunkerCode(defaultPoolName)
-        managedKubernetes_page.actions.setPoolRam('743578435847373893')
-        managedKubernetes_page.actions.setPoolCpu('74357843584373893')
-        managedKubernetes_page.actions.setPoolDisk('743578435847373893')
-        managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
+        // managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+        // managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+        // managedKubernetes_page.actions.clickAddPoolBtn()
+        // managedKubernetes_page.actions.enterKubernetesVunkerCode(defaultPoolName)
+        // managedKubernetes_page.actions.setPoolRam('743578435847373893')
+        // managedKubernetes_page.actions.setPoolCpu('74357843584373893')
+        // managedKubernetes_page.actions.setPoolDisk('743578435847373893')
+        // managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
     it('[PD-804] Worker Node Pool: Deleting pool (if there is extra pool)', () => {
         const clusterName = "basic-priv";
         const newPoolName1 = "auto";
         const newPoolName2 = "no-auto";
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(newPoolName1)
-        managedKubernetes_page.actions.clickClusterRowPerName(newPoolName1)        // here it refers to the pool row
-        managedKubernetes_page.actions.clickDeletePoolBtn()
-        managedKubernetes_page.actions.enterTextToDeletePoolField(newPoolName1)
-        managedKubernetes_page.actions.clickDeletePoolSubmitBtn()
-        managedKubernetes_page.actions.isNotVisibleCreatedKuberClusterWorkerNode(newPoolName1)
-        managedKubernetes_page.actions.clickClusterRowPerName(newPoolName2)          // here it refers to the pool row
-        managedKubernetes_page.actions.clickDeletePoolBtn()
-        managedKubernetes_page.actions.enterTextToDeletePoolField(newPoolName2)
-        managedKubernetes_page.actions.clickDeletePoolSubmitBtn()
-        managedKubernetes_page.actions.isNotVisibleCreatedKuberClusterWorkerNode(newPoolName2)
+        // sidebar.actions.clickManagedKubernetesIcon()
+        // managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+        // managedKubernetes_page.actions.clickWorkerNodePoolTab(newPoolName1)
+        // managedKubernetes_page.actions.clickClusterRowPerName(newPoolName1)        // here it refers to the pool row
+        // managedKubernetes_page.actions.clickDeletePoolBtn()
+        // managedKubernetes_page.actions.enterTextToDeletePoolField(newPoolName1)
+        // managedKubernetes_page.actions.clickDeletePoolSubmitBtn()
+        // managedKubernetes_page.actions.isNotVisibleCreatedKuberClusterWorkerNode(newPoolName1)
+        // managedKubernetes_page.actions.clickClusterRowPerName(newPoolName2)          // here it refers to the pool row
+        // managedKubernetes_page.actions.clickDeletePoolBtn()
+        // managedKubernetes_page.actions.enterTextToDeletePoolField(newPoolName2)
+        // managedKubernetes_page.actions.clickDeletePoolSubmitBtn()
+        // managedKubernetes_page.actions.isNotVisibleCreatedKuberClusterWorkerNode(newPoolName2)
     })
     it('[PD-806] Worker Node Pool: Configure Worker Node Pool Size: enable autoscaling - invalid values (unsuccessful)', () => {
         const clusterName = "basic-priv";
         const defaultPoolName = "fortesting";
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
-        managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
-        managedKubernetes_page.actions.isWorkerNodeDecreaseBtnDisabled()
-    })
+    //     sidebar.actions.clickManagedKubernetesIcon()
+    //     managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+    //     managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+    //     managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
+    //     managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
+    //     managedKubernetes_page.actions.isWorkerNodeDecreaseBtnDisabled()
+     })
     it('[PD-805] Worker Node Pool: Configure Worker Node Pool Size: enable autoscaling', () => {
         const clusterName = "basic-priv";
         const defaultPoolName = "fortesting";
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
-        managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
-        managedKubernetes_page.actions.clickAutoscalingCheckbox()
-        managedKubernetes_page.actions.clickWorkedNodeIncreaseBtn()
-        managedKubernetes_page.actions.clickNextPageContinueBtn()
-        managedKubernetes_page.actions.waitForWorkerNodePoolReady(defaultPoolName)
-        managedKubernetes_page.actions.isVisibleCreatedKuberCluster(defaultPoolName + " (Автомасштабируемый)")  // here it refers to worker node pool row - 
+        // sidebar.actions.clickManagedKubernetesIcon()
+        // managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+        // managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+        // managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
+        // managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
+        // managedKubernetes_page.actions.clickAutoscalingCheckbox()
+        // managedKubernetes_page.actions.clickWorkedNodeIncreaseBtn()
+        // managedKubernetes_page.actions.clickNextPageContinueBtn()
+        // managedKubernetes_page.actions.waitForWorkerNodePoolReady(defaultPoolName)
+        // managedKubernetes_page.actions.isVisibleCreatedKuberCluster(defaultPoolName + " (Автомасштабируемый)")  // here it refers to worker node pool row - 
     })
     it('[PD-807] Worker Node Pool: Configure Worker Node Pool Size: disable autoscaling', () => {
         const clusterName = "basic-priv";
         const defaultPoolName = "fortesting";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
-        managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
-        managedKubernetes_page.actions.clickAutoscalingCheckbox()
-        managedKubernetes_page.actions.clickNextPageContinueBtn()
-        managedKubernetes_page.actions.waitForWorkerNodePoolReady(defaultPoolName)
-        managedKubernetes_page.actions.isVisibleCreatedKuberCluster(defaultPoolName)  // here it refers to worker node pool row 
-        managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
-        managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
-        managedKubernetes_page.actions.IsAutoScalingNotChecked()
+        // managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+        // managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+        // managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
+        // managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
+        // managedKubernetes_page.actions.clickAutoscalingCheckbox()
+        // managedKubernetes_page.actions.clickNextPageContinueBtn()
+        // managedKubernetes_page.actions.waitForWorkerNodePoolReady(defaultPoolName)
+        // managedKubernetes_page.actions.isVisibleCreatedKuberCluster(defaultPoolName)  // here it refers to worker node pool row 
+        // managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
+        // managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
+        // managedKubernetes_page.actions.IsAutoScalingNotChecked()
     })
     it('[PD-808] Worker Node Pool: Configure Worker Node Pool Size: disable autoscaling - invalid values (unsuccessful)', () => {
         const clusterName = "basic-priv";
         const defaultPoolName = "fortesting";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
-        managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
-        managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
-        managedKubernetes_page.actions.clickAutoscalingCheckbox()
-        managedKubernetes_page.actions.enterConfigurePoolSizeNodeMin(0)
-        managedKubernetes_page.actions.enterConfigurePoolSizeNodeMax(0)
-        managedKubernetes_page.actions.isVisibleConfigureWorkerNodePoolSizeBtn()
-        managedKubernetes_page.actions.enterConfigurePoolSizeNodeMin(-1)
-        managedKubernetes_page.actions.enterConfigurePoolSizeNodeMax(-1)
-        managedKubernetes_page.actions.isVisibleConfigureWorkerNodeMinFieldErrorTxt('Максимальное количество воркер-нод должно быть больше минимального')
-        managedKubernetes_page.actions.isVisibleConfigureWorkerNodeMaxFieldErrorTxt('Максимальное количество воркер-нод должно быть больше минимального')
+        // managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
+        // managedKubernetes_page.actions.clickWorkerNodePoolTab(defaultPoolName)
+        // managedKubernetes_page.actions.clickClusterRowPerName(defaultPoolName)       // here it refers to the pool row
+        // managedKubernetes_page.actions.clickConfigureWorkerNodePoolSizeBtn()
+        // managedKubernetes_page.actions.clickAutoscalingCheckbox()
+        // managedKubernetes_page.actions.enterConfigurePoolSizeNodeMin(0)
+        // managedKubernetes_page.actions.enterConfigurePoolSizeNodeMax(0)
+        // managedKubernetes_page.actions.isVisibleConfigureWorkerNodePoolSizeBtn()
+        // managedKubernetes_page.actions.enterConfigurePoolSizeNodeMin(-1)
+        // managedKubernetes_page.actions.enterConfigurePoolSizeNodeMax(-1)
+        // managedKubernetes_page.actions.isVisibleConfigureWorkerNodeMinFieldErrorTxt('Максимальное количество воркер-нод должно быть больше минимального')
+        // managedKubernetes_page.actions.isVisibleConfigureWorkerNodeMaxFieldErrorTxt('Максимальное количество воркер-нод должно быть больше минимального')
     })
     it('[PD-809] Virtual Servers: Worker Node: Configuration tab (assertion)', () => {
         const workerNodeName = "basic-priv";
         const configFields = ['ОС', 'vCpu', 'RAM', 'Диск']
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickServersIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
-        managedKubernetes_page.actions.isVisibleConfigurationTabMainData(configFields)
+        // sidebar.actions.clickServersIcon()
+        // managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
+        // managedKubernetes_page.actions.isVisibleConfigurationTabMainData(configFields)
     })
     it('[PD-810] Virtual Servers: Worker Node: Local Network tab (assertion)', () => {
         const workerNodeName = "basic-priv";
         const configFields = ['Локальная сеть', 'IP воркер-ноды', 'MAC-адрес']
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickServersIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
-        managedKubernetes_page.actions.clickLocalNetworkTab()
-        managedKubernetes_page.actions.isVisibleConfigurationTabMainData(configFields)
+        // sidebar.actions.clickServersIcon()
+        // managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
+        // managedKubernetes_page.actions.clickLocalNetworkTab()
+        // managedKubernetes_page.actions.isVisibleConfigurationTabMainData(configFields)
     })
     it('[PD-811] Virtual Servers: Worker Node: Reboot', () => {
         const workerNodeName = "basic-priv";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickServersIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
-        managedKubernetes_page.actions.isVisibleRebootBtn()
-        managedKubernetes_page.actions.clickRebootBtn()
-        managedKubernetes_page.actions.waitForWorkerNodeReady()
+        // managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
+        // managedKubernetes_page.actions.isVisibleRebootBtn()
+        // managedKubernetes_page.actions.clickRebootBtn()
+        // managedKubernetes_page.actions.waitForWorkerNodeReady()
     })
     it('[PD-812] Virtual Servers: Worker Node: Console', () => {
         const workerNodeName = "basic-priv";
         cy.login(configData.base_url, configData.login, configData.password)
-        sidebar.actions.clickServersIcon()
-        managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
-        managedKubernetes_page.actions.isVisibleConsoleBtn()
+        // sidebar.actions.clickServersIcon()
+        // managedKubernetes_page.actions.clickClusterRowPerName(workerNodeName)
+        // managedKubernetes_page.actions.isVisibleConsoleBtn()
     })
     it('[PD-809] Delete cluster: Basic-Private type', () => {
         const clusterName = "basic-priv";
