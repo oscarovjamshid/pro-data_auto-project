@@ -53,7 +53,7 @@ class Server {
         serverStatusLbl: () => cy.get('[qa-element="vm-status"]'),
         diskTypeSSDBtn: () => cy.get('[qa-element="disk-type-1"]'),
         diskTypeNVMEBtn: () => cy.get('[qa-element="disk-type-2"]'),
-        diskTxt: () => cy.get('[qa-element="local-disk-size-range-input"]'),
+        diskTxt: () => cy.get('[qa-element="local-disk-size-range-value"]'),
         loginTypeSSHBtn: () => cy.get('[qa-element="authorize-ssh"]'),
         osErrorLbl: () => cy.get('[qa-element="version-error"]'),
         titleErrorLbl: () => cy.get('[qa-element="create-vm-name-error"]'), 
