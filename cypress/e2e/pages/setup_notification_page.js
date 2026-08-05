@@ -50,9 +50,4 @@ class SetupNotification {
         
     }
 }
-
-
-
-
-
 module.exports = new SetupNotification()

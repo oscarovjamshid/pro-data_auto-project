@@ -22,7 +22,6 @@ class ServerActions {
         clickServerActionsBtn: () => {
             this.elements.serverActionsBtn().should('be.visible').click()
         },
-
         clickStartServerBtn: () => {
             this.elements.serverStartBtn().should('be.visible').click()
         },
