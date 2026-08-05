@@ -13,6 +13,7 @@ class Templates {
         newTemplate_cancelBtnAfterCreationInConfirmationModal: () => cy.get('[qa-element="vm-create-template-close-success"]'),
         newTemplate_closeModalBtn: () => cy.get('[qa-element="modal-close"]'),
         newTemplate_notificationToastForExistingTempName: (text) => cy.get('[qa-element="toast"]').contains(text),
+        newTemplate_errorMsgForNotEnoughQuota: (text) => cy.get('[qa-element="vm-create-template-disk-limit"]').contains(text),
         addVM_customRadioBtn: () => cy.get('[qa-element="os-template-filter-users"]'),
         addVM_customDropdownList: () => cy.get('[qa-element="filtered-os-template-toggle"]'),
         addVM_customDropdownOption: (text) => cy.get('[qa-element^="filtered-os-template"]').contains(text),
@@ -35,7 +36,7 @@ class Templates {
             this.elements.templates_tab().click()
         },
         clickCreateTemplateBtnInActionsMenu: () => {
-            this.elements.actions_createTemplateBtn().should('be.visible').click()
+            this.elements.actions_createTemplateBtn().should('be.visible').scrollIntoView().click({ force: true })
         },
         typeTemplateName: (name) => {
             this.elements.newTemplate_nameInputField().should('be.visible').type(name)
@@ -51,6 +52,9 @@ class Templates {
         },
         isVisibleNotificationToastForExistingTempName: (text) => {
             this.elements.newTemplate_notificationToastForExistingTempName(text).should('be.visible')
+        },
+        isVisibleErrorMsgForNotEnoughQuota: (text) => {
+            this.elements.newTemplate_errorMsgForNotEnoughQuota(text).should('be.visible')
         },
         isVisiblePriceText: (text) => {
             this.elements.newTemplate_priceText(text).should('be.visible')
@@ -71,8 +75,9 @@ class Templates {
             this.elements.newTemplate_closeModalBtn().should('be.visible').click()
         },
         hoverOnCustomOSVmCreateTemplateBtn: (text) => {
-            this.elements.actions_createTemplateBtn().trigger('mouseover') // or use .realHover(); method from cypress-real-events plugin if installed
-            cy.contains(text).should('be.visible');
+            this.elements.actions_createTemplateBtn().should('be.visible').scrollIntoView().trigger('mouseover', { force: true })
+            cy.wait(1500)
+            cy.contains(text).should('be.visible')
         },
         // Custom dropdown in Add VM page
         isCheckedCustomRadioBtnInAddVMPage: () => {
