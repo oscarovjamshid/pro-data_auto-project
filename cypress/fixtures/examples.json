@@ -15,5 +15,6 @@
     "test_server_with_backup": "TS-With-Backup",
     "test_server_without_backup": "TS-Without-Backup",
     "test_server_with_customOS": "TS-With-Custom-OS",
-    "password1": "qaTester@2000!"
+    "password1": "qaTester@2000!",
+    "currency": "KZT"
 }

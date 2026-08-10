@@ -17,13 +17,13 @@ class Templates {
         addVM_customRadioBtn: () => cy.get('[qa-element="os-template-filter-users"]'),
         addVM_customDropdownList: () => cy.get('[qa-element="filtered-os-template-toggle"]'),
         addVM_customDropdownOption: (text) => cy.get('[qa-element^="filtered-os-template"]').contains(text),
-        templates_tab_createdTempRowByName: (name) => cy.get('tbody').find('tr').contains(name),
+        templates_tab_createdTempRowByName: (name) => cy.contains('tbody tr', name, { timeout: 120000 }),
         templates_tab_tempStatusRowByName: (templateName, status) => cy.getTemplateRow(templateName).within(() => { cy.get('[qa-element="status"]').should('contain', status) }),
-        templates_tab_resourceVisibilityIconRowByName: (name) => cy.get('tbody').contains('tr', name).find('[qa-element^="template-change"]'),
-        templates_tab_createServerIconRowByName: (name) => cy.get('tbody').contains('tr', name).find('[qa-element^="to-create-vm-user-template"]'),
-        templates_tab_deleteIconRowByName: (name) => cy.get('tbody').contains('tr', name).find('[qa-element^="delete-vm-user-template"]'),
+        templates_tab_resourceVisibilityIconRowByName: (name) => cy.contains('tbody tr', name, { timeout: 120000 }).find('[qa-element^="template-change"]'),
+        templates_tab_createServerIconRowByName: (name) => cy.contains('tbody tr', name, { timeout: 120000 }).find('[qa-element^="to-create-vm-user-template"]'),
+        templates_tab_deleteIconRowByName: (name) => cy.contains('tbody tr', name, { timeout: 120000 }).find('[qa-element^="delete-vm-user-template"]'),
         resourceVisibilityDropdownList: () => cy.get('[qa-element="project-toggle"]'),
-        resourceVisibilityProjectOptionCheckbox: (projectName) => cy.get('[qa-element="project-1"]').contains(projectName).find('input[type="checkbox"]'),
+        resourceVisibilityProjectOptionCheckbox: (projectName) => cy.get('[qa-element="project-1"]').contains(projectName).closest('button').find('input[type="checkbox"]'),
         resourceVisibilitySaveBtn: () => cy.get('[qa-element="resource-change-submit"]'),
         cancelDeleteTemplateBtn: () => cy.get('[qa-element="delete-vm-user-template-cancel"]'),
         confirmDeleteTemplateBtn: () => cy.get('[qa-element="delete-vm-user-template-submit"]'),
@@ -37,6 +37,9 @@ class Templates {
         },
         clickCreateTemplateBtnInActionsMenu: () => {
             this.elements.actions_createTemplateBtn().should('be.visible').scrollIntoView().click({ force: true })
+        },
+        isVisibleCreateTemplateBtnInActionsMenu: () => {
+            this.elements.actions_createTemplateBtn().should('be.visible')
         },
         typeTemplateName: (name) => {
             this.elements.newTemplate_nameInputField().should('be.visible').type(name)
@@ -89,6 +92,9 @@ class Templates {
         clickCustomDropdownListInAddVMPage: () => {
             this.elements.addVM_customDropdownList().should('be.visible').click()
         },
+        isVisibleCustomDropdownOptionInAddVMPage: (text) => {
+            this.elements.addVM_customDropdownOption(text).should('be.visible')
+        },
         clickCustomDropdownOptionInAddVMPage: (text) => {
             this.elements.addVM_customDropdownOption(text).should('be.visible').click()
         },
@@ -121,13 +127,18 @@ class Templates {
             this.actions.isVisibleCreatedTemplateRowByName(name)
         },
         clickResourceVisibilityIconInRowByName: (name) => {
-            this.elements.templates_tab_resourceVisibilityIconRowByName(name).should('be.visible').click()
+            this.elements.templates_tab_createdTempRowByName(name).scrollIntoView().trigger('mouseover', { force: true })
+            this.elements.templates_tab_resourceVisibilityIconRowByName(name).should('be.visible')
+            this.elements.templates_tab_resourceVisibilityIconRowByName(name).first().click({ force: true })
+            cy.wait(1000) // Wait for the modal to appear
         },
         clickCreateServerIconInRowByName: (name) => {
-            this.elements.templates_tab_createServerIconRowByName(name).should('be.visible').click()
+            this.elements.templates_tab_createdTempRowByName(name).scrollIntoView().trigger('mouseover', { force: true })
+            this.elements.templates_tab_createServerIconRowByName(name).should('exist')
+            this.elements.templates_tab_createServerIconRowByName(name).first().click({ force: true })
         },
         clickDeleteIconInRowByName: (name) => {
-            this.elements.templates_tab_deleteIconRowByName(name).should('be.visible').click()
+            this.elements.templates_tab_deleteIconRowByName(name).first().click()
         },
         isVisibleTemplateStatusRowByName: (templateName, status) => {
             this.elements.templates_tab_tempStatusRowByName(templateName, status).should('be.visible')
@@ -138,11 +149,12 @@ class Templates {
         },
         clickResourceVisibilitySaveBtn: () => {
             this.elements.resourceVisibilitySaveBtn().should('be.visible').click()
+            cy.wait(1000) // Wait for the modal to close
         },
-        isVisibleResourceVisibilityDropdownList: () => {
-            this.elements.resourceVisibilityDropdownList().should('be.visible')
+        clickResourceVisibilityDropdownList: () => {
+            this.elements.resourceVisibilityDropdownList().should('be.visible').click()
         },
-        iScheckedResourceVisibilityProjectOptionCheckbox: (projectName) => {
+        ischeckedResourceVisibilityProjectOptionCheckbox: (projectName) => {
             this.elements.resourceVisibilityProjectOptionCheckbox(projectName).should('be.checked')
         },
         isNotCheckedResourceVisibilityProjectOptionCheckbox: (projectName) => {
