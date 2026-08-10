@@ -55,8 +55,6 @@ describe('21.Custom Templates Tests', () => {
         templates_page.actions.clickCancelBtnAfterCreationInConfirmationModal()
         templates_page.actions.clickTemplatesTab()
         templates_page.actions.waitForCreatedTemplateRowByName("1234567890")
-        templates_page.actions.clickDeleteIconInRowByName("1234567890")
-        templates_page.actions.clickConfirmDeleteTemplateBtn()
     })
     it('[PD-953] Virtual Server: Create Template: with underscore and hyphen', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -74,8 +72,6 @@ describe('21.Custom Templates Tests', () => {
         templates_page.actions.clickCancelBtnAfterCreationInConfirmationModal()
         templates_page.actions.clickTemplatesTab()
         templates_page.actions.waitForCreatedTemplateRowByName("Test_template-hyphen")
-        templates_page.actions.clickDeleteIconInRowByName("Test_template-hyphen")
-        templates_page.actions.clickConfirmDeleteTemplateBtn()
     })
     it('[PD-955] Virtual Server: Create Template: with Available to all projects disabled', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -347,10 +343,20 @@ describe('21.Custom Templates Tests', () => {
         templates_page.actions.clickResourceVisibilityDropdownList()
         templates_page.actions.ischeckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
     })
+    it('[PD-971-974, 1097] Templates: Columns: assertion display name', () => {    // 5 test cases in 1 autotest
+        cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
+        cy.login(configData.base_url, configData.login, configData.password)
+        templates_page.actions.clickTemplatesTab()
+        templates_page.actions.isVisibleColumnHeader("Название")
+        templates_page.actions.isVisibleColumnHeader("Дата загрузки")
+        templates_page.actions.isVisibleColumnHeader("Размер, Гб")
+        templates_page.actions.isVisibleColumnHeader("Используется серверами")
+        templates_page.actions.isVisibleColumnHeader("Статус")
+    })
     it('[PD-970] Templates: Delete: Cancel deletion', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
-        templates_page.actions.clickTemplatesTab()    // we choose template from Templates page and then create a new VM from it
+        templates_page.actions.clickTemplatesTab()
         templates_page.actions.clickDeleteIconInRowByName(templateName)
         templates_page.actions.clickCancelDeleteTemplateBtn()
         templates_page.actions.isVisibleCreatedTemplateRowByName(templateName)
@@ -358,7 +364,11 @@ describe('21.Custom Templates Tests', () => {
     it('[PD-969] Templates: Delete', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
-        templates_page.actions.clickTemplatesTab()    // we choose template from Templates page and then create a new VM from it
+        templates_page.actions.clickTemplatesTab()
+        templates_page.actions.clickDeleteIconInRowByName("1234567890")
+        templates_page.actions.clickConfirmDeleteTemplateBtn()
+        templates_page.actions.clickDeleteIconInRowByName("Test_template-hyphen")
+        templates_page.actions.clickConfirmDeleteTemplateBtn()
         templates_page.actions.clickDeleteIconInRowByName(templateName)
         templates_page.actions.clickConfirmDeleteTemplateBtn()
         cy.wait(2000) // it takes some time for template to be deleted from UI

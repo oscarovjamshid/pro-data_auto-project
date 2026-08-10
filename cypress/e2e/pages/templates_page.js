@@ -27,6 +27,7 @@ class Templates {
         resourceVisibilitySaveBtn: () => cy.get('[qa-element="resource-change-submit"]'),
         cancelDeleteTemplateBtn: () => cy.get('[qa-element="delete-vm-user-template-cancel"]'),
         confirmDeleteTemplateBtn: () => cy.get('[qa-element="delete-vm-user-template-submit"]'),
+        columnHeader: (headerName) => cy.get('th[role="columnheader"]').contains(headerName)
     }
 
     actions = {
@@ -170,6 +171,10 @@ class Templates {
         isNotVisibleDeleteTemplateModal: (default_text) => {
             this.elements.confirmDeleteTemplateBtn().should('not.exist')
             cy.contains(default_text).should('be.visible')
+        },
+        // Column header functions
+        isVisibleColumnHeader: (headerName) => {
+            this.elements.columnHeader(headerName).should('be.visible')
         }
     }
 }
