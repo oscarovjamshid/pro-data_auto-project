@@ -15,6 +15,11 @@ module.exports = defineConfig({
 
   e2e: {
     setupNodeEvents(on, config) {
+      // --- Clean allure results of the previous run (runs once per run, not via before:run - mochawesome already uses it) ---
+      const allureResultsFolder = path.join(__dirname, "allure-results");
+      fs.rmSync(allureResultsFolder, { recursive: true, force: true });
+      fs.mkdirSync(allureResultsFolder, { recursive: true });
+
       // --- Reporters setup ---
       require("cypress-mochawesome-reporter/plugin")(on);
       allureWriter(on, config);
@@ -94,6 +99,7 @@ module.exports = defineConfig({
         },
       });
 
+      config.env.runId = Date.now() // one id per run for unique test data names: spec code can be re-evaluated in the middle of a run
       return config;
     },
     env: {

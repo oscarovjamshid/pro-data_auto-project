@@ -352,6 +352,9 @@ class Server {
         checkLocalIpTxtNotEmpty: () => {
             this.elements.localIpTxt().invoke('text').should('not.be.empty');
         },
+        waitForServerStatusLbl: () => {                 // status appears only after the new server is prepared
+            cy.get('[qa-element="vm-status"]', { timeout: 180000 }).should('be.visible')
+        },
         checkElementTextPeriodically: (maxIterations = 25) => {
             if (maxIterations <= 0) {
                 expect(true, 'Превышено максимальное количество итераций').to.equal(false);
