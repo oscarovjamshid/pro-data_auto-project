@@ -2,3 +2,8 @@ node_modules/
 cypress/screenshots/
 cypress/reports/
 allure-report/
+allure-results/
+cypress/downloads/
+.DS_Store
+pro-data-cypress-autotests/
+pro-data-cypress-autotests.zip
