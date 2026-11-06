@@ -38,11 +38,11 @@ describe('35.Alerts Tests', () => {
         { id: 'PD-887', name: 'Backup is created', label: 'Создан бэкап' },
         { id: 'PD-888', name: 'Stop VM', label: 'Остановка ВМ' },
         { id: 'PD-889', name: 'Start VM', label: 'Запуск ВМ' },
-        { id: 'no Jira ID', name: 'VM is created', label: 'Создана ВМ' },
-        { id: 'no Jira ID', name: 'OS template is created from VM', label: 'Создан шаблон ОС из ВМ' },
-        { id: 'no Jira ID', name: 'Managed DB is created', label: 'Создана управляемая БД' },
-        { id: 'no Jira ID', name: 'Managed DB resources are changed', label: 'Изменены ресурсы управляемой БД' },
-        { id: 'no Jira ID', name: 'DB fault tolerance is changed', label: 'Изменена отказоустойчивость БД' },
+        { id: 'PD-1135', name: 'VM is created', label: 'Создана ВМ' },
+        { id: 'PD-1136', name: 'OS template is created from VM', label: 'Создан шаблон ОС из ВМ' },
+        { id: 'PD-1137', name: 'Managed DB is created', label: 'Создана управляемая БД' },
+        { id: 'PD-1138', name: 'Managed DB resources are changed', label: 'Изменены ресурсы управляемой БД' },
+        { id: 'PD-1139', name: 'DB fault tolerance is changed', label: 'Изменена отказоустойчивость БД' },
     ]
     before(() => {
         cy.fixture('examples').then((data) => {
