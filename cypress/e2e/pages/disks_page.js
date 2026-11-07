@@ -1,6 +1,7 @@
 class Disk {
     elements = {
         createDiskBtn: () => cy.get('[qa-element="disk-create-show"]'), 
+        createDiskEmptyListBtn: () => cy.contains('button', 'Создать новый'),     // shown when disk list is empty, later change this to qa-element tag
         newDiskNameTxt: () => cy.get('[qa-element="disk-name"]'), 
         newDiskTypeHDDBtn: () => cy.get('[qa-element="hdd-ssd-0"]').contains('Стандартный'), 
         newDiskTypeSSDBtn: () => cy.get('[qa-element="hdd-ssd-1"]').contains('Быстрый'), 
@@ -29,6 +30,9 @@ class Disk {
     actions = {
         clickCreateDiskBtn: () => {
             this.elements.createDiskBtn().click()
+        },
+        clickCreateDiskEmptyListBtn: () => {
+            this.elements.createDiskEmptyListBtn().should('be.visible').click()
         },
         fillNewDiskNameTxt: (name) => {
             this.elements.newDiskNameTxt().type(name)

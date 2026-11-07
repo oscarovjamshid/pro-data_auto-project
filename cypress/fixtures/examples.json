@@ -21,5 +21,6 @@
     "main_project_name": "Default project",
     "child_login": "child@mailinator.com",
     "child_full_name": "Child User",
-    "root_phone": "998946611634"
+    "root_phone": "998946611634",
+    "main_project_owner": "Flex User"
 }
