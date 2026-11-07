@@ -1,6 +1,6 @@
 class FactorAuthentication {
     elements = {
-       TwoFactor: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-two-fa"]'),
+       TwoFactor: () => cy.get('[qa-element="nav_link_two-fa"]'),
        createFactorBtn: () => cy.get('[qa-element="two-fa-active"]'),
        passwordCheckBtn: () => cy.get('[qa-element="password-check-submit"]'),
        qrOtpInp: () => cy.get('[ qa-element="otp-mask"]'),

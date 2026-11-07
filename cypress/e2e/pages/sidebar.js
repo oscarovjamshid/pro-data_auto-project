@@ -13,13 +13,15 @@ class SideBar {
         settingsIcon: () => cy.get('[qa-element="account-settings"]'),
         logOutBtn: () => cy.get('[qa-element="sign-out"]'),
         confLogoutBtn: () => cy.get('[qa-element="logout-submit"]').contains('Да'),
-        consuption_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-reports"]'),
+        consuption_icon: () => cy.get('[qa-element="nav_link_reports"]'),
         backup_icon: () => cy.get('[qa-element="nav_link_backups"]'),
-        action_history_icon: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-log"]'),
+        action_history_icon: () => cy.get('[qa-element="nav_link_log"]'),
         access_keys_icon: () => cy.get('[qa-element="nav_link_access-keys"]'),
 
         region_icon: () => cy.get('[qa-element="region-selector"]'),
         user_icon: () => cy.get('[qa-element="user-menu-toggle"]'),
+        userMenuNameLbl: () => cy.get('[qa-element="user-menu"] [class*="UserCard_name"]'),       // later change this to qa-element tag
+        userMenuLoginLbl: () => cy.get('[qa-element="user-menu"] [class*="UserCard_login"]'),     // later change this to qa-element tag
         confirmLogoutBtn: () => cy.get('[qa-element="confirm-logout"]')
 
     }
@@ -66,6 +68,20 @@ class SideBar {
         },
         clickConfLogoutBtn: () => {
             this.elements.confirmLogoutBtn().click()
+        },
+        getUserMenuInfo: () => {                        // returns { fullName, email } of the logged in user from top-right user menu
+            this.elements.user_icon().click()
+            return this.elements.userMenuNameLbl().should('be.visible').invoke('text').then((fullName) => {
+                return this.elements.userMenuLoginLbl().invoke('text').then((email) => {
+                    this.elements.user_icon().click()
+                    return cy.wrap({ fullName: fullName.trim(), email: email.trim() })
+                })
+            })
+        },
+        checkUserMenuEmail: (email) => {
+            this.elements.user_icon().click()
+            this.elements.userMenuLoginLbl().should('be.visible').and('have.text', email)
+            this.elements.user_icon().click()
         },
         clickConsuptionIcon: () => {
             this.elements.consuption_icon().click()

@@ -1,6 +1,6 @@
 class AccessHistory {
     elements = {
-        accessTxt: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-access-keys"]'),
+        accessTxt: () => cy.get('[qa-element="nav_link_access-keys"]'),
         createKeyBtnWhenNoRecords: () => cy.get('[class*="Button_btn"], button'),
         createKeyBtn: () => cy.get('[qa-element="create-key-open"], button'),
         keyAccessTxt: () => cy.get('[qa-element="generated-access-key"]'),

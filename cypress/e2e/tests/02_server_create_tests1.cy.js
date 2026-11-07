@@ -53,6 +53,7 @@ describe('2.Create Server Tests Part1', () => {
         server_page.actions.clickLocalIpAddConfBtn()
         server_page.actions.clickLocalIpSelector()
         server_page.actions.selectLocalIpName(localIpName)
+        cy.wait(1000)
         server_page.actions.clickConfirmCreateServerBtn()
         server_page.actions.clickCloseModalBtn()
         server_page.actions.checkCreateApi(configData.test_server_with_backup)

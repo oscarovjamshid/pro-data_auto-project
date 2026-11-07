@@ -54,7 +54,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtnWhenNoRecords()
         managedKubernetes_page.actions.enterKlassterNameInp("   ")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
     it('[PD-134] Create cluster: Cyrillic letters', () => {
@@ -63,7 +63,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtnWhenNoRecords()
         managedKubernetes_page.actions.enterKlassterNameInp("ровыпаоыврраыв")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
     it('[PD-140] Create cluster: capital letters', () => {
@@ -72,17 +72,17 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtnWhenNoRecords()
         managedKubernetes_page.actions.enterKlassterNameInp("THISISTEST")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
     })
-    it('[PD-128,784,787, 791, 792] Create cluster: with Basic-Private type (v.1.29.6)', () => {                       //  5 test cases in 1 autotest
+    it('[PD-128,784,787, 791, 792] Create cluster: with Basic-Private type (v.1.35.6)', () => {                       //  5 test cases in 1 autotest
         const clusterName = "basic-priv";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickCreateClusterBtnWhenNoRecords()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()                       // 784 - Create cluster: with existing local network
@@ -109,14 +109,14 @@ describe('24.Managed Kubernetes Tests', () => {
         cy.wait(5000)
         managedKubernetes_page.actions.isVisibleCreatedKuberCluster(clusterName)
     })
-    it('[PD-130, PD-787] Create cluster: with Basic-Public type (v.1.34.3)', () => {         // 2 test cases in 1 autotest
+    it('[PD-130, PD-787] Create cluster: with Basic-Public type (v.1.36.3)', () => {         // 2 test cases in 1 autotest
         const clusterName = "basic-pub";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("34.3")  //v.1.34.3
+        managedKubernetes_page.actions.selectKuberVersionByNumber("36.3")  //v.1.36.3
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.clickPublicClusterSwitchLabel()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
@@ -145,7 +145,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("34.3")  //v.1.34.3
+        managedKubernetes_page.actions.selectKuberVersionByNumber("36.3")  //v.1.36.3
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.clickPublicClusterSwitchLabel()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
@@ -155,7 +155,7 @@ describe('24.Managed Kubernetes Tests', () => {
         localNetworks2_page.actions.enterLocalAddressData('192.168.1.16')
         publicNetworks_page.actions.clickAddNetworkModalBtn2()
     })
-    it('[PD-129, PD-782] Create cluster: with HA-Public type (v.1.30.5)', () => {                    // 2 test cases in 1 autotest
+    it('[PD-129, PD-782] Create cluster: with HA-Public type (v.1.36.2)', () => {                    // 2 test cases in 1 autotest
         const clusterName = "ha-pub";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
@@ -163,7 +163,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.enterKlassterNameInp("ha-pub")
         managedKubernetes_page.actions.clickHaControlGroupSwitchLabel()
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("30.5")  //v.1.30.5
+        managedKubernetes_page.actions.selectKuberVersionByNumber("36.2")  //v.1.36.2
         managedKubernetes_page.actions.clickUploadYourPublicKeyRadioBtn()               // 782 - Creating cluster: with 'Upload your public SSH key'
         managedKubernetes_page.actions.attachSshFileForPublicKeyFilepicker()
         managedKubernetes_page.actions.clickNextPageContinueBtn()
@@ -180,7 +180,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.kubernetesGetClusters()
         managedKubernetes_page.actions.isVisibleCreatedKuberCluster(clusterName)
     })
-    it('[PD-131, PD-745] Create cluster: with HA-Private type + with autoscaling (v.1.31.4)', () => {                    // 2 test cases in 1 autotest
+    it('[PD-131, PD-745] Create cluster: with HA-Private type + with autoscaling (v.1.35.6)', () => {                    // 2 test cases in 1 autotest
         const clusterName = "ha-priv";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
@@ -188,7 +188,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.enterKlassterNameInp(clusterName)
         managedKubernetes_page.actions.clickHaControlGroupSwitchLabel()
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("31.4")  //v.1.31.4
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -213,7 +213,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -229,7 +229,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -245,7 +245,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -260,7 +260,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0")
         managedKubernetes_page.actions.isDisabledNextPageContinueBtn()
@@ -271,7 +271,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -288,7 +288,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -305,7 +305,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -322,7 +322,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -339,7 +339,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -356,7 +356,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("testerforauto")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -373,7 +373,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("test")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -392,7 +392,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickCreateClusterBtn()
         managedKubernetes_page.actions.enterKlassterNameInp("test")
         managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+        managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
         managedKubernetes_page.actions.clickNextPageContinueBtn()
         managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
         managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -411,7 +411,7 @@ describe('24.Managed Kubernetes Tests', () => {
     //     managedKubernetes_page.actions.clickCreateClusterBtn()
     //     managedKubernetes_page.actions.enterKlassterNameInp("test")
     //     managedKubernetes_page.actions.selectVersionKubernetesKlasster()
-    //     managedKubernetes_page.actions.selectKuberVersionByNumber("29.6")  //v.1.29.6
+    //     managedKubernetes_page.actions.selectKuberVersionByNumber("35.6")  //v.1.35.6
     //     managedKubernetes_page.actions.clickNextPageContinueBtn()
     //     managedKubernetes_page.actions.enterPodovServerNumber("192.168.0.0/16")
     //     managedKubernetes_page.actions.clickKuberLocalNetworkList()
@@ -444,13 +444,13 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickActionBtnInCluster()
         managedKubernetes_page.actions.clickUpdateKuberVersionBtn()
         managedKubernetes_page.actions.clickUpdateKuberVersionDropdownList()
-        managedKubernetes_page.actions.selectKuberVersionByNumber("30.5")           // updating from v.29.6 to v.30.5
+        managedKubernetes_page.actions.selectKuberVersionByNumber("36.3")           // updating from v.35.6 to v.36.3
         managedKubernetes_page.actions.clickSubmitBtnInUpdateKuberVersionList()
         managedKubernetes_page.actions.isVisibleClusterStatus('Конфигурируется')
         managedKubernetes_page.actions.clickCancelBtnInAddPage() // this is back btn here
         managedKubernetes_page.actions.waitForClusterReady(clusterName)
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
-        managedKubernetes_page.actions.isVisibleClusterKuberTextInConfigurationTab("Версия:", "v1.30.5")
+        managedKubernetes_page.actions.isVisibleClusterKuberTextInConfigurationTab("Версия:", "v1.36.3")
     })
     it('[PD-794] Configuration: Update Kubernetes Version to invalid version (from higher to lower)', () => {
         const clusterName = "basic-priv";
@@ -500,7 +500,7 @@ describe('24.Managed Kubernetes Tests', () => {
         managedKubernetes_page.actions.clickClusterRowPerName(clusterName)
         managedKubernetes_page.actions.isVisibleClusterKuberTextInConfigurationTab('Группа управления:', 'Базовая, 2 CPU, 4 Гб RAM, 20 Гб SSD')
     })
-    it('[PD-797] Connection: Downloading v1.29.6 cluster config.yaml file (validating contents)', () => {
+    it('[PD-797] Connection: Downloading v1.35.6 cluster config.yaml file (validating contents)', () => {
         const clusterName = "basic-pub";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
@@ -524,7 +524,7 @@ describe('24.Managed Kubernetes Tests', () => {
             });
         });
     })
-    it('[PD-817] Connection: Downloading v1.30.5 cluster config.yaml file (validating contents)', () => {
+    it('[PD-817] Connection: Downloading v1.36.2 cluster config.yaml file (validating contents)', () => {
         const clusterName = "ha-pub";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()
@@ -548,7 +548,7 @@ describe('24.Managed Kubernetes Tests', () => {
             });
         });
     })
-    it('[PD-818] Connection: Downloading v1.31.4 cluster config.yaml file (validating contents)', () => {
+    it('[PD-818] Connection: Downloading v1.36.3 cluster config.yaml file (validating contents)', () => {
         const clusterName = "ha-priv";
         cy.login(configData.base_url, configData.login, configData.password)
         sidebar.actions.clickManagedKubernetesIcon()

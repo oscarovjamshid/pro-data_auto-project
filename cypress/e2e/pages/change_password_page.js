@@ -1,6 +1,6 @@
 class ChangePassword {
     elements = {
-       changePassword: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-change-pass"]'),
+       changePassword: () => cy.get('[qa-element="nav_link_change-pass"]'),
        passwordOldInp: () => cy.get('[qa-element="password-input"]').eq(0),
        passwordNewInp: () => cy.get('[qa-element="password-input"]').eq(1),
        passwordRepeatInp: () => cy.get('[qa-element="password-input"]').eq(2),

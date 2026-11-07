@@ -1,6 +1,6 @@
 class SetupNotification {
     elements = {
-       SetupNotification: () => cy.get('[qa-element="sidemenu-nav-account-settings-sublink-account-notification-settings"]'),
+       SetupNotification: () => cy.get('[qa-element="nav_link_notification-settings"]'),
        editEmailBtn: () => cy.get('[qa-element="edit-email-toggle"]'),
        emailInpLbl: () => cy.get('[qa-element="app-notifications-settings-email"]'),
        sendNotifBtn: () => cy.get('[qa-element="notifications-settings-submit"]'),

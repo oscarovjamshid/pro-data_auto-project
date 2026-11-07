@@ -30,6 +30,8 @@ class ManageUser {
         userPhoneNumberDeleteBtn: () => cy.get('[qa-element="user-edit-clear"]'),
         blockConfirmBtn: () => cy.get('[qa-element="user-change-status-submit"]'),
         unblockBtn: () => cy.contains('Разблокировать'),
+        projectListOptionCheckboxes: () => cy.get('[qa-element^="project-"]:visible:not([qa-element="project-toggle"])').find('input[type="checkbox"]'),
+        userEditBtnByEmail: (email) => cy.contains('tbody tr', email).find('a').first(),
     }
     actions = {
         clickAddNewUserButton: () => {
@@ -136,6 +138,23 @@ class ManageUser {
         },
         isNotVisibleUser: (name) => {
             this.elements.createdUser(name).should('not.exist')
+        },
+        isActiveUser: (email) => {
+            return this.elements.activeUserRow(email).should('be.visible').invoke('text').then((text) => text.includes('Активный'))
+        },
+        selectAllProjects: () => {
+            this.elements.projectListDropdown().click()
+            this.elements.projectListOptionCheckboxes().check({ force: true })
+            this.elements.projectListDropdown().click()
+        },
+        clickUserEditBtnByEmail: (email) => {
+            this.elements.userEditBtnByEmail(email).click()
+        },
+        clearEditUserPhoneTxt: () => {                  // root user edit page has no phone delete button
+            this.elements.editUserPhoneTxt().clear()
+        },
+        getEditUserPhone: () => {
+            return this.elements.editUserPhoneTxt().should('be.visible').invoke('val').then((value) => value.replace(/\D/g, ''))
         },
     }
 }

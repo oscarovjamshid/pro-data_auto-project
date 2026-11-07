@@ -1,7 +1,7 @@
 {
-    "base_url": "https://kz-1.pro-data.tech/",
-    "login": "qatesterprod@yopmail.com",
-    "password": "123.Kz.321",
+    "base_url": "https://test-my.pro-data.tech/",
+    "login": "flexo1@yopmail.com",
+    "password": "Iamidiot2001!",
     "user_ip": "94.158.54.224",
     "blocked_login": "bella@yopmail.com",
     "blocked_login_psw": "123.Qa.321",
@@ -16,5 +16,10 @@
     "test_server_without_backup": "TS-Without-Backup",
     "test_server_with_customOS": "TS-With-Custom-OS",
     "password1": "qaTester@2000!",
-    "currency": "KZT"
+    "currency": "UZS",
+    "test_local_network_name": "labubu",
+    "main_project_name": "Default project",
+    "child_login": "child@mailinator.com",
+    "child_full_name": "Child User",
+    "root_phone": "998946611634"
 }
