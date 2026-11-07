@@ -1,10 +1,10 @@
 class Yopmail {
     actions = {
         getTextFromLatestEmail(email) {
-            const login = email.split('@')[0]
-            cy.visit(`https://yopmail.com/?login=${login}`)
-            return cy.origin('https://yopmail.com', () => {
-                cy.get('iframe#ifmail', { timeout: 30000 })      // latest email is opened in #ifmail, inbox list is in #ifinbox
+            cy.visit('https://yopmail.com/')
+            return cy.origin('https://yopmail.com', { args: { email } }, ({ email }) => {
+                cy.get('#login').clear().type(`${email}{enter}`)
+                cy.get('iframe#ifmail', { timeout: 30000 })      // inbox page shows the latest email inside #ifmail iframe
                     .its('0.contentDocument.body.innerText').should('not.be.empty')
             })
         },
