@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "npx cypress run",
-    "dev": "npx cypress open"
+    "dev": "npx cypress open",
+    "allure:generate": "allure generate ./allure-results --clean",
+    "allure:open": "allure open ./allure-report"
   },
   "keywords": [],
   "author": "",
