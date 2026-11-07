@@ -28,9 +28,9 @@ describe('36.Resource Distribution Tests', () => {
         { id: 'PD-623', name: 'Kubernetes clusters', label: 'Kubernetes кластеры', apiType: 'KUBERNETES' },
         { id: 'PD-624', name: 'Load Balancer', label: 'Балансировщик нагрузки', apiType: 'LOAD_BALANCER' },
         { id: 'PD-625', name: 'Security Group', label: 'Группа безопасности', apiType: 'FIREWALL_GROUP' },
-        { id: 'no Jira ID', name: 'Object Storage', label: 'Объектное хранилище', apiType: 'OBJECT_STORAGE' },
-        { id: 'no Jira ID', name: 'Server Template', label: 'Шаблон сервера', apiType: 'VM_TEMPLATE' },
-        { id: 'no Jira ID', name: 'Router', label: 'Роутер', apiType: 'ROUTER' },
+        { id: 'PD-1199', name: 'Object Storage', label: 'Объектное хранилище', apiType: 'OBJECT_STORAGE' },
+        { id: 'PD-1200', name: 'Server Template', label: 'Шаблон сервера', apiType: 'VM_TEMPLATE' },
+        { id: 'PD-1201', name: 'Router', label: 'Роутер', apiType: 'ROUTER' },
     ]
     const allApiTypes = [...resourceTypes.map((type) => type.apiType), 'MANAGED_DB']     // MANAGED_DB comes in "All" list, but has no filter option
 
