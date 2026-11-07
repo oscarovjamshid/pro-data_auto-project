@@ -134,6 +134,9 @@ class ForgotPassword {
         clickResetPwdSaveBtn: () => {
             this.elements.resetPwdPageSaveBtn().click()
         },
+        isNotVisibleResetPwdSaveBtn: () => {           // form is replaced by success message after password is saved
+            cy.get('[qa-element="password-reset-save"]', { timeout: 15000 }).should('not.exist')
+        },
         clickResetPwdBackToMainBtn: () => {
             this.elements.resetPwdPageBackToMainBtn().click()
         },

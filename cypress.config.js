@@ -86,6 +86,16 @@ module.exports = defineConfig({
           return false;
         },
 
+        //  Number for unique test user names (user-DDMMYYYY-NN): one per run, resets every day
+        userNumberForRun({ runId, date }) {
+          const counterFile = path.join(__dirname, "cypress", "fixtures", "user_counter.json");
+          const saved = fs.existsSync(counterFile) ? JSON.parse(fs.readFileSync(counterFile, "utf8")) : {};
+          if (saved.runId === runId) return saved.number;
+          const number = saved.date === date ? saved.number + 1 : 1;
+          fs.writeFileSync(counterFile, JSON.stringify({ date, number, runId }));
+          return number;
+        },
+
         //  Clean the entire downloads folder
         cleanDownloadsFolder() {
           const downloadsFolder = path.join(__dirname, "cypress", "downloads");

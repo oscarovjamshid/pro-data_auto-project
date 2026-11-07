@@ -75,6 +75,10 @@ class Login {
             this.elements.passwordErrorLbl().should('be.visible')
             this.elements.passwordErrorLbl().contains(text)
         },
+        isNotLoginedWithError: (text) => {
+            cy.wait('@signInRequest').its('response.statusCode').should('not.eq', 200)
+            this.elements.blockedPasswordErrorLbl().should('be.visible').and('contain.text', text)
+        },
         isVisiblePasswordErrorTextForBlockedOrNotFound: (text) => {
             this.elements.blockedPasswordErrorLbl().should('be.visible')
             this.elements.blockedPasswordErrorLbl().contains(text)

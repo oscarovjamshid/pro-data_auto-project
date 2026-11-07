@@ -7,3 +7,4 @@ cypress/downloads/
 .DS_Store
 pro-data-cypress-autotests/
 pro-data-cypress-autotests.zip
+cypress/fixtures/user_counter.json

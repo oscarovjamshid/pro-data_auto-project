@@ -9,6 +9,7 @@ class SideBar {
         object_storage_icon: () => cy.get('[qa-element="nav_link_storage"]'),
         managed_kubernetes_icon: () => cy.get('[qa-element="nav_link_clusters"]'),
         userManagement_icon: () => cy.get('[qa-element="nav_link_users"]'),
+        projectManagement_icon: () => cy.get('[qa-element="nav_link_projects"]'),
         manageUser_icon: () => cy.get('[qa-element="nav_link-account-users"]'),
         settingsIcon: () => cy.get('[qa-element="account-settings"]'),
         logOutBtn: () => cy.get('[qa-element="sign-out"]'),
@@ -52,6 +53,9 @@ class SideBar {
         },
         clickUserManagement: () => {
             this.elements.userManagement_icon().click()
+        },
+        clickProjectManagement: () => {
+            this.elements.projectManagement_icon().click()
         },
         clickManageUser: () => {
             this.elements.manageUser_icon().click()
