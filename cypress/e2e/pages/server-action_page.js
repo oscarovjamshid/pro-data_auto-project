@@ -66,6 +66,16 @@ class ServerActions {
             this.elements.serverStoppedStatus().should('be.visible')
         },
 
+        stopServerIfRunning: () => {
+            this.elements.serverStatusLbl().invoke('text').then((status) => {
+                if (status.includes('В работе')) {
+                    this.actions.clickServerActionsBtn()
+                    this.actions.clickStopServerBtn()
+                    this.actions.checkStatus(25, 'Остановлен')
+                    cy.reload() // closes the actions menu
+                }
+            })
+        },
         checkStatus: (maxIterations, status) => {
             cy.log('Итерация: ' + maxIterations);
             if (maxIterations <= 0) {

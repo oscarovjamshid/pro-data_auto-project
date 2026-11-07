@@ -12,6 +12,7 @@ class ServerList {
         server_backNavigateBtn: () => cy.get('[qa-element="to-back"]'),
         server_detailNotVisible: () => cy.get('[qa-element="vm-delete-show"]'),
         serverRowByName: (name) => cy.contains('tr', name),
+        serverStatusLblByName: (name) => cy.contains('tr', name).find('[qa-element="vm-status"]'),
 
     }
     actions = {
@@ -29,6 +30,22 @@ class ServerList {
         },
         searchServer: (text) => {
             this.elements.server_searchTxt().type(text)
+        },
+        waitForServerStatusByName: (name, statuses, maxIterations = 25) => {    // servers list is not updated by itself, so we reload the page
+            if (maxIterations <= 0) {
+                expect(true, 'Превышено максимальное количество итераций').to.equal(false);
+                return;
+            }
+            this.elements.serverStatusLblByName(name).invoke('text').then((status) => {
+                if (statuses.some((expected) => status.includes(expected))) {
+                    cy.log('success');
+                } else {
+                    cy.wait(5000);
+                    cy.reload();
+                    this.elements.server_searchTxt().clear().type(name)
+                    this.actions.waitForServerStatusByName(name, statuses, maxIterations - 1);
+                }
+            });
         },
         isVisibleSearchTxtServer: (text) => {
             this.elements.server_searchLbl(text).should('be.visible');

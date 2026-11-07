@@ -1,6 +1,6 @@
 class SideBar {
     elements = {
-        servers_icon: () => cy.get('[qa-element="nav_link_servers"]'),
+        servers_icon: () => cy.get('[qa-element="nav_link_servers"]', { timeout: 30000 }),
         networks_icon: () => cy.get('[qa-element="nav_link_networks"]'),
         load_balance_icon: () => cy.get('[qa-element="nav_link_loadbalancers"]'),
         disks_icon: () => cy.get('[qa-element="nav_link_disks"]'),

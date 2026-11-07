@@ -10,7 +10,11 @@ import templates_page from "../pages/templates_page";
 import configuration_page from "../pages/configuration_page";
 
 describe('21.Custom Templates Tests', () => {
-    let templateName = "Test-template";
+    const runId = Cypress.env('runId')
+    const templateName = `test-template-${runId}`
+    const numbersTemplateName = `template${runId}`
+    const hyphenTemplateName = `test_template-hyphen-${runId}`
+    const allProjectsDisabledTemplateName = `test_template-all-projects-disabled-${runId}`
     let configData;
     before(() => {
         cy.fixture('examples').then((data) => {
@@ -20,6 +24,7 @@ describe('21.Custom Templates Tests', () => {
     beforeEach(() => {
         cy.viewport(1280, 720)
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
+        templates_page.actions.trackPanelRequests()
     })
     it('[PD-951, PD-954] Virtual Server: Create Template: with latin letters', () => {        // 2 test cases in 1 autotest
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -33,11 +38,11 @@ describe('21.Custom Templates Tests', () => {
         serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
         templates_page.actions.typeTemplateName(templateName)
+        templates_page.actions.isCheckedAvailableToAllProjectsCheckbox()    // [PD-954]
         templates_page.actions.clickCreateTemplateBtnInModal()
         templates_page.actions.clickCancelBtnAfterCreationInConfirmationModal()
-        cy.wait(30000) // wait for template creation - first temp takes a bit longer 
         templates_page.actions.clickTemplatesTab()
-        templates_page.actions.waitForCreatedTemplateRowByName(templateName)
+        templates_page.actions.waitForCreatedTemplateRowByName(templateName, 300000, 5000, 30000)    // first template takes longer: check every 5s, reload every 30s
     })
     it('[PD-952] Virtual Server: Create Template: with numbers', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -50,11 +55,11 @@ describe('21.Custom Templates Tests', () => {
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
-        templates_page.actions.typeTemplateName("1234567890")
+        templates_page.actions.typeTemplateName(numbersTemplateName)
         templates_page.actions.clickCreateTemplateBtnInModal()
         templates_page.actions.clickCancelBtnAfterCreationInConfirmationModal()
         templates_page.actions.clickTemplatesTab()
-        templates_page.actions.waitForCreatedTemplateRowByName("1234567890")
+        templates_page.actions.waitForCreatedTemplateRowByName(numbersTemplateName)
     })
     it('[PD-953] Virtual Server: Create Template: with underscore and hyphen', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -67,11 +72,11 @@ describe('21.Custom Templates Tests', () => {
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
-        templates_page.actions.typeTemplateName("Test_template-hyphen")
+        templates_page.actions.typeTemplateName(hyphenTemplateName)
         templates_page.actions.clickCreateTemplateBtnInModal()
         templates_page.actions.clickCancelBtnAfterCreationInConfirmationModal()
         templates_page.actions.clickTemplatesTab()
-        templates_page.actions.waitForCreatedTemplateRowByName("Test_template-hyphen")
+        templates_page.actions.waitForCreatedTemplateRowByName(hyphenTemplateName)
     })
     it('[PD-955] Virtual Server: Create Template: with Available to all projects disabled', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -84,14 +89,12 @@ describe('21.Custom Templates Tests', () => {
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
-        templates_page.actions.typeTemplateName("Test_template-all-projects-disabled")
+        templates_page.actions.typeTemplateName(allProjectsDisabledTemplateName)
         templates_page.actions.clickAvailableToAllProjectsCheckbox()
         templates_page.actions.clickCreateTemplateBtnInModal()
         templates_page.actions.clickCancelBtnAfterCreationInConfirmationModal()
         templates_page.actions.clickTemplatesTab()
-        templates_page.actions.waitForCreatedTemplateRowByName("Test_template-all-projects-disabled")
-        templates_page.actions.clickDeleteIconInRowByName("Test_template-all-projects-disabled")
-        templates_page.actions.clickConfirmDeleteTemplateBtn()
+        templates_page.actions.waitForCreatedTemplateRowByName(allProjectsDisabledTemplateName)    // template is deleted in PD-969
     })
     it('[PD-956] Virtual Server: Create Template: empty name (unsuccessful)', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -131,7 +134,7 @@ describe('21.Custom Templates Tests', () => {
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
         serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
-        templates_page.actions.typeTemplateName("Test-template")
+        templates_page.actions.typeTemplateName(templateName)
         templates_page.actions.clickCreateTemplateBtnInModal()
         templates_page.actions.isVisibleNotificationToastForExistingTempName("Имя шаблона должно быть уникальным в рамках компании")
     })
@@ -145,23 +148,25 @@ describe('21.Custom Templates Tests', () => {
         server_page.actions.selectVersionOs()
         server_page.actions.writeTitle(configData.test_server_without_backup)
         server_page.actions.writeDesc("for templates test when Disk size is big")
-        server_page.actions.writeCpuTxt(2)
-        server_page.actions.writeRamTxt(4)
+        server_page.actions.writeCpuTxt(1)
+        server_page.actions.writeRamTxt(1)
         server_page.actions.setDisk(120)
-        server_page.actions.enablePublicIp()
+        server_page.actions.enableLocalIp()    // public IP quota is 0 on the stand, so VM gets an existing local network
+        server_page.actions.clickLocalIpSelector()
+        server_page.actions.selectLocalIpName(configData.test_local_network_name)
+        server_page.actions.selectLocalIpFreeAddress()
         server_page.actions.clickLoginTypeSSHBtn()
         server_page.actions.clickConfirmCreateServerBtn()
         server_page.actions.clickCloseModalBtn()
         server_page.actions.isVisibleCreatedServer(configData.test_server_without_backup)
         serverlist_page.actions.searchServer(configData.test_server_without_backup)
         serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_without_backup)
-        server_page.actions.checkElementTextPeriodically()
+        serverlist_page.actions.waitForServerStatusByName(configData.test_server_without_backup, ['В работе', 'Остановлен'])    // new VM can come up running or stopped
         serverlist_page.actions.clickServerCard(configData.test_server_without_backup)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_without_backup)
-        serverAction_page.actions.isRunningServer()
-        serverAction_page.actions.clickServerActionsBtn()
-        serverAction_page.actions.clickStopServerBtn()
+        serverAction_page.actions.stopServerIfRunning()
         serverAction_page.actions.checkStatus(25, 'Остановлен')
+        templates_page.actions.waitForPanelToLoad()
         serverAction_page.actions.clickServerActionsBtn()    // and now we check the template creation with big-sized disky-VM
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
         templates_page.actions.isVisibleErrorMsgForNotEnoughQuota("Невозможно создать шаблон из данного загрузочного диска, так как его размер превышает оставшуюся квоту")
@@ -198,23 +203,26 @@ describe('21.Custom Templates Tests', () => {
         server_page.actions.clickServerTitleField()
         server_page.actions.writeTitle(configData.test_server_with_customOS)
         server_page.actions.writeDesc("with custom OS,NVME")
-        server_page.actions.writeCpuTxt(2)
-        server_page.actions.writeRamTxt(4)
+        server_page.actions.writeCpuTxt(1)
+        server_page.actions.writeRamTxt(1)
         server_page.actions.clickDiskTypeNVMEBtn()
         server_page.actions.setDisk(10)
-        server_page.actions.enablePublicIp()
+        server_page.actions.enableLocalIp()
+        server_page.actions.clickLocalIpSelector()
+        server_page.actions.selectLocalIpName(configData.test_local_network_name)
+        server_page.actions.selectLocalIpFreeAddress()
         server_page.actions.clickConfirmCreateServerBtn()
         server_page.actions.clickCloseModalBtn()
         server_page.actions.isVisibleCreatedServer(configData.test_server_with_customOS)
         serverlist_page.actions.searchServer(configData.test_server_with_customOS)
         serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_with_customOS)
-        server_page.actions.checkElementTextPeriodically()
+        serverlist_page.actions.waitForServerStatusByName(configData.test_server_with_customOS, ['В работе', 'Остановлен'])    // new VM can come up running or stopped
         serverlist_page.actions.clickServerCard(configData.test_server_with_customOS)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_with_customOS)
-        serverAction_page.actions.isRunningServer()
-        serverAction_page.actions.clickServerActionsBtn()
-        serverAction_page.actions.clickStopServerBtn()
+        serverAction_page.actions.stopServerIfRunning()
         serverAction_page.actions.checkStatus(25, 'Остановлен')
+        templates_page.actions.waitForPanelToLoad()
+        serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.hoverOnCustomOSVmCreateTemplateBtn("Источник ВМ не поддерживает count-init") // now we check template creation
         configuration_page.actions.isVisibleDangerBtn() // in the end we delete this VM
         configuration_page.actions.clickDeleteServerDangerBtn()
@@ -232,9 +240,11 @@ describe('21.Custom Templates Tests', () => {
         serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
-        serverAction_page.actions.clickServerActionsBtn()
-        serverAction_page.actions.clickStopServerBtn()
+        templates_page.actions.waitForPanelToLoad()
+        serverAction_page.actions.stopServerIfRunning()    // PD-960 leaves the server running
+        templates_page.actions.waitForPanelToLoad()
         serverAction_page.actions.checkStatus(25, 'Остановлен')
+        serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
         templates_page.actions.isVisiblePriceText(configData.currency)
     })
@@ -247,10 +257,13 @@ describe('21.Custom Templates Tests', () => {
         serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
+        templates_page.actions.waitForPanelToLoad()
+        serverAction_page.actions.checkStatus(25, 'Остановлен')
         serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
         templates_page.actions.clickCancelBtnInModal()
-        templates_page.actions.isVisibleCreateTemplateBtnInActionsMenu()
+        templates_page.actions.isNotVisibleCreateTemplateModal()
+        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
     })
     it('[PD-964] Virtual Server: Create Template: X icon', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -261,10 +274,13 @@ describe('21.Custom Templates Tests', () => {
         serverlist_page.actions.isVisibleSearchTxtServer(configData.test_server_name)
         serverlist_page.actions.clickServerCard(configData.test_server_name)
         serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
+        templates_page.actions.waitForPanelToLoad()
+        serverAction_page.actions.checkStatus(25, 'Остановлен')
         serverAction_page.actions.clickServerActionsBtn()
         templates_page.actions.clickCreateTemplateBtnInActionsMenu()
         templates_page.actions.clickCloseModalBtn()
-        templates_page.actions.isVisibleCreateTemplateBtnInActionsMenu()
+        templates_page.actions.isNotVisibleCreateTemplateModal()
+        serverlist_page.actions.isVisibleServerDetail(configData.test_server_name)
     })
     it('[PD-965] Virtual Server: Create Server: display of templates under Custom tab', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -276,7 +292,7 @@ describe('21.Custom Templates Tests', () => {
         templates_page.actions.clickCustomRadioBtnInAddVMPage()
         templates_page.actions.isCheckedCustomRadioBtnInAddVMPage()
         templates_page.actions.clickCustomDropdownListInAddVMPage()
-        templates_page.actions.isVisibleCustomDropdownOptionInAddVMPage("Test-template")
+        templates_page.actions.isVisibleCustomDropdownOptionInAddVMPage(templateName)
     })
     it('[PD-966] Templates: Create Server: creating new VM (successfully)', () => {
         let templateVmName = "Test-VM-from-template";
@@ -289,23 +305,26 @@ describe('21.Custom Templates Tests', () => {
         templates_page.actions.isVisibleCustomDropdownOptionInAddVMPage(templateName)
         server_page.actions.writeTitle(templateVmName)
         server_page.actions.writeDesc("for templates test creating new VM from template")
-        server_page.actions.writeCpuTxt(2)
-        server_page.actions.writeRamTxt(4)
+        server_page.actions.writeCpuTxt(1)
+        server_page.actions.writeRamTxt(1)
         server_page.actions.setDisk(120)
-        server_page.actions.enablePublicIp()
+        server_page.actions.enableLocalIp()
+        server_page.actions.clickLocalIpSelector()
+        server_page.actions.selectLocalIpName(configData.test_local_network_name)
+        server_page.actions.selectLocalIpFreeAddress()
         server_page.actions.clickLoginTypeSSHBtn()
         server_page.actions.clickConfirmCreateServerBtn()
         server_page.actions.clickCloseModalBtn()
         server_page.actions.isVisibleCreatedServer(templateVmName)
         serverlist_page.actions.searchServer(templateVmName)
         serverlist_page.actions.isVisibleSearchTxtServer(templateVmName)
-        server_page.actions.checkElementTextPeriodically()
+        serverlist_page.actions.waitForServerStatusByName(templateVmName, ['В работе', 'Остановлен'])    // new VM can come up running or stopped
         serverlist_page.actions.clickServerCard(templateVmName)
         serverlist_page.actions.isVisibleServerDetail(templateVmName)
-        serverAction_page.actions.isRunningServer()
-        serverAction_page.actions.clickServerActionsBtn()
-        serverAction_page.actions.clickStopServerBtn()
+        serverAction_page.actions.stopServerIfRunning()
         serverAction_page.actions.checkStatus(25, 'Остановлен')  // in the end we delete this VM
+        templates_page.actions.waitForPanelToLoad()
+        serverAction_page.actions.clickServerActionsBtn()
         configuration_page.actions.isVisibleDangerBtn()
         configuration_page.actions.clickDeleteServerDangerBtn()
         configuration_page.actions.writeDeleteServerNameTxt(templateVmName)
@@ -314,34 +333,41 @@ describe('21.Custom Templates Tests', () => {
         configuration_page.actions.isVisibleDeletedVMMessage("Сервер успешно удален")
     })
     it('[PD-968] Templates: Resource visibility: removing projects', () => {
-        let templateProjectName = "Test-Project";
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
-        templates_page.actions.clickTemplatesTab()    // we choose template from Templates page and then create a new VM from it
+        templates_page.actions.clickTemplatesTab()
+        templates_page.actions.waitForPanelToLoad()
         templates_page.actions.clickResourceVisibilityIconInRowByName(templateName)
+        templates_page.actions.isCheckedResourceVisibilityAllProjectsCheckbox()    // template is created with "Available to all projects" enabled
+        templates_page.actions.clickResourceVisibilityAllProjectsCheckbox()
         templates_page.actions.clickResourceVisibilityDropdownList()
-        templates_page.actions.ischeckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
-        templates_page.actions.clickResourceVisibilityProjectOptionCheckbox(templateProjectName)
-        templates_page.actions.clickResourceVisibilityDropdownList()
-        templates_page.actions.clickResourceVisibilitySaveBtn()
-        templates_page.actions.clickResourceVisibilityIconInRowByName(templateName)
-        templates_page.actions.clickResourceVisibilityDropdownList()
-        templates_page.actions.isNotCheckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
+        templates_page.actions.getResourceVisibilityProjectName(configData.main_project_name).then((templateProjectName) => {
+            templates_page.actions.ischeckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
+            templates_page.actions.clickResourceVisibilityProjectOptionCheckbox(templateProjectName)
+            templates_page.actions.clickResourceVisibilityDropdownList()
+            templates_page.actions.clickResourceVisibilitySaveBtn()
+            templates_page.actions.clickResourceVisibilityIconInRowByName(templateName)
+            templates_page.actions.isNotCheckedResourceVisibilityAllProjectsCheckbox()
+            templates_page.actions.clickResourceVisibilityDropdownList()
+            templates_page.actions.isNotCheckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
+        })
     })
     it('[PD-967] Templates: Resource visibility: adding projects', () => {
-        let templateProjectName = "Test-Project";
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
-        templates_page.actions.clickTemplatesTab()    // we choose template from Templates page and then create a new VM from it
+        templates_page.actions.clickTemplatesTab()
+        templates_page.actions.waitForPanelToLoad()
         templates_page.actions.clickResourceVisibilityIconInRowByName(templateName)
         templates_page.actions.clickResourceVisibilityDropdownList()
-        templates_page.actions.isNotCheckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
-        templates_page.actions.clickResourceVisibilityProjectOptionCheckbox(templateProjectName)
-        templates_page.actions.clickResourceVisibilityDropdownList()
-        templates_page.actions.clickResourceVisibilitySaveBtn()
-        templates_page.actions.clickResourceVisibilityIconInRowByName(templateName)
-        templates_page.actions.clickResourceVisibilityDropdownList()
-        templates_page.actions.ischeckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
+        templates_page.actions.getResourceVisibilityProjectName(configData.main_project_name).then((templateProjectName) => {
+            templates_page.actions.isNotCheckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
+            templates_page.actions.clickResourceVisibilityProjectOptionCheckbox(templateProjectName)
+            templates_page.actions.clickResourceVisibilityDropdownList()
+            templates_page.actions.clickResourceVisibilitySaveBtn()
+            templates_page.actions.clickResourceVisibilityIconInRowByName(templateName)
+            templates_page.actions.clickResourceVisibilityDropdownList()
+            templates_page.actions.ischeckedResourceVisibilityProjectOptionCheckbox(templateProjectName)
+        })
     })
     it('[PD-971-974, 1097] Templates: Columns: assertion display name', () => {    // 5 test cases in 1 autotest
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
@@ -357,6 +383,7 @@ describe('21.Custom Templates Tests', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
         templates_page.actions.clickTemplatesTab()
+        templates_page.actions.waitForPanelToLoad()
         templates_page.actions.clickDeleteIconInRowByName(templateName)
         templates_page.actions.clickCancelDeleteTemplateBtn()
         templates_page.actions.isVisibleCreatedTemplateRowByName(templateName)
@@ -365,16 +392,15 @@ describe('21.Custom Templates Tests', () => {
         cy.intercept('POST', `${configData.base_url}panel-main/api/v1/auth/sign-in`).as('signInRequest');
         cy.login(configData.base_url, configData.login, configData.password)
         templates_page.actions.clickTemplatesTab()
-        templates_page.actions.clickDeleteIconInRowByName("1234567890")
-        templates_page.actions.clickConfirmDeleteTemplateBtn()
-        templates_page.actions.clickDeleteIconInRowByName("Test_template-hyphen")
-        templates_page.actions.clickConfirmDeleteTemplateBtn()
-        templates_page.actions.clickDeleteIconInRowByName(templateName)
-        templates_page.actions.clickConfirmDeleteTemplateBtn()
-        cy.wait(2000) // it takes some time for template to be deleted from UI
-        cy.reload()
-        templates_page.actions.clickTemplatesTab()
-        templates_page.actions.isNotVisibleDeleteTemplateModal("Шаблоны еще не созданы")
+        templates_page.actions.waitForPanelToLoad()
+        const names = [numbersTemplateName, hyphenTemplateName, allProjectsDisabledTemplateName, templateName]
+        names.forEach((name) => {
+            templates_page.actions.isVisibleTemplateStatusRowByName(name, "Успешно")    // template can't be deleted while it is being created
+            templates_page.actions.clickDeleteIconInRowByName(name)
+            templates_page.actions.clickConfirmDeleteTemplateBtn()
+            templates_page.actions.isVisibleTemplateStatusRowByName(name, "Удаляется")
+        })
+        templates_page.actions.waitForEmptyTemplatesList("Шаблоны еще не созданы")
     })
 
 })

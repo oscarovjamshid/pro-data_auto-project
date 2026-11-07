@@ -47,6 +47,7 @@ class Server {
         localIpAddressTxtforCustomOS: () => cy.get('[qa-element="address-mask"]'), 
         localIpGatewayTxt: () => cy.get('[qa-element="gateway-mask"]').last(),
         localIpTxt: () => cy.get('[qa-element="free-ip-address-toggle"]'),
+        localIpFreeAddressOption: (index) => cy.get(`[qa-element="free-ip-address-${index}"]`),
         confirmCreateServerBtn: () => cy.get('[qa-element="vm-craete-submit"]').last(),
         closeModalBtn: () => cy.get('[qa-element="create-success-close"]'),
         createdServerTitleLbl: (text) => cy.get('.vm-table').contains('div', text),
@@ -376,6 +377,10 @@ class Server {
         },
         selectLocalIpName: (name) => {
             this.elements.localIpOption(name).click()
+        },
+        selectLocalIpFreeAddress: (index = 0) => {
+            this.elements.localIpTxt().click()
+            this.elements.localIpFreeAddressOption(index).click()
         },
         clickLocalIpAddNewBtn: () => {
             this.elements.localIpAddNewBtn().click()
